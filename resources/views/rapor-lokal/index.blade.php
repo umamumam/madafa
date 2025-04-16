@@ -8,7 +8,8 @@
                 <h4>Data Rapor Lokal</h4>
             </div>
             <div class="card-body" style="overflow-x:auto;">
-                <table class="display table table-striped table-hover dt-responsive nowrap" style="width: 100%">
+                <table id="res-config" class="display table table-striped table-hover dt-responsive nowrap"
+                    style="width: 100%">
                     <thead style="background-color: #e9f5ff;">
                         <tr>
                             <th>No</th>

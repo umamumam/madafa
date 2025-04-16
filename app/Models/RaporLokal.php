@@ -9,6 +9,7 @@ class RaporLokal extends Model
     protected $fillable = [
         'siswa_id',
         'kelas_id',
+        'semester',
         'tahun_pelajaran_id',
         'nilai_spiritual_id',
         'deskripsi_spiritual',

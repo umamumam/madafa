@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('siswa_id')->constrained('siswas')->onDelete('cascade');
             $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
+            $table->enum('semester', ['1', '2']);
             $table->foreignId('tahun_pelajaran_id')->constrained('tahun_pelajarans')->onDelete('cascade');
             $table->foreignId('nilai_spiritual_id')->nullable()->constrained('nilais')->onDelete('set null');
             $table->text('deskripsi_spiritual')->nullable();

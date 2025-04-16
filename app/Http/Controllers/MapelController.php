@@ -17,9 +17,13 @@ class MapelController extends Controller
     {
         $request->validate([
             'mapel' => 'required|string|max:255',
+            'kkm' => 'nullable|integer|min:0|max:100',
         ]);
 
-        Mapel::create($request->all());
+        Mapel::create([
+            'mapel' => $request->mapel,
+            'kkm' => $request->kkm,
+        ]);
         return redirect()->back()->with('success', 'Mata Pelajaran berhasil ditambahkan.');
     }
 
@@ -27,10 +31,14 @@ class MapelController extends Controller
     {
         $request->validate([
             'mapel' => 'required|string|max:255',
+            'kkm' => 'nullable|integer|min:0|max:100',
         ]);
 
         $mapel = Mapel::findOrFail($id);
-        $mapel->update($request->all());
+        $mapel->update([
+            'mapel' => $request->mapel,
+            'kkm' => $request->kkm,
+        ]);
         return redirect()->back()->with('success', 'Mata Pelajaran berhasil diperbarui.');
     }
 

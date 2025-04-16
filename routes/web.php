@@ -66,6 +66,8 @@ Route::get('/rapor-lokal/{id}/detail', [RaporLokalController::class, 'showDetail
 Route::get('/rapor-lokal/{id}/export', [RaporLokalController::class, 'exportPdf'])->name('rapor-lokal.export');
 Route::get('/rapor-lokal/siswa', [RaporLokalController::class, 'showBySiswa'])->name('rapor-lokal.siswa');
 Route::put('/rapor-lokal/{id}/detail', [RaporLokalDetailController::class, 'update'])->name('rapor-lokal.detail.update');
+Route::put('/rapor-lokal/{id}', [RaporLokalController::class, 'update'])->name('rapor-lokal.update');
+
 Route::resource('kompetensi', KompetensiController::class);
 
 

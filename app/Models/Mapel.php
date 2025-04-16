@@ -11,7 +11,7 @@ class Mapel extends Model
 
     protected $table = 'mapels';
 
-    protected $fillable = ['mapel'];
+    protected $fillable = ['mapel', 'kkm'];
     public function gurus()
     {
         return $this->belongsToMany(Guru::class, 'guru_mapel', 'mapel_id', 'guru_id');

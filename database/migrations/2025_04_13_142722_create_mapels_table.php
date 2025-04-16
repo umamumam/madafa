@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('mapels', function (Blueprint $table) {
             $table->id();
             $table->string('mapel');
+            $table->integer('kkm')->nullable();
             $table->timestamps();
         });
     }

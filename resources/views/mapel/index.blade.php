@@ -10,11 +10,11 @@
                 <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Mapel</button>
             </div>
             <div class="card-body" style="overflow-x:auto;">
-                <table id="res-config" class="display table table-striped table-hover dt-responsive nowrap"
-                    style="width: 100%">
+                <table id="res-config" class="display table table-striped table-hover dt-responsive nowrap" style="width: 100%">
                     <thead style="background-color: #e9f5ff;">
                         <tr>
                             <th>Nama Mapel</th>
+                            <th>KKM</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -22,9 +22,9 @@
                         @foreach ($data as $m)
                         <tr>
                             <td>{{ $m->mapel }}</td>
+                            <td>{{ $m->kkm }}</td>
                             <td>
-                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#editModal{{ $m->id }}">
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $m->id }}">
                                     <i class="fa fa-pencil-alt"></i>
                                     <span class="d-none d-sm-inline"> Edit</span>
                                 </button>
@@ -53,6 +53,10 @@
                                             <div class="mb-2">
                                                 <label>Nama Mapel</label>
                                                 <input type="text" name="mapel" class="form-control" value="{{ $m->mapel }}" required>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label>KKM</label>
+                                                <input type="number" name="kkm" class="form-control" value="{{ $m->kkm }}">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -84,6 +88,10 @@
                     <div class="mb-2">
                         <label>Nama Mapel</label>
                         <input type="text" name="mapel" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>KKM</label>
+                        <input type="number" name="kkm" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">

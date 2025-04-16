@@ -24,10 +24,46 @@ class RaporLokalController extends Controller
             'tahunPelajaran',
             'details.mapel',
             'details.nilai',
+            'nilaiSpiritual',
+            'nilaiSosial',
+            'nilaiEkstra',
+            'ekstrakurikuler',
+            'ket',
+            'waliKelas',
+            'kepalaMadrasah',
         ])->findOrFail($id);
 
-        return view('rapor-lokal.detail', compact('rapor'));
+        $nilais = \App\Models\Nilai::all();
+        $ekstras = \App\Models\Ekstrakurikuler::all();
+        $keterangans = \App\Models\Ket::all();
+        $gurus = \App\Models\Guru::all();
+        return view('rapor-lokal.detail', compact('rapor', 'nilais', 'ekstras', 'keterangans', 'gurus'));
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nilai_spiritual_id' => 'nullable|exists:nilais,id',
+            'deskripsi_spiritual' => 'nullable|string',
+            'nilai_sosial_id' => 'nullable|exists:nilais,id',
+            'deskripsi_sosial' => 'nullable|string',
+            'ekstrakurikuler_id' => 'nullable|exists:ekstrakurikulers,id',
+            'nilai_ekstra_id' => 'nullable|exists:nilais,id',
+            'sakit' => 'nullable|integer',
+            'izin' => 'nullable|integer',
+            'tanpa_keterangan' => 'nullable|integer',
+            'catatan' => 'nullable|string',
+            'ket_id' => 'nullable|exists:kets,id',
+            'walikelas_id' => 'nullable|exists:gurus,id',
+            'kepala_madrasah_id' => 'nullable|exists:gurus,id',
+        ]);
+
+        $rapor = RaporLokal::findOrFail($id);
+        $rapor->update($request->all());
+
+        return redirect()->back()->with('success', 'Data rapor berhasil diperbarui.');
+    }
+
 
     public function showBySiswa()
     {
@@ -51,9 +87,16 @@ class RaporLokalController extends Controller
             'tahunPelajaran',
             'details.mapel',
             'details.nilai',
+            'nilaiSpiritual',
+            'nilaiSosial',
+            'nilaiEkstra',
+            'ekstrakurikuler',
+            'ket',
+            'waliKelas',
+            'kepalaMadrasah',
         ])
-        ->where('siswa_id', $siswa->id)
-        ->first();
+            ->where('siswa_id', $siswa->id)
+            ->first();
 
         if (!$rapor) {
             return back()->with('error', 'Rapor Lokal belum tersedia untuk siswa ini.');
