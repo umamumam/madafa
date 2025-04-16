@@ -11,7 +11,7 @@
                 <p><strong>Nis:</strong> {{ $kdum->siswa->nis ?? '-' }}</p>
                 <p><strong>Nama Siswa:</strong> {{ $kdum->siswa->nama_siswa ?? '-' }}</p>
                 <p><strong>Jenis Kelamin:</strong> {{ $kdum->siswa->jenisKelamin->jeniskelamin ?? '-' }}</p>
-                <p><strong>Kelas:</strong> {{ $kdum->kelas->nama_kelas ?? '-' }} ({{ $kdum->kelas->program->program ?? '-' }})</p>
+                <p><strong>Kelas:</strong> {{ $kdum->siswa->kelas->nama_kelas ?? '-' }} ({{ $kdum->siswa->kelas->program->program ?? '-' }})</p>
                 <p><strong>Tahun Pelajaran:</strong> {{ $kdum->tahunPelajaran->tahun ?? '-' }}</p>
 
                 <div style="overflow-x:auto;">

@@ -65,11 +65,6 @@ class Siswa extends Model
                     'tahun_pelajaran_id' => $tahunAktif->id,
                 ]);
 
-                RaporLokal::create([
-                    'siswa_id' => $siswa->id,
-                    'kelas_id' => $siswa->kelas_id,
-                    'tahun_pelajaran_id' => $tahunAktif->id,
-                ]);
             }
 
             if (!\App\Models\User::where('nisn', $siswa->nisn)->exists()) {
@@ -130,5 +125,18 @@ class Siswa extends Model
     public function riwayatKelas()
     {
         return $this->hasMany(RiwayatKelasSiswa::class);
+    }
+
+    public function createRaporLokal()
+    {
+        $tahunAktif = \App\Models\TahunPelajaran::where('active', true)->first();
+
+        if ($tahunAktif) {
+            RaporLokal::create([
+                'siswa_id' => $this->id,
+                'kelas_id' => $this->kelas_id,
+                'tahun_pelajaran_id' => $tahunAktif->id,
+            ]);
+        }
     }
 }

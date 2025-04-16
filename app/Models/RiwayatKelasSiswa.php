@@ -14,6 +14,26 @@ class RiwayatKelasSiswa extends Model
         'tahun_pelajaran_id',
         'semester',
     ];
+
+    protected static function booted()
+    {
+        static::created(function ($riwayat) {
+            $existingRapor = \App\Models\RaporLokal::where('siswa_id', $riwayat->siswa_id)
+                ->where('kelas_id', $riwayat->kelas_id)
+                ->where('tahun_pelajaran_id', $riwayat->tahun_pelajaran_id)
+                ->where('semester', $riwayat->semester)
+                ->first();
+
+            if (!$existingRapor) {
+                \App\Models\RaporLokal::create([
+                    'siswa_id' => $riwayat->siswa_id,
+                    'kelas_id' => $riwayat->kelas_id,
+                    'tahun_pelajaran_id' => $riwayat->tahun_pelajaran_id,
+                    'semester' => $riwayat->semester,
+                ]);
+            }
+        });
+    }
     public function siswa()
     {
         return $this->belongsTo(Siswa::class);

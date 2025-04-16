@@ -14,8 +14,7 @@
     <h3>Data KDUM Siswa</h3>
 
     <p><strong>Nama:</strong> {{ $kdum->siswa->nama_siswa }}</p>
-    <p><strong>Kelas:</strong> {{ $kdum->kelas->nama_kelas }}</p>
-    <p><strong>Program:</strong> {{ $kdum->kelas->program->program ?? '-' }}</p>
+    <p><strong>Kelas:</strong> {{ $kdum->siswa->kelas->nama_kelas ?? '-' }} ({{ $kdum->siswa->kelas->program->program ?? '-' }})</p>
     <p><strong>Tahun Pelajaran:</strong> {{ $kdum->tahunPelajaran->tahun }}</p>
 
     <h4>Detail Kompetensi</h4>

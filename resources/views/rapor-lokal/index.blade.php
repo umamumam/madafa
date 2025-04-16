@@ -15,6 +15,7 @@
                             <th>No</th>
                             <th>Nama Siswa</th>
                             <th>Kelas</th>
+                            <th>Semester</th>
                             <th>Tahun Pelajaran</th>
                             <th>Aksi</th>
                         </tr>
@@ -25,6 +26,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $rapor->siswa->nama_siswa }}</td>
                             <td>{{ $rapor->kelas->nama_kelas }}</td>
+                            <td>{{ $rapor->semester }}</td>
                             <td>{{ $rapor->tahunPelajaran->tahun }}</td>
                             <td>
                                 <a href="{{ route('rapor-lokal.detail', $rapor->id) }}" class="btn btn-sm btn-info">Detail</a>

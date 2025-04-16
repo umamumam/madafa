@@ -80,4 +80,28 @@ class RiwayatKelasSiswaController extends Controller
 
         return redirect()->route('siswas.index')->with('success', 'Semua siswa berhasil dipindah dan riwayat ditambahkan.');
     }
+    public function naikKelas(Request $request)
+    {
+        $request->validate([
+            'kelas_asal_id' => 'required|exists:kelas,id',
+            'kelas_tujuan_id' => 'required|exists:kelas,id',
+            'tahun_pelajaran_id' => 'required|exists:tahun_pelajarans,id',
+            'semester' => 'required|in:1,2',
+        ]);
+
+        $siswas = Siswa::where('kelas_id', $request->kelas_asal_id)->get();
+
+        foreach ($siswas as $siswa) {
+            $siswa->update(['kelas_id' => $request->kelas_tujuan_id]);
+            RiwayatKelasSiswa::create([
+                'siswa_id' => $siswa->id,
+                'kelas_id' => $request->kelas_tujuan_id,
+                'tahun_pelajaran_id' => $request->tahun_pelajaran_id,
+                'semester' => $request->semester,
+            ]);
+            $siswa->createRaporLokal();
+        }
+
+        return redirect()->route('siswas.index')->with('success', 'Naik kelas berhasil dan rapor lokal sudah dibuat.');
+    }
 }
