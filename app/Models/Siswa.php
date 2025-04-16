@@ -52,6 +52,13 @@ class Siswa extends Model
         static::created(function ($siswa) {
             $tahunAktif = \App\Models\TahunPelajaran::where('active', true)->first();
             if ($tahunAktif) {
+                \App\Models\RiwayatKelasSiswa::create([
+                    'siswa_id' => $siswa->id,
+                    'kelas_id' => $siswa->kelas_id,
+                    'tahun_pelajaran_id' => $tahunAktif->id,
+                    'semester' => 1,
+                ]);
+
                 \App\Models\Kdum::create([
                     'siswa_id' => $siswa->id,
                     'kelas_id' => $siswa->kelas_id,
@@ -119,5 +126,9 @@ class Siswa extends Model
     public function raporLokals()
     {
         return $this->hasMany(RaporLokal::class);
+    }
+    public function riwayatKelas()
+    {
+        return $this->hasMany(RiwayatKelasSiswa::class);
     }
 }

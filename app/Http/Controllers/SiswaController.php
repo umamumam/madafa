@@ -257,4 +257,11 @@ class SiswaController extends Controller
         $siswa->delete();
         return redirect()->route('siswas.index')->with('success', 'Data siswa berhasil dihapus');
     }
+
+    public function showRiwayatKelas($id)
+    {
+        $siswa = Siswa::with(['riwayatKelas.kelas', 'riwayatKelas.tahunPelajaran'])->findOrFail($id);
+
+        return view('siswas.riwayat-kelas', compact('siswa'));
+    }
 }

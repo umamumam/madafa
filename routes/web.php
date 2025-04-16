@@ -17,6 +17,7 @@ use App\Http\Controllers\TahunPelajaranController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\RaporLokalDetailController;
+use App\Http\Controllers\RiwayatKelasSiswaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
@@ -48,6 +49,7 @@ Route::resource('tahun', TahunPelajaranController::class);
 Route::resource('mapel', MapelController::class);
 Route::resource('jabatan', JabatanController::class);
 Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
+Route::get('/siswas/{id}/riwayat-kelas', [SiswaController::class, 'showRiwayatKelas'])->name('siswa.riwayat.kelas');
 Route::resource('siswas', SiswaController::class);
 Route::get('/siswa/edit-siswa/{id}', [SiswaController::class, 'editSiswa'])->name('siswas.edit-siswa');
 Route::put('/siswa/update-siswa/{id}', [SiswaController::class, 'updateSiswa'])->name('siswas.update-siswa');
@@ -67,6 +69,10 @@ Route::get('/rapor-lokal/{id}/export', [RaporLokalController::class, 'exportPdf'
 Route::get('/rapor-lokal/siswa', [RaporLokalController::class, 'showBySiswa'])->name('rapor-lokal.siswa');
 Route::put('/rapor-lokal/{id}/detail', [RaporLokalDetailController::class, 'update'])->name('rapor-lokal.detail.update');
 Route::put('/rapor-lokal/{id}', [RaporLokalController::class, 'update'])->name('rapor-lokal.update');
+Route::get('/riwayat-kelas-siswa/create', [RiwayatKelasSiswaController::class, 'create'])->name('riwayat_kelas_siswa.create');
+Route::post('/riwayat-kelas-siswa/store', [RiwayatKelasSiswaController::class, 'store'])->name('riwayat_kelas_siswa.store');
+Route::get('riwayat-kelas/mass-update', [RiwayatKelasSiswaController::class, 'massUpdate'])->name('riwayatkelas.mass');
+Route::post('riwayat-kelas/mass-update', [RiwayatKelasSiswaController::class, 'massStore'])->name('riwayatkelas.mass.store');
 
 Route::resource('kompetensi', KompetensiController::class);
 

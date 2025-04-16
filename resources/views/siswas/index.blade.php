@@ -8,6 +8,7 @@
             <div class="card-header">
                 <h1>Data Siswa</h1>
                 <a href="{{ route('siswas.create') }}" class="btn btn-primary">Tambah Siswa</a>
+                <a href="{{ url('riwayat-kelas/mass-update') }}" class="btn btn-danger">Update Kelas</a>
                 {{-- <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Tahun Pelajaran</button> --}}
             </div>
             <div class="card-body" style="overflow-x:auto;">
@@ -48,6 +49,9 @@
                                 <td>
                                     <a href="{{ route('siswas.edit', $siswa->id) }}" class="btn btn-warning btn-sm">
                                         <i class="fa fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{{ route('siswa.riwayat.kelas', $siswa->id) }}" class="btn btn-info btn-sm">
+                                        <i class="fa fa-history"></i> Riwayat Kelas
                                     </a>
                                     <form action="{{ route('siswas.destroy', $siswa->id) }}" method="POST" style="display:inline;">
                                         @csrf
