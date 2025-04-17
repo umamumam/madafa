@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             StatusGuruSeeder::class,
             KetSeeder::class,
             NilaiSeeder::class,
-            KompetensiSeeder::class
+            KompetensiSeeder::class,
+            MapelSeeder::class
         ]);
         User::factory()->create([
             'name' => 'Test User',

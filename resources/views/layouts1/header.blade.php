@@ -1,3 +1,11 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+    $user = Auth::user();
+    if (!$user || !$user->role) {
+        header('Location: /');
+        exit;
+    }
+@endphp
 <header class="pc-header">
     <div class="header-wrapper">
         <!-- [Mobile Media Block] start -->
