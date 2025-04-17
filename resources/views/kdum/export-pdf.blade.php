@@ -15,7 +15,7 @@
 
     <p><strong>Nama:</strong> {{ $kdum->siswa->nama_siswa }}</p>
     <p><strong>Kelas:</strong> {{ $kdum->siswa->kelas->nama_kelas ?? '-' }} ({{ $kdum->siswa->kelas->program->program ?? '-' }})</p>
-    <p><strong>Tahun Pelajaran:</strong> {{ $kdum->tahunPelajaran->tahun }}</p>
+    <p><strong>Tahun Pelajaran:</strong> {{ $kdum->raporTerbaru->tahunPelajaran->tahun }}</p>
 
     <h4>Detail Kompetensi</h4>
     <table>

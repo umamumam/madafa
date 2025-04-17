@@ -26,7 +26,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $kdum->siswa->nama_siswa }}</td>
-                            <td>{{ $kdum->kelas->nama_kelas ?? '-' }}</td>
+                            <td>{{ $kdum->siswa->kelas->nama_kelas ?? '-' }}</td>
                             <td>{{ $kdum->tahunPelajaran->tahun ?? '-' }}</td>
                             <td>
                                 <a href="{{ route('kdum.detail', $kdum->id) }}" class="btn btn-sm btn-info">Detail</a>

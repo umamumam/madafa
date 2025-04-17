@@ -9,8 +9,8 @@
             </div>
             <div class="card-body">
                 <p><strong>Siswa:</strong> {{ $kdum->siswa->nama_siswa }}</p>
-                <p><strong>Kelas:</strong> {{ $kdum->kelas->nama_kelas ?? '-' }}</p>
-                <p><strong>Tahun Pelajaran:</strong> {{ $kdum->tahunPelajaran->tahun ?? '-' }}</p>
+                <p><strong>Kelas:</strong> {{ $kdum->siswa->kelas->nama_kelas ?? '-' }}</p>
+                <p><strong>Tahun Pelajaran:</strong> {{ $kdum->raporTerbaru->tahunPelajaran->tahun ?? '-' }}</p>
 
                 <div style="overflow-x:auto;">
                     <table class="display table table-striped table-hover dt-responsive nowrap" style="width: 100%;">
@@ -21,7 +21,7 @@
                                 <th>Kompetensi</th>
                                 <th>Nilai</th>
                                 <th>Penyemak</th>
-                                <th style="width: 200px;">Aksi</th>
+                                <th style="width: 300px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,14 +46,32 @@
                                             @endforeach
                                         </select>
 
-                                        <select name="penyemak_id" class="form-select form-select-sm" style="width: auto;">
+                                        {{-- <select name="penyemak_id" class="form-select form-select-sm" style="width: auto;">
                                             <option value="">Penyemak</option>
                                             @foreach($penyemaks as $penyemak)
                                             <option value="{{ $penyemak->id }}" @selected($detail->penyemak_id == $penyemak->id)>
                                                 {{ $penyemak->guru->nama_guru }}
                                             </option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
+                                        <div class="position-relative" style="width: 300px;">
+                                            <input type="text" class="form-control form-control-sm" id="penyemak_input_{{ $detail->id }}"
+                                                name="penyemak_input" placeholder="Ketik nama penyemak..."
+                                                value="{{ $detail->penyemak->guru->nama_guru ?? '' }}" oninput="filterPenyemak({{ $detail->id }})"
+                                                autocomplete="off">
+                                            <input type="hidden" name="penyemak_id" id="penyemak_id_{{ $detail->id }}" value="{{ $detail->penyemak_id }}">
+                                            <ul id="penyemak_list_{{ $detail->id }}" class="dropdown-menu show"
+                                                style="display: none; width: 100%; position: absolute; z-index: 999; max-height: 200px; overflow-y: auto;">
+                                                @foreach($penyemaks as $penyemak)
+                                                <li class="penyemak_item_{{ $detail->id }}">
+                                                    <a href="javascript:void(0);" class="dropdown-item"
+                                                        onclick="pilihPenyemak('{{ $penyemak->id }}', '{{ $penyemak->guru->nama_guru }}', {{ $detail->id }})">
+                                                        {{ $penyemak->guru->nama_guru }}
+                                                    </a>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
 
                                         <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                                     </form>
@@ -74,4 +92,40 @@
         </div>
     </div>
 </div>
+<script>
+    function filterPenyemak(id) {
+        let input = document.getElementById("penyemak_input_" + id).value.toLowerCase();
+        let list = document.getElementById("penyemak_list_" + id);
+        let items = document.querySelectorAll(".penyemak_item_" + id);
+
+        let visibleCount = 0;
+        for (let item of items) {
+            let text = item.textContent.toLowerCase();
+            if (text.includes(input) && visibleCount < 5) {
+                item.style.display = "block";
+                visibleCount++;
+            } else {
+                item.style.display = "none";
+            }
+        }
+
+        list.style.display = visibleCount > 0 ? "block" : "none";
+    }
+
+    function pilihPenyemak(id, nama, detailId) {
+        document.getElementById("penyemak_input_" + detailId).value = nama;
+        document.getElementById("penyemak_id_" + detailId).value = id;
+        document.getElementById("penyemak_list_" + detailId).style.display = "none";
+    }
+
+    document.addEventListener("click", function (event) {
+        document.querySelectorAll("[id^=penyemak_list_]").forEach(list => {
+            if (!list.contains(event.target) &&
+                !document.getElementById("penyemak_input_" + list.id.split("_")[2]).contains(event.target)) {
+                list.style.display = "none";
+            }
+        });
+    });
+</script>
+
 @endsection

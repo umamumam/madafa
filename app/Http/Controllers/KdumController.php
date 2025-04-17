@@ -27,7 +27,7 @@ class KdumController extends Controller
     {
         $kdum = Kdum::with(['siswa', 'kelas', 'tahunPelajaran', 'details.kompetensi', 'details.nilai', 'details.penyemak'])
             ->findOrFail($id);
-        $penyemaks = Penyemak::all();
+        $penyemaks = Penyemak::with('guru')->get();
         return view('kdum.detail', compact('kdum', 'penyemaks'));
     }
 

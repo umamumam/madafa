@@ -49,4 +49,8 @@ class Kdum extends Model
     {
         return $this->hasMany(KdumDetail::class);
     }
+    public function raporTerbaru()
+    {
+        return $this->hasOne(RaporLokal::class, 'siswa_id', 'siswa_id')->latestOfMany();
+    }
 }
