@@ -164,7 +164,7 @@
                                     <i class="ti ti-edit-circle"></i>
                                     <span>Edit Profile</span>
                                 </a>
-                                <a href="#!" class="dropdown-item">
+                                {{-- <a href="#!" class="dropdown-item">
                                     <i class="ti ti-user"></i>
                                     <span>View Profile</span>
                                 </a>
@@ -175,7 +175,7 @@
                                 <a href="#!" class="dropdown-item">
                                     <i class="ti ti-wallet"></i>
                                     <span>Billing</span>
-                                </a>
+                                </a> --}}
                                 <a href="#" class="dropdown-item"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="ti ti-power"></i>
@@ -188,22 +188,22 @@
                             </div>
                             <div class="tab-pane fade" id="drp-tab-2" role="tabpanel" aria-labelledby="drp-t2"
                                 tabindex="0">
-                                <a href="#!" class="dropdown-item">
+                                {{-- <a href="#!" class="dropdown-item">
                                     <i class="ti ti-help"></i>
                                     <span>Support</span>
-                                </a>
+                                </a> --}}
                                 <a href="#!" class="dropdown-item">
                                     <i class="ti ti-user"></i>
                                     <span>Account Settings</span>
                                 </a>
-                                <a href="#!" class="dropdown-item">
+                                {{-- <a href="#!" class="dropdown-item">
                                     <i class="ti ti-lock"></i>
                                     <span>Privacy Center</span>
                                 </a>
                                 <a href="#!" class="dropdown-item">
                                     <i class="ti ti-messages"></i>
                                     <span>Feedback</span>
-                                </a>
+                                </a> --}}
                                 <a href="#!" class="dropdown-item">
                                     <i class="ti ti-list"></i>
                                     <span>History</span>
