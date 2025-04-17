@@ -29,17 +29,58 @@ function terbilang($x)
     return trim(preg_replace('/\s+/', ' ', $temp));
 }
 @endphp
+@php
+function predikatNilai($nilai, $kkm) {
+    if (is_null($nilai)) return '-';
+
+    if ($kkm == 65) {
+        if ($nilai <= 64) return 'D';
+        if ($nilai <= 70) return 'C';
+        if ($nilai <= 79) return 'B';
+        return 'A';
+    }
+
+    return null; // Biarkan pakai default dari DB jika bukan kkm 65
+}
+@endphp
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
                 <h4>Rapor - {{ $rapor->siswa->nama_siswa }}</h4>
             </div>
+            <form method="GET" action="{{ route('rapor-lokal.siswa') }}">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group mb-3 col-6">
+                            <label for="kelas_id"><strong>Pilih Kelas:</strong></label>
+                            <select name="kelas_id" id="kelas_id" class="form-control" onchange="this.form.submit()">
+                                <option value="">Pilih Kelas</option>
+                                @foreach($kelasList as $kelas)
+                                    <option value="{{ $kelas->id }}" {{ request('kelas_id') == $kelas->id ? 'selected' : '' }}>
+                                        {{ $kelas->nama_kelas }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mb-3 col-6">
+                            <label for="semester"><strong>Pilih Semester:</strong></label>
+                            <select name="semester" id="semester" class="form-control" onchange="this.form.submit()">
+                                <option value="1" {{ $semester == 1 ? 'selected' : '' }}>Semester 1 (Gasal)</option>
+                                <option value="2" {{ $semester == 2 ? 'selected' : '' }}>Semester 2 (Genap)</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+
             <div class="card-body">
                 <p><strong>NIS:</strong> {{ $rapor->siswa->nis }}</p>
                 <p><strong>Nama:</strong> {{ $rapor->siswa->nama_siswa }}</p>
                 <p><strong>Jenis Kelamin:</strong> {{ $rapor->siswa->jenisKelamin->jeniskelamin ?? '-' }}</p>
-                <p><strong>Kelas:</strong> {{ $rapor->kelas->nama_kelas }}</p>
+                <p><strong>Kelas:</strong> {{ $rapor->kelas->nama_kelas }} ({{ $rapor->semester }} / {{ $rapor->semester == 1 ? 'Gasal' : 'Genap' }})</p>
                 <p><strong>Tahun Pelajaran:</strong> {{ $rapor->tahunPelajaran->tahun }}</p>
 
                 <div class="table-responsive">
@@ -68,7 +109,14 @@ function terbilang($x)
                                         {{ $detail->jumlah ? ucwords(terbilang($detail->jumlah)) : '-' }}
                                     </span>
                                 </td>
-                                <td>{{ $detail->nilai->abjad ?? '-' }}</td>
+                                <td>
+                                    @php
+                                        $kkm = $detail->mapel->kkm;
+                                        $nilai = $detail->jumlah;
+                                        $abjad = $kkm == 65 ? predikatNilai($nilai, $kkm) : ($detail->nilai->abjad ?? '-');
+                                    @endphp
+                                    {{ $abjad }}
+                                </td>
                                 <td>{{ $detail->keterangan ?? '-' }}</td>
                                 <td>{{ $detail->rata_rata ?? '-' }}</td>
                             </tr>
@@ -92,26 +140,72 @@ function terbilang($x)
                     </table>
                 </div>
 
-                <p><strong>Nilai Spiritual:</strong> {{ $rapor->nilaiSpiritual->abjad ?? '-' }}</p>
-                <p><strong>Deskripsi Spiritual:</strong> {{ $rapor->deskripsi_spiritual }}</p>
-
-                <p><strong>Nilai Sosial:</strong> {{ $rapor->nilaiSosial->abjad ?? '-' }}</p>
-                <p><strong>Deskripsi Sosial:</strong> {{ $rapor->deskripsi_sosial }}</p>
-
-                <p><strong>Ekstrakurikuler:</strong> {{ $rapor->ekstrakurikuler->ekskul ?? '-' }}</p>
-                <p><strong>Nilai Ekstrakurikuler:</strong> {{ $rapor->nilaiEkstra->abjad ?? '-' }}</p>
-
-                <p><strong>Sakit:</strong> {{ $rapor->sakit ?? '-' }} Hari</p>
-                <p><strong>Izin:</strong> {{ $rapor->izin ?? '-'}} Hari</p>
-                <p><strong>Tanpa Keterangan:</strong> {{ $rapor->tanpa_keterangan ?? '-' }} Hari</p>
-
-                <p><strong>Catatan:</strong> {{ $rapor->catatan }}</p>
-
-                <p><strong>Keterangan:</strong> {{ $rapor->keterangan->ket ?? '-' }}</p>
-
-                <p><strong>Wali Kelas:</strong> {{ $rapor->walikelas->nama_guru ?? '-' }}</p>
-                <p><strong>Kepala Madrasah:</strong> {{ $rapor->kepalaMadrasah->nama_guru ?? '-' }}</p>
+                <!-- Tabel untuk nilai spiritual, sosial, ekstrakurikuler, dsb -->
+                <div class="table-responsive mt-4">
+                    <table class="table table-bordered">
+                        <thead class="bg-light">
+                            <tr>
+                                <th colspan="2">Nilai dan Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Nilai Spiritual:</strong></td>
+                                <td>{{ $rapor->nilaiSpiritual->abjad ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deskripsi Spiritual:</strong></td>
+                                <td>{{ $rapor->deskripsi_spiritual }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nilai Sosial:</strong></td>
+                                <td>{{ $rapor->nilaiSosial->abjad ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deskripsi Sosial:</strong></td>
+                                <td>{{ $rapor->deskripsi_sosial }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ekstrakurikuler:</strong></td>
+                                <td>{{ $rapor->ekstrakurikuler->ekskul ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nilai Ekstrakurikuler:</strong></td>
+                                <td>{{ $rapor->nilaiEkstra->abjad ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sakit:</strong></td>
+                                <td>{{ $rapor->sakit ?? '-' }} Hari</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Izin:</strong></td>
+                                <td>{{ $rapor->izin ?? '-'}} Hari</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tanpa Keterangan:</strong></td>
+                                <td>{{ $rapor->tanpa_keterangan ?? '-' }} Hari</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Catatan:</strong></td>
+                                <td>{{ $rapor->catatan }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Keterangan:</strong></td>
+                                <td>{{ $rapor->keterangan->ket ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wali Kelas:</strong></td>
+                                <td>{{ $rapor->walikelas->nama_guru ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kepala Madrasah:</strong></td>
+                                <td>{{ $rapor->kepalaMadrasah->nama_guru ?? '-' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

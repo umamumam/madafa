@@ -65,23 +65,120 @@ class RaporLokalController extends Controller
     }
 
 
-    public function showBySiswa()
+    // public function showBySiswa(Request $request)
+    // {
+    //     $user = Auth::user();
+
+    //     if ($user->role !== 'siswa') {
+    //         return redirect()->route('dashboard')->with('error', 'Hanya siswa yang dapat mengakses halaman ini.');
+    //     }
+
+    //     $siswa = \App\Models\Siswa::where('nisn', $user->nisn)
+    //         ->orWhere('nis', $user->nis)
+    //         ->first();
+
+    //     if (!$siswa) {
+    //         return back()->with('error', 'Data siswa tidak ditemukan.');
+    //     }
+
+    //     // ambil semester dari query parameter (default ke 1)
+    //     $semester = $request->query('semester', 1);
+
+    //     $rapor = RaporLokal::with([
+    //         'siswa.jenisKelamin',
+    //         'kelas.program',
+    //         'tahunPelajaran',
+    //         'details.mapel',
+    //         'details.nilai',
+    //         'nilaiSpiritual',
+    //         'nilaiSosial',
+    //         'nilaiEkstra',
+    //         'ekstrakurikuler',
+    //         'ket',
+    //         'waliKelas',
+    //         'kepalaMadrasah',
+    //     ])
+    //         ->where('siswa_id', $siswa->id)
+    //         ->where('semester', $semester)
+    //         ->first();
+
+    //     if (!$rapor) {
+    //         return back()->with('error', "Rapor semester $semester belum tersedia untuk siswa ini.");
+    //     }
+
+    //     return view('rapor-lokal.siswa-detail', compact('rapor', 'semester'));
+    // }
+    // public function showBySiswa(Request $request)
+    // {
+    //     $user = Auth::user();
+
+    //     if ($user->role !== 'siswa') {
+    //         return redirect()->route('dashboard')->with('error', 'Hanya siswa yang dapat mengakses halaman ini.');
+    //     }
+
+    //     $siswa = \App\Models\Siswa::where('nisn', $user->nisn)
+    //         ->orWhere('nis', $user->nis)
+    //         ->first();
+
+    //     if (!$siswa) {
+    //         return back()->with('error', 'Data siswa tidak ditemukan.');
+    //     }
+
+    //     // ambil semester dan kelas dari query parameter (default ke 1 untuk semester, null untuk kelas)
+    //     $semester = $request->query('semester', 1);
+    //     $kelasId = $request->query('kelas_id', null);
+
+    //     $raporQuery = RaporLokal::with([
+    //         'siswa.jenisKelamin',
+    //         'kelas.program',
+    //         'tahunPelajaran',
+    //         'details.mapel',
+    //         'details.nilai',
+    //         'nilaiSpiritual',
+    //         'nilaiSosial',
+    //         'nilaiEkstra',
+    //         'ekstrakurikuler',
+    //         'ket',
+    //         'waliKelas',
+    //         'kepalaMadrasah',
+    //     ])
+    //     ->where('siswa_id', $siswa->id)
+    //     ->where('semester', $semester);
+
+    //     // Tambahkan filter untuk kelas jika ada
+    //     if ($kelasId) {
+    //         $raporQuery->where('kelas_id', $kelasId);
+    //     }
+
+    //     $rapor = $raporQuery->first();
+
+    //     if (!$rapor) {
+    //         return back()->with('error', "Rapor semester $semester untuk kelas $kelasId belum tersedia untuk siswa ini.");
+    //     }
+
+    //     // Ambil daftar kelas yang tersedia untuk siswa
+    //     $kelasList = \App\Models\Kelas::all();
+
+    //     return view('rapor-lokal.siswa-detail', compact('rapor', 'semester', 'kelasList'));
+    // }
+    public function showBySiswa(Request $request)
     {
         $user = Auth::user();
-
         if ($user->role !== 'siswa') {
             return redirect()->route('dashboard')->with('error', 'Hanya siswa yang dapat mengakses halaman ini.');
         }
-
         $siswa = \App\Models\Siswa::where('nisn', $user->nisn)
             ->orWhere('nis', $user->nis)
             ->first();
-
         if (!$siswa) {
             return back()->with('error', 'Data siswa tidak ditemukan.');
         }
-
-        $rapor = RaporLokal::with([
+        $semester = $request->query('semester', 1);
+        $kelasId = $request->query('kelas_id', null);
+        $kelasList = RaporLokal::where('siswa_id', $siswa->id)
+            ->where('semester', $semester)
+            ->pluck('kelas_id');
+        $raporQuery = RaporLokal::with([
             'siswa.jenisKelamin',
             'kelas.program',
             'tahunPelajaran',
@@ -96,14 +193,19 @@ class RaporLokalController extends Controller
             'kepalaMadrasah',
         ])
             ->where('siswa_id', $siswa->id)
-            ->first();
-
-        if (!$rapor) {
-            return back()->with('error', 'Rapor Lokal belum tersedia untuk siswa ini.');
+            ->where('semester', $semester);
+        if ($kelasId) {
+            $raporQuery->where('kelas_id', $kelasId);
         }
-
-        return view('rapor-lokal.siswa-detail', compact('rapor'));
+        $rapor = $raporQuery->first();
+        if (!$rapor) {
+            return back()->with('error', "Rapor semester $semester untuk kelas $kelasId belum tersedia untuk siswa ini.");
+        }
+        $kelasList = \App\Models\Kelas::whereIn('id', $kelasList)->get();
+        return view('rapor-lokal.siswa-detail', compact('rapor', 'semester', 'kelasList'));
     }
+
+
 
     public function exportPdf($id)
     {

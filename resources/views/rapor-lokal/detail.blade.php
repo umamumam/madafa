@@ -52,7 +52,7 @@ function predikatNilai($nilai, $kkm) {
             </div>
             <div class="card-body">
                 <p><strong>Nama:</strong> {{ $rapor->siswa->nama_siswa }}</p>
-                <p><strong>Kelas:</strong> {{ $rapor->kelas->nama_kelas }}</p>
+                <p><strong>Kelas:</strong> {{ $rapor->kelas->nama_kelas }} ({{ $rapor->semester }} / {{ $rapor->semester == 1 ? 'Gasal' : 'Genap' }})</p>
                 <p><strong>Tahun Pelajaran:</strong> {{ $rapor->tahunPelajaran->tahun }}</p>
 
                 <div class="table-responsive">
