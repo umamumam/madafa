@@ -46,8 +46,11 @@ function predikatNilai($nilai, $kkm) {
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h4>Rapor - {{ $rapor->siswa->nama_siswa }}</h4>
+                <a href="{{ route('rapor-lokal.export', $rapor->id) }}" class="btn btn-danger btn-sm w-auto" target="_blank">
+                    <i class="fa fa-file-pdf"></i> Export PDF
+                </a>
             </div>
             <form method="GET" action="{{ route('rapor-lokal.siswa') }}">
                 <div class="card-body">

@@ -62,6 +62,12 @@
                                             <input type="hidden" name="penyemak_id" id="penyemak_id_{{ $detail->id }}" value="{{ $detail->penyemak_id }}">
                                             <ul id="penyemak_list_{{ $detail->id }}" class="dropdown-menu show"
                                                 style="display: none; width: 100%; position: absolute; z-index: 999; max-height: 200px; overflow-y: auto;">
+                                                <li class="penyemak_item_{{ $detail->id }}">
+                                                    <a href="javascript:void(0);" class="dropdown-item text-danger"
+                                                        onclick="hapusPenyemak({{ $detail->id }})">
+                                                        -- Hapus Pilihan --
+                                                    </a>
+                                                </li>
                                                 @foreach($penyemaks as $penyemak)
                                                 <li class="penyemak_item_{{ $detail->id }}">
                                                     <a href="javascript:void(0);" class="dropdown-item"
@@ -126,6 +132,12 @@
             }
         });
     });
+    function hapusPenyemak(id) {
+        document.getElementById(`penyemak_input_${id}`).value = '';
+        document.getElementById(`penyemak_id_${id}`).value = '';
+        document.getElementById(`penyemak_list_${id}`).style.display = "none";
+    }
+
 </script>
 
 @endsection

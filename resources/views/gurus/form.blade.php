@@ -60,15 +60,27 @@
 
         <div class="row mb-3">
             <div class="col-md-4">
-                <label for="pendidikan_terakhir_id">Pendidikan Terakhir</label>
-                <select name="pendidikan_terakhir_id" class="form-control">
-                    <option value="">Pilih</option>
-                    @foreach($pendidikans as $p)
-                        <option value="{{ $p->id }}" {{ old('pendidikan_terakhir_id', $guru->pendidikan_terakhir_id ?? '') == $p->id ? 'selected' : '' }}>
-                            {{ $p->pendidikan }}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="form-group mb-3">
+                    <label for="pendidikan_input">Pendidikan Terakhir</label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" id="pendidikan_input" name="pendidikan_input"
+                            placeholder="Ketik pendidikan terakhir..." oninput="filterPendidikan()" autocomplete="off"
+                            value="{{ old('pendidikan_terakhir_nama', $guru->pendidikan_terakhir->pendidikan ?? '') }}">
+                        <input type="hidden" name="pendidikan_terakhir_id" id="pendidikan_terakhir_id"
+                            value="{{ old('pendidikan_terakhir_id', $guru->pendidikan_terakhir_id ?? '') }}">
+                        <ul id="pendidikan_list" class="dropdown-menu"
+                            style="display: none; width: 100%; position: absolute; z-index: 999; max-height: 200px; overflow-y: auto;">
+                            @foreach($pendidikans as $p)
+                                <li class="pendidikan_item">
+                                    <a href="javascript:void(0);" class="dropdown-item"
+                                        onclick="pilihPendidikan('{{ $p->id }}', '{{ $p->pendidikan }}')">
+                                        {{ $p->pendidikan }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <label>Instansi Pendidikan Terakhir</label>
@@ -113,15 +125,34 @@
         <div class="row mb-3">
             @for($i = 1; $i <= 3; $i++)
                 <div class="col-md-4">
-                    <label>Mapel {{ $i }}</label>
-                    <select name="mapel_{{ $i }}_id" class="form-control">
-                        <option value="">Pilih</option>
-                        @foreach($mapels as $m)
-                            <option value="{{ $m->id }}" {{ old("mapel_{$i}_id", $guru->{"mapel_{$i}_id"} ?? '') == $m->id ? 'selected' : '' }}>
-                                {{ $m->mapel }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="form-group mb-3">
+                        <label for="mapel_input_{{ $i }}">Mapel {{ $i }}</label>
+                        <div class="position-relative">
+                            <input type="text" class="form-control" id="mapel_input_{{ $i }}"
+                                name="mapel_input_{{ $i }}" placeholder="Ketik nama mapel..."
+                                oninput="filterMapel({{ $i }})" autocomplete="off"
+                                value="{{ old("mapel_input_{$i}", $guru->{"mapel_{$i}"}->mapel ?? '') }}">
+                            <input type="hidden" name="mapel_{{ $i }}_id" id="mapel_{{ $i }}_id"
+                                value="{{ old("mapel_{$i}_id", $guru->{"mapel_{$i}_id"} ?? '') }}">
+                            <ul id="mapel_list_{{ $i }}" class="dropdown-menu"
+                                style="display: none; width: 100%; position: absolute; z-index: 999; max-height: 200px; overflow-y: auto;">
+                                <li class="mapel_item_{{ $i }}">
+                                    <a href="javascript:void(0);" class="dropdown-item text-danger"
+                                        onclick="hapusMapel({{ $i }})">
+                                        -- Hapus Pilihan --
+                                    </a>
+                                </li>
+                                @foreach($mapels as $m)
+                                    <li class="mapel_item_{{ $i }}">
+                                        <a href="javascript:void(0);" class="dropdown-item"
+                                            onclick="pilihMapel('{{ $m->id }}', '{{ $m->mapel }}', {{ $i }})">
+                                            {{ $m->mapel }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             @endfor
         </div>
@@ -129,17 +160,146 @@
         <div class="row mb-3">
             @for($i = 1; $i <= 3; $i++)
                 <div class="col-md-4">
-                    <label>Jabatan {{ $i }}</label>
-                    <select name="jabatan_{{ $i }}_id" class="form-control">
-                        <option value="">Pilih</option>
-                        @foreach($jabatans as $j)
-                            <option value="{{ $j->id }}" {{ old("jabatan_{$i}_id", $guru->{"jabatan_{$i}_id"} ?? '') == $j->id ? 'selected' : '' }}>
-                                {{ $j->jabatan }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="form-group mb-3">
+                        <label for="jabatan_input_{{ $i }}">Jabatan {{ $i }}</label>
+                        <div class="position-relative">
+                            <input type="text" class="form-control" id="jabatan_input_{{ $i }}"
+                                name="jabatan_input_{{ $i }}" placeholder="Ketik nama jabatan..."
+                                oninput="filterJabatan({{ $i }})" autocomplete="off"
+                                value="{{ old("jabatan_input_{$i}", $guru->{"jabatan_{$i}"}->jabatan ?? '') }}">
+                            <input type="hidden" name="jabatan_{{ $i }}_id" id="jabatan_{{ $i }}_id"
+                                value="{{ old("jabatan_{$i}_id", $guru->{"jabatan_{$i}_id"} ?? '') }}">
+                            <ul id="jabatan_list_{{ $i }}" class="dropdown-menu"
+                                style="display: none; width: 100%; position: absolute; z-index: 999; max-height: 200px; overflow-y: auto;">
+                                <li class="jabatan_item_{{ $i }}">
+                                    <a href="javascript:void(0);" class="dropdown-item text-danger"
+                                        onclick="hapusJabatan({{ $i }})">
+                                        -- Hapus Pilihan --
+                                    </a>
+                                </li>
+                                @foreach($jabatans as $j)
+                                    <li class="jabatan_item_{{ $i }}">
+                                        <a href="javascript:void(0);" class="dropdown-item"
+                                            onclick="pilihJabatan('{{ $j->id }}', '{{ $j->jabatan }}', {{ $i }})">
+                                            {{ $j->jabatan }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             @endfor
         </div>
     </div>
 </div>
+<script>
+    function filterPendidikan() {
+        const input = document.getElementById('pendidikan_input').value.toLowerCase();
+        const list = document.getElementById('pendidikan_list');
+        const items = document.querySelectorAll('.pendidikan_item');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(input) && visibleCount < 5) {
+                item.style.display = "block";
+                visibleCount++;
+            } else {
+                item.style.display = "none";
+            }
+        });
+
+        list.style.display = visibleCount > 0 ? "block" : "none";
+    }
+
+    function pilihPendidikan(id, nama) {
+        document.getElementById('pendidikan_input').value = nama;
+        document.getElementById('pendidikan_terakhir_id').value = id;
+        document.getElementById('pendidikan_list').style.display = "none";
+    }
+
+    document.addEventListener("click", function (event) {
+        const list = document.getElementById('pendidikan_list');
+        const input = document.getElementById('pendidikan_input');
+        if (!list.contains(event.target) && !input.contains(event.target)) {
+            list.style.display = "none";
+        }
+    });
+</script>
+<script>
+    function filterMapel(index) {
+        const input = document.getElementById(`mapel_input_${index}`).value.toLowerCase();
+        const list = document.getElementById(`mapel_list_${index}`);
+        const items = document.querySelectorAll(`.mapel_item_${index}`);
+        let visibleCount = 0;
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(input) && visibleCount < 5) {
+                item.style.display = "block";
+                visibleCount++;
+            } else {
+                item.style.display = "none";
+            }
+        });
+        list.style.display = visibleCount > 0 ? "block" : "none";
+    }
+
+    function pilihMapel(id, nama, index) {
+        document.getElementById(`mapel_input_${index}`).value = nama;
+        document.getElementById(`mapel_${index}_id`).value = id;
+        document.getElementById(`mapel_list_${index}`).style.display = "none";
+    }
+
+    function filterJabatan(index) {
+        const input = document.getElementById(`jabatan_input_${index}`).value.toLowerCase();
+        const list = document.getElementById(`jabatan_list_${index}`);
+        const items = document.querySelectorAll(`.jabatan_item_${index}`);
+        let visibleCount = 0;
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(input) && visibleCount < 5) {
+                item.style.display = "block";
+                visibleCount++;
+            } else {
+                item.style.display = "none";
+            }
+        });
+        list.style.display = visibleCount > 0 ? "block" : "none";
+    }
+
+    function pilihJabatan(id, nama, index) {
+        document.getElementById(`jabatan_input_${index}`).value = nama;
+        document.getElementById(`jabatan_${index}_id`).value = id;
+        document.getElementById(`jabatan_list_${index}`).style.display = "none";
+    }
+
+    document.addEventListener("click", function (event) {
+        for (let i = 1; i <= 3; i++) {
+            const mapelList = document.getElementById(`mapel_list_${i}`);
+            const mapelInput = document.getElementById(`mapel_input_${i}`);
+            if (mapelList && !mapelList.contains(event.target) && !mapelInput.contains(event.target)) {
+                mapelList.style.display = "none";
+            }
+
+            const jabatanList = document.getElementById(`jabatan_list_${i}`);
+            const jabatanInput = document.getElementById(`jabatan_input_${i}`);
+            if (jabatanList && !jabatanList.contains(event.target) && !jabatanInput.contains(event.target)) {
+                jabatanList.style.display = "none";
+            }
+        }
+    });
+</script>
+<script>
+    function hapusMapel(index) {
+        document.getElementById(`mapel_input_${index}`).value = '';
+        document.getElementById(`mapel_${index}_id`).value = '';
+        document.getElementById(`mapel_list_${index}`).style.display = "none";
+    }
+
+    function hapusJabatan(index) {
+        document.getElementById(`jabatan_input_${index}`).value = '';
+        document.getElementById(`jabatan_${index}_id`).value = '';
+        document.getElementById(`jabatan_list_${index}`).style.display = "none";
+    }
+</script>
