@@ -7,6 +7,8 @@ use App\Models\Penyemak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Mpdf\Mpdf;
+use Illuminate\Support\Facades\View;
 
 class RaporLokalController extends Controller
 {
@@ -110,6 +112,20 @@ class RaporLokalController extends Controller
 
 
 
+    // public function exportPdf($id)
+    // {
+    //     $rapor = RaporLokal::with([
+    //         'siswa.jenisKelamin',
+    //         'kelas.program',
+    //         'kelas.waliKelas',
+    //         'tahunPelajaran',
+    //         'details.mapel',
+    //         'details.nilai',
+    //     ])->findOrFail($id);
+
+    //     $pdf = PDF::loadView('rapor-lokal.export-pdf', compact('rapor'));
+    //     return $pdf->stream('RaporLokal_' . $rapor->siswa->nama_siswa . '.pdf');
+    // }
     public function exportPdf($id)
     {
         $rapor = RaporLokal::with([
@@ -120,8 +136,11 @@ class RaporLokalController extends Controller
             'details.mapel',
             'details.nilai',
         ])->findOrFail($id);
-
-        $pdf = PDF::loadView('rapor-lokal.export-pdf', compact('rapor'));
-        return $pdf->stream('RaporLokal_' . $rapor->siswa->nama_siswa . '.pdf');
+        $html = View::make('rapor-lokal.export-pdf', compact('rapor'))->render();
+        $mpdf = new Mpdf([
+            'default_font' => 'Arial',
+        ]);
+        $mpdf->WriteHTML($html);
+        return response($mpdf->Output('', 'S'))->header('Content-Type', 'application/pdf');
     }
 }

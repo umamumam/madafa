@@ -44,11 +44,7 @@ function predikatNilai($nilai, $kkm) {
     <meta charset="UTF-8">
     <title>Rapor PDF</title>
     <style>
-        @font-face {
-            font-family: 'Amiri';
-            src: url('{{ public_path('fonts/Amiri-Regular.ttf') }}') format('truetype');
-        }
-        body { font-family: 'Amiri', sans-serif; font-size: 12px; margin: 20px; }
+        body { font-family: Arial, sans-serif; font-size: 12px; margin: 20px; }
         h3 { margin-bottom: 15px; }
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
         th, td { border: 1px solid #000; padding: 6px; text-align: left; }
@@ -56,7 +52,6 @@ function predikatNilai($nilai, $kkm) {
         .text-center { text-align: center; }
         .text-right { text-align: right; }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 </head>
 <body>
     <h3>Rapor Lokal - {{ $rapor->siswa->nama_siswa }}</h3>
