@@ -14,7 +14,8 @@ class KetSeeder extends Seeder
             ['ket' => 'Naik ke kelas 11', 'created_at' => now(), 'updated_at' => now()],
             ['ket' => 'Naik ke kelas 12', 'created_at' => now(), 'updated_at' => now()],
             ['ket' => 'Tamat', 'created_at' => now(), 'updated_at' => now()],
-            ['ket' => 'Tidak Naik', 'created_at' => now(), 'updated_at' => now()],
+            ['ket' => 'Tidak Naik Kelas', 'created_at' => now(), 'updated_at' => now()],
+            ['ket' => 'Tidak Tamat', 'created_at' => now(), 'updated_at' => now()],
         ];
 
         DB::table('kets')->insert($data);
