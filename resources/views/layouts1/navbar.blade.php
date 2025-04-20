@@ -3,7 +3,7 @@
         <div class="m-header">
             <a href="#" class="b-brand text-primary">
                 <!-- ========   Change your logo from here   ============ -->
-                <img src="{{ asset('ma.png') }}" alt="Logo" style="width: 210px; height: auto;">
+                <img src="{{ asset('kopma.png') }}" alt="Logo" style="width: 210px; height: auto;">
             </a>
         </div>
         <div class="navbar-content">

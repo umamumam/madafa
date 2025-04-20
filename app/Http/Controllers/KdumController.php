@@ -68,4 +68,17 @@ class KdumController extends Controller
         $pdf = PDF::loadView('kdum.export-pdf', compact('kdum'));
         return $pdf->stream('KDUM_' . $kdum->siswa->nama_siswa . '.pdf');
     }
+    public function exportAll()
+    {
+        $kdums = Kdum::with([
+            'siswa.kelas.program',
+            'raporTerbaru.tahunPelajaran',
+            'details.kompetensi',
+            'details.nilai',
+            'details.penyemak.guru'
+        ])->get();
+
+        $pdf = PDF::loadView('kdum.kdum-all', compact('kdums'))->setPaper('a4', 'portrait');
+        return $pdf->stream('KDUM_Semua_Peserta.pdf');
+    }
 }

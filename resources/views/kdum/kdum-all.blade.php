@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>KDUM PDF</title>
+    <title>KDUM PDF Semua</title>
     <style>
         body { font-family: sans-serif; font-size: 12px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -10,12 +10,17 @@
         .no-border td {
             border: none;
         }
+        .page-break {
+            page-break-after: always;
+        }
     </style>
 </head>
 <body>
 
+@foreach($kdums as $kdum)
     <h3 style="text-align: center;">LAPORAN HASIL PENILAIAN KDUM & HAFALAN PESERTA DIDIK MA DARUL FALAH</h3>
     <hr style="border: 0; border-top: 3px double #000;">
+
     <table class="no-border" style="width: 100%; border-collapse: collapse;">
         <tr>
             <td style="width: 100px;">NIS</td>
@@ -38,9 +43,10 @@
         <tr>
             <td>Tahun Pelajaran</td>
             <td style="text-align: center;">:</td>
-            <td>{{ $kdum->raporTerbaru->tahunPelajaran->tahun }}</td>
+            <td>{{ $kdum->raporTerbaru->tahunPelajaran->tahun ?? '-' }}</td>
         </tr>
     </table>
+
     <table>
         <thead>
             <tr>
@@ -61,11 +67,12 @@
             @endforeach
         </tbody>
     </table>
-    <table class="no-border">
+
+    <table class="no-border" style="margin-top: 20px;">
         <tr>
             <td style="width: 33%">&nbsp;</td>
             <td style="width: 33%">&nbsp;</td>
-            <td style="width: 33%;">Sirahan, {{ date('d F Y') }}</td>
+            <td style="width: 33%;">Sirahan, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</td>
         </tr>
         <tr>
             <td style="width: 33%">&nbsp;</td>
@@ -73,11 +80,16 @@
             <td style="width: 33%">Petugas,</td>
         </tr>
         <tr>
-            <td style="width: 33%; padding-top: 45px;">&nbsp;</td>
-            <td style="width: 33%; padding-top: 45px;">&nbsp;</td>
-            <td style="width: 33%; padding-top: 45px;">..................................</td>
+            <td style="padding-top: 45px;">&nbsp;</td>
+            <td style="padding-top: 45px;">&nbsp;</td>
+            <td style="padding-top: 45px;">..................................</td>
         </tr>
     </table>
+
+    @if (!$loop->last)
+        <div class="page-break"></div>
+    @endif
+@endforeach
 
 </body>
 </html>

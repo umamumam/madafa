@@ -5,8 +5,11 @@
     <!-- Config table start -->
     <div class="col-sm-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h4>Data KDUM</h4>
+                <a href="{{ route('kdum.export.all') }}" target="_blank" class="btn btn-danger btn-sm">
+                    <i class="fas fa-file-pdf"></i> Cetak Semua PDF
+                </a>
             </div>
             <div class="card-body" style="overflow-x:auto;">
                 {{-- <input type="text" id="searchInput" class="form-control mb-3" placeholder="Cari Nama Kelas..."> --}}

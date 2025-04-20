@@ -135,7 +135,7 @@ function predikatNilai($nilai, $kkm) {
                         <select name="nilai_spiritual_id" class="form-select">
                             <option value="">Pilih</option>
                             @foreach($nilais as $nilai)
-                                <option value="{{ $nilai->id }}" @selected($rapor->nilai_spiritual_id == $nilai->id)>{{ $nilai->abjad }}</option>
+                                <option value="{{ $nilai->id }}" @selected($rapor->nilai_spiritual_id == $nilai->id)>{{ $nilai->keterangan }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -148,7 +148,7 @@ function predikatNilai($nilai, $kkm) {
                         <select name="nilai_sosial_id" class="form-select">
                             <option value="">Pilih</option>
                             @foreach($nilais as $nilai)
-                                <option value="{{ $nilai->id }}" @selected($rapor->nilai_sosial_id == $nilai->id)>{{ $nilai->abjad }}</option>
+                                <option value="{{ $nilai->id }}" @selected($rapor->nilai_sosial_id == $nilai->id)>{{ $nilai->keterangan }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -170,7 +170,7 @@ function predikatNilai($nilai, $kkm) {
                         <select name="nilai_ekstra_id" class="form-select">
                             <option value="">Pilih</option>
                             @foreach($nilais as $nilai)
-                                <option value="{{ $nilai->id }}" @selected($rapor->nilai_ekstra_id == $nilai->id)>{{ $nilai->abjad }}</option>
+                                <option value="{{ $nilai->id }}" @selected($rapor->nilai_ekstra_id == $nilai->id)>{{ $nilai->keterangan }}</option>
                             @endforeach
                         </select>
                     </div>

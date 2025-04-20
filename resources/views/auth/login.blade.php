@@ -13,7 +13,7 @@
     <meta name="author" content="CodedThemes">
 
     <!-- [Favicon] icon -->
-    <link rel="icon" href="{{ asset('mantis/assets/images/favicon.svg') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
         id="main-font-link">
@@ -47,7 +47,7 @@
                 <!-- Logo -->
                 <div class="auth-header text-center">
                     <a href="#">
-                        <img src="{{ asset('mantis/assets/images/logo-dark.svg') }}" alt="Logo">
+                        <img src="{{ asset('kopma.png') }}" alt="Logo" style="width: 200px; height: auto;">
                     </a>
                 </div>
 
