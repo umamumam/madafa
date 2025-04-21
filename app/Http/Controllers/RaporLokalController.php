@@ -139,8 +139,42 @@ class RaporLokalController extends Controller
         $html = View::make('rapor-lokal.export-pdf', compact('rapor'))->render();
         $mpdf = new Mpdf([
             'default_font' => 'Arial',
+            'margin_top' => 5,
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_bottom' => 10,
         ]);
         $mpdf->WriteHTML($html);
+        return response($mpdf->Output('', 'S'))->header('Content-Type', 'application/pdf');
+    }
+    public function exportAllRapor()
+    {
+        $rapors = RaporLokal::with([
+            'siswa',
+            'kelas.program',
+            'tahunPelajaran',
+            'details.mapel',
+            'details.nilai'
+        ])->get();
+
+        // Render HTML dari view
+        $html = View::make('rapor-lokal.export-all', compact('rapors'))->render();
+
+        // Buat instance mpdf dengan pengaturan
+        $mpdf = new Mpdf([
+            'default_font' => 'Arial',
+            'margin_top' => 5,
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_bottom' => 10,
+            'format' => 'A4',
+            'orientation' => 'P' // Portrait
+        ]);
+
+        // Tulis HTML ke PDF
+        $mpdf->WriteHTML($html);
+
+        // Kembalikan response PDF langsung tanpa download
         return response($mpdf->Output('', 'S'))->header('Content-Type', 'application/pdf');
     }
 }

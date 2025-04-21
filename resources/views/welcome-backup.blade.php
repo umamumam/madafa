@@ -75,21 +75,13 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section">
                                 <a href="{{ url('siswas/create') }}" title="Pendaftaran Peserta Didik Baru">PPDB</a>
                             </li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
                             <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section dropdown">
-                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
-                                    Berkas Pendaftaran
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/berkas">PESERTA DIDIK BARU</a></li>
-                                    <li><a class="dropdown-item" href="/naik">PESERTA NAIK TINGKAT</a></li>
-                                </ul>
-                            </li>
+                            <li class="scroll-to-section"><a href="#portfolio">Projects</a></li>
                             <li class="scroll-to-section"><a href="#blog">Blog</a></li>
                             <li class="scroll-to-section"><a href="#contact">Contact</a></li>
                             <li class="scroll-to-section">
@@ -107,7 +99,7 @@
     </header>
     <!-- ***** Header Area End ***** -->
 
-    {{-- <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -147,19 +139,100 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <div id="about" class="about section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    @yield('content')
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="about-left-image wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
+                                <img src="{{ asset('digimedia/assets/images/about-dec.png') }}" alt="">
+                                <i class="fas fa-info-circle" style="position: absolute; top: 10px; left: 10px; color: #fff; font-size: 24px;"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 align-self-center  wow fadeInRight" data-wow-duration="1s"
+                            data-wow-delay="0.5s">
+                            <div class="about-right-content">
+                                <div class="section-heading">
+                                    <h6>About Us</h6>
+                                    <h4>Who is DigiMedia <em>Agency</em></h4>
+                                    <div class="line-dec"></div>
+                                </div>
+                                <p>We hope this DigiMedia template is useful for your work. You can use this template
+                                    for any purpose. You may <a rel="nofollow" href="http://paypal.me/templatemo"
+                                        target="_blank">contribute a little amount</a> via PayPal to <a
+                                        href="https://templatemo.com/contact" target="_blank">support TemplateMo</a> in
+                                    creating new templates regularly.</p>
+                                <div class="row">
+                                    <div class="col-lg-4 col-sm-4">
+                                        <div class="skill-item first-skill-item wow fadeIn" data-wow-duration="1s"
+                                            data-wow-delay="0s">
+                                            <div class="progress" data-percentage="90">
+                                                <span class="progress-left">
+                                                    <span class="progress-bar"></span>
+                                                </span>
+                                                <span class="progress-right">
+                                                    <span class="progress-bar"></span>
+                                                </span>
+                                                <div class="progress-value">
+                                                    <div>
+                                                        90%<br>
+                                                        <span>Coding</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4">
+                                        <div class="skill-item second-skill-item wow fadeIn" data-wow-duration="1s"
+                                            data-wow-delay="0s">
+                                            <div class="progress" data-percentage="80">
+                                                <span class="progress-left">
+                                                    <span class="progress-bar"></span>
+                                                </span>
+                                                <span class="progress-right">
+                                                    <span class="progress-bar"></span>
+                                                </span>
+                                                <div class="progress-value">
+                                                    <div>
+                                                        80%<br>
+                                                        <span>Photoshop</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4">
+                                        <div class="skill-item third-skill-item wow fadeIn" data-wow-duration="1s"
+                                            data-wow-delay="0s">
+                                            <div class="progress" data-percentage="80">
+                                                <span class="progress-left">
+                                                    <span class="progress-bar"></span>
+                                                </span>
+                                                <span class="progress-right">
+                                                    <span class="progress-bar"></span>
+                                                </span>
+                                                <div class="progress-value">
+                                                    <div>
+                                                        80%<br>
+                                                        <span>Animation</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- <div id="services" class="services section">
+    <div id="services" class="services section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -704,7 +777,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <footer>
         <div class="container">

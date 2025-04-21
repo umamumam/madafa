@@ -1,7 +1,7 @@
-@extends('layouts1.app')
+@extends('layouts2.landing')
 
 @section('content')
-    <h1>Data Siswa</h1>
+    <h1>PPDB</h1>
     <form action="{{ route('siswas.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 

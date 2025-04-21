@@ -4,8 +4,9 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h4>Data Rapor Lokal</h4>
+                <a href="{{ route('rapor-lokal.export-all') }}" target="_blank" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"></i> Ekspor Semua PDF</a>
             </div>
             <div class="card-body" style="overflow-x:auto;">
                 <table id="res-config" class="display table table-striped table-hover dt-responsive nowrap"

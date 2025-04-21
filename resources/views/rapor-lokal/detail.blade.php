@@ -95,13 +95,13 @@ function predikatNilai($nilai, $kkm) {
                                     <form action="{{ route('rapor-lokal.detail.update', $detail->id) }}" method="POST" class="d-flex gap-2">
                                         @csrf
                                         @method('PUT')
-                                        <select name="nilai_id" class="form-select form-select-sm">
+                                        {{-- <select name="nilai_id" class="form-select form-select-sm">
                                             <option value="">Nilai</option>
                                             @foreach(App\Models\Nilai::all() as $nilai)
                                             <option value="{{ $nilai->id }}" @selected($detail->nilai_id == $nilai->id)>{{ $nilai->abjad }}</option>
                                             @endforeach
-                                        </select>
-                                        <input type="text" name="predikat" class="form-control form-control-sm" placeholder="Predikat" value="{{ $detail->predikat }}">
+                                        </select> --}}
+                                        {{-- <input type="text" name="predikat" class="form-control form-control-sm" placeholder="Predikat" value="{{ $detail->predikat }}"> --}}
                                         <input type="number" name="jumlah" class="form-control form-control-sm" placeholder="Nilai Mapel" value="{{ $detail->jumlah }}">
                                         <input type="number" name="rata_rata" step="0.01" class="form-control form-control-sm" placeholder="Rata-rata" value="{{ $detail->rata_rata }}">
                                         <button type="submit" class="btn btn-sm btn-primary">Simpan</button>

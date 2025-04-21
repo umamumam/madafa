@@ -23,9 +23,12 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/coba', function () {
-//     return view('coba');
-// });
+Route::get('/berkas', function () {
+    return view('berkas');
+});
+Route::get('/naik', function () {
+    return view('naik');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -70,7 +73,7 @@ Route::get('/rapor-lokal/{id}/export', [RaporLokalController::class, 'exportPdf'
 Route::get('/rapor-lokal/siswa', [RaporLokalController::class, 'showBySiswa'])->name('rapor-lokal.siswa');
 Route::put('/rapor-lokal/{id}/detail', [RaporLokalDetailController::class, 'update'])->name('rapor-lokal.detail.update');
 Route::put('/rapor-lokal/{id}', [RaporLokalController::class, 'update'])->name('rapor-lokal.update');
-Route::get('rapor-lokal/export-all', [RaporLokalController::class, 'exportAll'])->name('rapor-lokal.export-all');
+Route::get('rapor-lokal/export-all', [RaporLokalController::class, 'exportAllRapor'])->name('rapor-lokal.export-all');
 Route::get('/riwayat-kelas-siswa/create', [RiwayatKelasSiswaController::class, 'create'])->name('riwayat_kelas_siswa.create');
 Route::post('/riwayat-kelas-siswa/store', [RiwayatKelasSiswaController::class, 'store'])->name('riwayat_kelas_siswa.store');
 Route::get('riwayat-kelas/mass-update', [RiwayatKelasSiswaController::class, 'massUpdate'])->name('riwayatkelas.mass');
