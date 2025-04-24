@@ -29,6 +29,9 @@ Route::get('/berkas', function () {
 Route::get('/naik', function () {
     return view('naik');
 });
+Route::get('/coba', function () {
+    return view('coba');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -54,8 +57,10 @@ Route::resource('jabatan', JabatanController::class);
 Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
 Route::get('/siswas/{id}/riwayat-kelas', [SiswaController::class, 'showRiwayatKelas'])->name('siswa.riwayat.kelas');
 Route::resource('siswas', SiswaController::class);
+Route::get('siswas/{id}', [SiswaController::class, 'show'])->name('siswas.show');
 Route::get('/siswa/edit-siswa/{id}', [SiswaController::class, 'editSiswa'])->name('siswas.edit-siswa');
 Route::put('/siswa/update-siswa/{id}', [SiswaController::class, 'updateSiswa'])->name('siswas.update-siswa');
+Route::get('/siswas/{id}/export-pdf', [SiswaController::class, 'exportPdf'])->name('siswas.exportPdf');
 
 Route::resource('gurus', GuruController::class);
 Route::resource('penyemak', PenyemakController::class);

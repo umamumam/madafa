@@ -9,6 +9,7 @@ use App\Models\Pendidikan;
 use App\Models\JenisKelamin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SiswaController extends Controller
 {
@@ -89,7 +90,7 @@ class SiswaController extends Controller
         }
 
         // Menyimpan data siswa baru
-        Siswa::create([
+        $siswa = Siswa::create([
             'nis' => $request->nis,
             'nisn' => $request->nisn,
             'nik_siswa' => $request->nik_siswa,
@@ -122,8 +123,8 @@ class SiswaController extends Controller
             'no_kks' => $request->no_kks,
             'no_pkh' => $request->no_pkh,
         ]);
-
-        return redirect()->route('siswas.index')->with('success', 'Data siswa berhasil ditambahkan');
+        return redirect()->route('siswas.show', $siswa->id)->with('success', 'Data siswa berhasil ditambahkan');
+        // return redirect()->route('siswas.index')->with('success', 'Data siswa berhasil ditambahkan');
     }
 
     // Menampilkan form edit siswa
@@ -261,7 +262,38 @@ class SiswaController extends Controller
     public function showRiwayatKelas($id)
     {
         $siswa = Siswa::with(['riwayatKelas.kelas', 'riwayatKelas.tahunPelajaran'])->findOrFail($id);
-
         return view('siswas.riwayat-kelas', compact('siswa'));
+    }
+    public function show($id)
+    {
+        $siswa = Siswa::with([
+            'jeniskelamin',
+            'kelas',
+            'program',
+            'pendidikanAyah',
+            'pendidikanIbu'
+        ])->findOrFail($id);
+        return view('siswas.show', compact('siswa'));
+    }
+    // public function exportPdf($id)
+    // {
+    //     $siswa = Siswa::with(['jeniskelamin'])->findOrFail($id);
+
+    //     $pdf = PDF::loadView('siswas.detail_pdf', compact('siswa'))->setPaper('A4', 'portrait');
+    //     return $pdf->stream('detail-siswa-'.$siswa->nama_siswa.'.pdf');
+    // }
+    public function exportPdf($id, Request $request)
+    {
+        $jenis = $request->query('jenis');
+        $siswa = Siswa::findOrFail($id);
+        if ($jenis == 'mts') {
+            $view = 'naik';
+        } elseif ($jenis == 'baru') {
+            $view = 'berkas';
+        } else {
+            abort(404, 'Jenis export tidak valid');
+        }
+        $pdf = Pdf::loadView($view, compact('siswa'));
+        return $pdf->stream('formulir_siswa.pdf');
     }
 }
