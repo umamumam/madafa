@@ -11,8 +11,10 @@
         </select>
     </div>
 
-    <a href="#" id="exportPdfBtn" class="btn btn-danger mb-3" target="_blank">Export PDF</a>
-
+    <div class="d-flex mb-3">
+        <a href="#" id="exportPdfBtn" class="btn btn-danger me-2" target="_blank">Export PDF</a>
+        <a href="{{ url('/kartu/' . $siswa->id) }}" class="btn btn-primary me-2" target="_blank">Cetak Kartu</a>
+    </div>
 
     <div class="container mt-4">
         <h4 class="text-center mb-4">FORMULIR PESERTA DIDIK BARU</h4>

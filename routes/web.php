@@ -6,6 +6,7 @@ use App\Http\Controllers\KdumController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\UjianController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\ProfileController;
@@ -61,6 +62,7 @@ Route::get('siswas/{id}', [SiswaController::class, 'show'])->name('siswas.show')
 Route::get('/siswa/edit-siswa/{id}', [SiswaController::class, 'editSiswa'])->name('siswas.edit-siswa');
 Route::put('/siswa/update-siswa/{id}', [SiswaController::class, 'updateSiswa'])->name('siswas.update-siswa');
 Route::get('/siswas/{id}/export-pdf', [SiswaController::class, 'exportPdf'])->name('siswas.exportPdf');
+Route::get('/kartu/{id}', [App\Http\Controllers\SiswaController::class, 'cetakKartu']);
 
 Route::resource('gurus', GuruController::class);
 Route::resource('penyemak', PenyemakController::class);
@@ -83,7 +85,10 @@ Route::get('/riwayat-kelas-siswa/create', [RiwayatKelasSiswaController::class, '
 Route::post('/riwayat-kelas-siswa/store', [RiwayatKelasSiswaController::class, 'store'])->name('riwayat_kelas_siswa.store');
 Route::get('riwayat-kelas/mass-update', [RiwayatKelasSiswaController::class, 'massUpdate'])->name('riwayatkelas.mass');
 Route::post('riwayat-kelas/mass-update', [RiwayatKelasSiswaController::class, 'massStore'])->name('riwayatkelas.mass.store');
-
+Route::get('/ujian', [UjianController::class, 'index'])->name('ujian.index');
+Route::post('/ujian', [UjianController::class, 'store'])->name('ujian.store');
+Route::put('/ujian/{id}', [UjianController::class, 'update'])->name('ujian.update');
+Route::delete('/ujian/{id}', [UjianController::class, 'destroy'])->name('ujian.destroy');
 Route::resource('kompetensi', KompetensiController::class);
 
 

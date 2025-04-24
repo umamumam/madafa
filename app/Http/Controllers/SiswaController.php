@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Program;
 use App\Models\Pendidikan;
 use App\Models\JenisKelamin;
+use App\Models\RiwayatKelasSiswa;
+use App\Models\Ujian;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
 {
@@ -295,5 +298,20 @@ class SiswaController extends Controller
         }
         $pdf = Pdf::loadView($view, compact('siswa'));
         return $pdf->stream('formulir_siswa.pdf');
+    }
+    public function cetakKartu($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $riwayat = RiwayatKelasSiswa::with(['siswa', 'tahunPelajaran'])
+        ->where('siswa_id', $id)
+        ->latest()
+        ->first();
+        $ujian = Ujian::all()->sortBy('tanggal');
+        $tanggal = Carbon::now()->translatedFormat('d F Y');
+        foreach ($ujian as $ujianItem) {
+            $ujianItem->formatted_tanggal = Carbon::parse($ujianItem->tanggal)->locale('id')->translatedFormat('l, d F Y');
+        }
+        $pdf = Pdf::loadView('kartu', compact('siswa', 'tanggal', 'riwayat', 'ujian'))->setPaper('a4');
+        return $pdf->stream('kartu_siswa.pdf');
     }
 }
