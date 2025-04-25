@@ -75,13 +75,13 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="/">Home</a></li>
                             <li class="scroll-to-section">
-                                <a href="{{ url('siswas/create') }}" title="Pendaftaran Peserta Didik Baru">PPDB</a>
+                                <a href="/alur" title="Pendaftaran Peserta Didik Baru" class="active">PPDB</a>
                             </li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
                             <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section dropdown">
+                            {{-- <li class="scroll-to-section dropdown">
                                 <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     Berkas Pendaftaran
                                 </a>
@@ -89,7 +89,7 @@
                                     <li><a class="dropdown-item" href="/berkas">PESERTA DIDIK BARU</a></li>
                                     <li><a class="dropdown-item" href="/naik">PESERTA NAIK TINGKAT</a></li>
                                 </ul>
-                            </li>
+                            </li> --}}
                             <li class="scroll-to-section"><a href="#blog">Blog</a></li>
                             <li class="scroll-to-section"><a href="#contact">Contact</a></li>
                             <li class="scroll-to-section">

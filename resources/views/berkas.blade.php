@@ -325,9 +325,9 @@
             </table>
         </div>
         <div class="page-break"></div>
-        <div class="card">
+        {{-- <div class="card">
             <img src="logo.png" alt="Logo" width="50px;">
-        </div>
+        </div> --}}
     </div>
 </body>
 

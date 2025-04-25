@@ -30,8 +30,8 @@ Route::get('/berkas', function () {
 Route::get('/naik', function () {
     return view('naik');
 });
-Route::get('/coba', function () {
-    return view('coba');
+Route::get('/alur', function () {
+    return view('alur');
 });
 
 Route::get('/dashboard', function () {

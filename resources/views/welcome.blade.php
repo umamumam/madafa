@@ -77,11 +77,11 @@
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
                             <li class="scroll-to-section">
-                                <a href="{{ url('siswas/create') }}" title="Pendaftaran Peserta Didik Baru">PPDB</a>
+                                <a href="/alur" title="Pendaftaran Peserta Didik Baru">PPDB</a>
                             </li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
                             <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="/berkas">Berkas Pendaftaran</a></li>
+                            {{-- <li class="scroll-to-section"><a href="/berkas">Berkas Pendaftaran</a></li> --}}
                             <li class="scroll-to-section"><a href="#blog">Blog</a></li>
                             <li class="scroll-to-section"><a href="#contact">Contact</a></li>
                             <li class="scroll-to-section">
