@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\UjianController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\ProfileController;
@@ -21,8 +23,14 @@ use App\Http\Controllers\RaporLokalDetailController;
 use App\Http\Controllers\RiwayatKelasSiswaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/', [GaleriController::class, 'showOnLanding']);
 Route::get('/', function () {
-    return view('welcome');
+    $beritas = \App\Models\Berita::latest()->take(4)->get();
+    $galeri = \App\Models\Galeri::latest()->take(10)->get();
+    return view('welcome', compact('beritas', 'galeri'));
 });
 Route::get('/berkas', function () {
     return view('berkas');
@@ -94,6 +102,10 @@ Route::post('/ujian', [UjianController::class, 'store'])->name('ujian.store');
 Route::put('/ujian/{id}', [UjianController::class, 'update'])->name('ujian.update');
 Route::delete('/ujian/{id}', [UjianController::class, 'destroy'])->name('ujian.destroy');
 Route::resource('kompetensi', KompetensiController::class);
-
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
+Route::post('/galeri', [GaleriController::class, 'store'])->name('galeri.store');
+Route::post('/galeri/update/{id}', [GaleriController::class, 'update'])->name('galeri.update');
+Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
+Route::resource('berita', BeritaController::class);
 
 require __DIR__.'/auth.php';

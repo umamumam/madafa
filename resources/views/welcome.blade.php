@@ -111,7 +111,8 @@
                                     <div class="col-lg-12">
                                         <h6>Welcome</h6>
                                         <h2>MADRASAH ALIYAH DARUL FALAH</h2>
-                                        <p style="text-align: justify;"><b>MA Darul Falah</b> merupakan salah satu unit pelaksanaan teknis dibidang
+                                        <p style="text-align: justify;"><b>MA Darul Falah</b> merupakan salah satu unit
+                                            pelaksanaan teknis dibidang
                                             pendidikan berazazkan islami ikut serta dalam mengemban tugas dalam
                                             mencerdaskan bangsa. MA Darul Falah senantiasa berusaha untuk memperbaiki
                                             diri dalam peningkatan mutu pendidikan dan mutu pelayanan. Diantara
@@ -149,7 +150,8 @@
                         <div class="col-lg-6">
                             <div class="about-left-image wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
                                 <p style="margin-top: 50px;">&nbsp;</p><img src="{{ asset('profil.jpg') }}" alt="">
-                                <i class="fas fa-info-circle" style="position: absolute; top: 10px; left: 10px; color: #fff; font-size: 24px;"></i>
+                                <i class="fas fa-info-circle"
+                                    style="position: absolute; top: 10px; left: 10px; color: #fff; font-size: 24px;"></i>
                             </div>
                         </div>
                         <div class="col-lg-6 align-self-center  wow fadeInRight" data-wow-duration="1s"
@@ -163,7 +165,8 @@
                                 <ol>
                                     <li><strong>Nama Madrasah</strong>: MA Darul Falah</li>
                                     <li><strong>No. Statistik Madrasah</strong>: 131233180020</li>
-                                    <li><strong>Alamat</strong>: Jl. Raya Tayu-Jepara Km.17 Ds. Sirahan Kec. Cluwak Kab. Pati 59157</li>
+                                    <li><strong>Alamat</strong>: Jl. Raya Tayu-Jepara Km.17 Ds. Sirahan Kec. Cluwak Kab.
+                                        Pati 59157</li>
                                     <li><strong>No. Telp./Fax</strong>: (0291) 4277748</li>
                                     <li><strong>Email</strong>: darulfalah_sirahan@yahoo.co.id</li>
                                     <li><strong>Website</strong>: www.madarulfalah.sch.id</li>
@@ -181,7 +184,7 @@
                                     <li><strong>Status Kepemilikan Tanah</strong>: Wakaf Bersertifikat</li>
                                     <li><strong>Titik Koordinat</strong>: Bujur -6.52347, Lintang 110.91458</li>
                                 </ol>
-{{--
+                                {{--
                                 <div class="row">
                                     <div class="col-lg-4 col-sm-4">
                                         <div class="skill-item first-skill-item wow fadeIn" data-wow-duration="1s"
@@ -268,7 +271,8 @@
                                         <div class="first-thumb active">
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-01.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-01.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Apartments
                                             </div>
@@ -276,7 +280,8 @@
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-02.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-02.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Food &amp; Life
                                             </div>
@@ -284,7 +289,8 @@
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-03.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-03.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Cars
                                             </div>
@@ -292,7 +298,8 @@
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-04.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-04.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Shopping
                                             </div>
@@ -300,7 +307,8 @@
                                         <div class="last-thumb">
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-01.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-01.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Traveling
                                             </div>
@@ -338,7 +346,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -374,7 +383,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image-02.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image-02.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -410,7 +420,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image-03.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image-03.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -446,7 +457,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image-04.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image-04.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -482,7 +494,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -554,78 +567,27 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="loop owl-carousel">
+                        @foreach ($galeri as $item)
                         <div class="item">
                             <a href="#">
                                 <div class="portfolio-item">
                                     <div class="thumb">
-                                        <img src="{{ asset('digimedia/assets/images/portfolio-01.jpg') }}" alt="">
+                                        <img src="{{ asset('storage/' . $item->foto) }}" alt="">
                                     </div>
                                     <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
+                                        <h4>{{ $item->judul }}</h4>
+                                        <span>{{ $item->tahun }}</span>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('digimedia/assets/images/portfolio-01.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('digimedia/assets/images/portfolio-02.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('digimedia/assets/images/portfolio-03.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('digimedia/assets/images/portfolio-04.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div id="blog" class="blog">
+    {{-- <div id="blog" class="blog">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 offset-lg-4  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
@@ -663,7 +625,8 @@
                             <div class="col-lg-12">
                                 <div class="post-item">
                                     <div class="thumb">
-                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-02.jpg') }}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-02.jpg') }}"
+                                                alt=""></a>
                                     </div>
                                     <div class="right-content">
                                         <span class="category">SEO Analysis</span>
@@ -678,7 +641,8 @@
                             <div class="col-lg-12">
                                 <div class="post-item">
                                     <div class="thumb">
-                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-03.jpg') }}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-03.jpg') }}"
+                                                alt=""></a>
                                     </div>
                                     <div class="right-content">
                                         <span class="category">SEO Analysis</span>
@@ -693,7 +657,8 @@
                             <div class="col-lg-12">
                                 <div class="post-item last-post-item">
                                     <div class="thumb">
-                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-04.jpg') }}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-04.jpg') }}"
+                                                alt=""></a>
                                     </div>
                                     <div class="right-content">
                                         <span class="category">SEO Analysis</span>
@@ -710,7 +675,104 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+    @php
+    $firstBerita = $beritas->first();
+    $otherBeritas = $beritas->slice(1); // sisanya
+    @endphp
+
+    <div id="blog" class="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 offset-lg-4  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="section-heading">
+                        <h6>Recent News</h6>
+                        <h4>Berita Terbaru <br><em>MA Darul Falah</em></h4>
+                        <div class="line-dec"></div>
+                    </div>
+                </div>
+
+                {{-- Bagian Besar (ID terkecil) --}}
+                @if($firstBerita)
+                <div class="col-lg-6 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="blog-post">
+                        <div class="thumb">
+                            <a href="#"><img src="{{ asset('storage/' . $firstBerita->gambar) }}" alt=""
+                                    class="img-fluid"></a>
+                        </div>
+                        <div class="down-content">
+                            <span class="category">Berita</span>
+                            <span class="date">{{ \Carbon\Carbon::parse($firstBerita->tanggal)->format('d M Y')
+                                }}</span>
+                            <a href="#">
+                                <h4>{{ $firstBerita->judul }}</h4>
+                            </a>
+                            <p>{{ \Illuminate\Support\Str::limit($firstBerita->deskripsi, 150) }}</p>
+                            <span class="author">
+                                <img src="{{ asset('digimedia/assets/images/person_3.jpg') }}" alt="">By: Admin
+                            </span>
+                            <div class="border-first-button"><a href="#">Baca Selengkapnya</a></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                {{-- Bagian Kanan Kecil (ID lebih besar) --}}
+                <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="blog-posts">
+                        <div class="row">
+                            @foreach($otherBeritas as $berita)
+                            <div class="col-lg-12">
+                                <div class="post-item {{ $loop->last ? 'last-post-item' : '' }}">
+                                    <div class="thumb">
+                                        <a href="#"><img src="{{ asset('storage/' . $berita->gambar) }}" alt=""
+                                                class="img-fluid" style="max-width: 50%; height: auto;"></a>
+                                    </div>
+                                    <div class="right-content">
+                                        <span class="category">Berita</span>
+                                        <span class="date">{{ \Carbon\Carbon::parse($berita->tanggal)->format('d M Y')
+                                            }}</span>
+                                        <a href="#">
+                                            <h4>{{ $berita->judul }}</h4>
+                                        </a>
+                                        <p>{{ \Illuminate\Support\Str::limit($berita->deskripsi, 80) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
+
+    <style>
+        #blog .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-posts .thumb img {
+            max-width: 50%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .blog-post .thumb img {
+            width: 100%;
+            height: auto;
+        }
+
+        .show-up {
+            margin-top: 30px;
+        }
+
+        .down-content h4 {
+            margin-bottom: 15px;
+        }
+    </style>
 
     <div id="contact" class="contact-us section">
         <div class="container">
@@ -733,9 +795,10 @@
                             <div class="col-lg-5">
                                 <div id="map">
                                     <iframe
-                                        src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                                        width="100%" height="636px" frameborder="0" style="border:0"
-                                        allowfullscreen></iframe>
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.527439024364!2d110.9120089!3d-6.5234872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e712f7a08d6ded1%3A0x5f4094377b329cc!2sMA%20Darul%20Falah!5e0!3m2!1sid!2sid!4v1714036422689!5m2!1sid!2sid"
+                                        width="100%" height="636px" frameborder="0" style="border:0;" allowfullscreen=""
+                                        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                    </iframe>
                                 </div>
                             </div>
                             <div class="col-lg-7">
@@ -744,46 +807,54 @@
                                         <div class="col-lg-4">
                                             <div class="info-post">
                                                 <div class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/phone-icon.png') }}" alt="">
-                                                    <a href="#">010-020-0340</a>
+                                                    <img src="{{ asset('digimedia/assets/images/phone-icon.png') }}"
+                                                        alt="">
+                                                    <a href="#">02914277748</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="info-post">
                                                 <div class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/email-icon.png') }}" alt="">
-                                                    <a href="#">our@email.com</a>
+                                                    <img src="{{ asset('digimedia/assets/images/email-icon.png') }}"
+                                                        alt="">
+                                                    <a href="#">darulfalah_sirahan <br>@yahoo.co.id</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="info-post">
                                                 <div class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/location-icon.png') }}" alt="">
-                                                    <a href="#">123 Rio de Janeiro</a>
+                                                    <img src="{{ asset('digimedia/assets/images/location-icon.png') }}"
+                                                        alt="">
+                                                    <a href="#">Jln. Raya Tayu – Jepara Km.17</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <fieldset>
-                                                <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
+                                                <input type="name" name="name" id="name" placeholder="Name"
+                                                    autocomplete="on" required>
                                             </fieldset>
                                             <fieldset>
-                                                <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
+                                                <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*"
+                                                    placeholder="Your Email" required="">
                                             </fieldset>
                                             <fieldset>
-                                                <input type="subject" name="subject" id="subject" placeholder="Subject" autocomplete="on">
+                                                <input type="subject" name="subject" id="subject" placeholder="Subject"
+                                                    autocomplete="on">
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-6">
                                             <fieldset>
-                                                <textarea name="message" type="text" class="form-control" id="message" placeholder="Message" required=""></textarea>
+                                                <textarea name="message" type="text" class="form-control" id="message"
+                                                    placeholder="Message" required=""></textarea>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <button type="submit" id="form-submit" class="main-button">Send Message Now</button>
+                                                <button type="submit" id="form-submit" class="main-button">Send Message
+                                                    Now</button>
                                             </fieldset>
                                         </div>
                                     </div>
