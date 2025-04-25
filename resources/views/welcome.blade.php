@@ -148,7 +148,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="about-left-image wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="{{ asset('digimedia/assets/images/about-dec.png') }}" alt="">
+                                <p style="margin-top: 50px;">&nbsp;</p><img src="{{ asset('profil.jpg') }}" alt="">
                                 <i class="fas fa-info-circle" style="position: absolute; top: 10px; left: 10px; color: #fff; font-size: 24px;"></i>
                             </div>
                         </div>
@@ -156,15 +156,32 @@
                             data-wow-delay="0.5s">
                             <div class="about-right-content">
                                 <div class="section-heading">
-                                    <h6>About Us</h6>
-                                    <h4>Who is DigiMedia <em>Agency</em></h4>
+                                    <h6>Profil</h6>
+                                    <h4>Profil <em>MA Darul Falah</em></h4>
                                     <div class="line-dec"></div>
                                 </div>
-                                <p>We hope this DigiMedia template is useful for your work. You can use this template
-                                    for any purpose. You may <a rel="nofollow" href="http://paypal.me/templatemo"
-                                        target="_blank">contribute a little amount</a> via PayPal to <a
-                                        href="https://templatemo.com/contact" target="_blank">support TemplateMo</a> in
-                                    creating new templates regularly.</p>
+                                <ol>
+                                    <li><strong>Nama Madrasah</strong>: MA Darul Falah</li>
+                                    <li><strong>No. Statistik Madrasah</strong>: 131233180020</li>
+                                    <li><strong>Alamat</strong>: Jl. Raya Tayu-Jepara Km.17 Ds. Sirahan Kec. Cluwak Kab. Pati 59157</li>
+                                    <li><strong>No. Telp./Fax</strong>: (0291) 4277748</li>
+                                    <li><strong>Email</strong>: darulfalah_sirahan@yahoo.co.id</li>
+                                    <li><strong>Website</strong>: www.madarulfalah.sch.id</li>
+                                    <li><strong>Tahun Berdiri</strong>: 1983</li>
+                                    <li><strong>Ijin Operasional</strong>: Nomor 1307 Tahun 2021</li>
+                                    <li><strong>Badan Pengelola</strong>: Yayasan Pelita Desa Sirahan</li>
+                                    <li><strong>Jumlah Guru</strong>: 32 Tenaga Didik</li>
+                                    <li><strong>Jumlah Peserta Didik</strong>: 422 Peserta</li>
+                                    <li><strong>Jumlah Karyawan</strong>: 12 Orang</li>
+                                    <li><strong>Jumlah Ruang Kelas</strong>: 14 Ruang</li>
+                                    <li><strong>Waktu Belajar</strong>: Pagi Hari</li>
+                                    <li><strong>Jarak Tempuh ke Kabupaten</strong>: 44 Km</li>
+                                    <li><strong>Jarak Tempuh ke Kecamatan</strong>: 4 Km</li>
+                                    <li><strong>Luas Tanah & Bangunan</strong>: 3300 m² / 2284 m²</li>
+                                    <li><strong>Status Kepemilikan Tanah</strong>: Wakaf Bersertifikat</li>
+                                    <li><strong>Titik Koordinat</strong>: Bujur -6.52347, Lintang 110.91458</li>
+                                </ol>
+{{--
                                 <div class="row">
                                     <div class="col-lg-4 col-sm-4">
                                         <div class="skill-item first-skill-item wow fadeIn" data-wow-duration="1s"
@@ -223,7 +240,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -526,8 +543,8 @@
             <div class="row">
                 <div class="col-lg-5">
                     <div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-                        <h6>Our Portofolio</h6>
-                        <h4>See Our Recent <em>Projects</em></h4>
+                        <h6>Our Galery</h6>
+                        <h4>Galeri <em>MA Darul Falah</em></h4>
                         <div class="line-dec"></div>
                     </div>
                 </div>

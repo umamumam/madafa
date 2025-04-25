@@ -44,7 +44,11 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('l
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
+Route::get('/identitas-siswa', [ProfilController::class, 'identitasSiswa'])->name('profil.identitassiswa');
+Route::get('/identitas-siswa/cetak-pdf', [ProfilController::class, 'cetakIdentitasSiswaPdf'])->name('profil.identitassiswa.pdf');
 Route::get('/profil-guru', [ProfilController::class, 'showProfile'])->name('profil.guru');
+Route::get('/identitas-guru', [ProfilController::class, 'identitasGuru'])->name('profil.identitasguru');
+Route::get('/identitas-guru/cetak-pdf', [ProfilController::class, 'cetakIdentitasGuruPdf'])->name('profil.identitasguru.pdf');
 Route::post('/profil/update-password', [ProfilController::class, 'updatePassword'])->name('profil.updatePassword');
 Route::post('/profil/upload-foto', [ProfilController::class, 'uploadFoto'])->name('profil.uploadFoto');
 

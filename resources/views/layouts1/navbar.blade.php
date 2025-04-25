@@ -73,6 +73,12 @@
                         <span class="pc-mtext">Rapor</span>
                     </a>
                 </li>
+                <li class="pc-item">
+                    <a href="/identitas-guru" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-school"></i></span>
+                        <span class="pc-mtext">Biodata Guru</span>
+                    </a>
+                </li>
                 @endif
                 @if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'super admin'))
                 <li class="pc-item">
@@ -103,6 +109,12 @@
                     <a href="{{ route('rapor-lokal.siswa') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-file-certificate"></i></span>
                         <span class="pc-mtext">Rapor Saya</span>
+                    </a>
+                </li>
+                <li class="pc-item">
+                    <a href="/identitas-siswa" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-id"></i></span>
+                        <span class="pc-mtext">Identitas Siswa</span>
                     </a>
                 </li>
                 @endif
