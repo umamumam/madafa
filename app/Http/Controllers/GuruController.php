@@ -7,8 +7,10 @@ use App\Models\Mapel;
 use App\Models\Jabatan;
 use App\Models\Pendidikan;
 use App\Models\StatusGuru;
+use App\Imports\GuruImport;
 use App\Models\JenisKelamin;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class GuruController extends Controller
@@ -19,8 +21,12 @@ class GuruController extends Controller
             'jenisKelamin',
             'pendidikanTerakhir',
             'statusGuru',
-            'mapel1', 'mapel2', 'mapel3',
-            'jabatan1', 'jabatan2', 'jabatan3'
+            'mapel1',
+            'mapel2',
+            'mapel3',
+            'jabatan1',
+            'jabatan2',
+            'jabatan3'
         ])->get();
 
         return view('gurus.index', compact('gurus'));
@@ -180,5 +186,17 @@ class GuruController extends Controller
         $guru->delete();
 
         return redirect()->route('gurus.index')->with('success', 'Data guru berhasil dihapus');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv' // Validasi file yang diupload
+        ]);
+
+        // Menggunakan import dengan kelas GuruImport
+        Excel::import(new GuruImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data guru berhasil diimport.');
     }
 }

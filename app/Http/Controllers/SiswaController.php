@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\Ujian;
 use App\Models\Program;
 use App\Models\Pendidikan;
+use App\Imports\SiswaImport;
 use App\Models\JenisKelamin;
-use App\Models\RiwayatKelasSiswa;
-use App\Models\Ujian;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\RiwayatKelasSiswa;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
@@ -303,9 +305,9 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::findOrFail($id);
         $riwayat = RiwayatKelasSiswa::with(['siswa', 'tahunPelajaran'])
-        ->where('siswa_id', $id)
-        ->latest()
-        ->first();
+            ->where('siswa_id', $id)
+            ->latest()
+            ->first();
         $ujian = Ujian::all()->sortBy('tanggal');
         $tanggal = Carbon::now()->translatedFormat('d F Y');
         foreach ($ujian as $ujianItem) {
@@ -313,5 +315,15 @@ class SiswaController extends Controller
         }
         $pdf = Pdf::loadView('kartu', compact('siswa', 'tanggal', 'riwayat', 'ujian'))->setPaper('a4');
         return $pdf->stream('kartu_siswa.pdf');
+    }
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new SiswaImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data siswa berhasil diimport.');
     }
 }

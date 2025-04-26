@@ -7,8 +7,18 @@
         <div class="card">
             <div class="card-header">
                 <h1>Data Siswa</h1>
-                <a href="{{ route('siswas.create') }}" class="btn btn-primary">Tambah Siswa</a>
-                <a href="{{ url('riwayat-kelas/mass-update') }}" class="btn btn-danger">Update Kelas</a>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <a href="{{ route('siswas.create') }}" class="btn btn-primary">Tambah Siswa</a>
+                    <a href="{{ url('riwayat-kelas/mass-update') }}" class="btn btn-danger">Update Kelas</a>
+                    <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
+                        @csrf
+                        <input type="file" name="file" required class="form-control">
+                        <button type="submit" class="btn btn-success">Import</button>
+                    </form>
+                    <a href="{{ route('siswa.download-template') }}" class="btn btn-warning">
+                        Download Template
+                    </a>
+                </div>
                 {{-- <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Tahun Pelajaran</button> --}}
             </div>
             <div class="card-body" style="overflow-x:auto;">

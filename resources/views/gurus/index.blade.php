@@ -7,7 +7,23 @@
         <div class="card">
             <div class="card-header">
                 <h1>Data Guru</h1>
-                <a href="{{ route('gurus.create') }}" class="btn btn-primary mb-3">Tambah Guru</a>
+                <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+                    <a href="{{ route('gurus.create') }}" class="btn btn-primary">
+                        Tambah Guru
+                    </a>
+
+                    <a href="{{ asset('template/guru_import.xlsx') }}" class="btn btn-warning" target="_blank">
+                        Download Template Guru
+                    </a>
+
+                    <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
+                        @csrf
+                        <input type="file" name="file" class="form-control" required>
+                        <button type="submit" class="btn btn-success">
+                            Import
+                        </button>
+                    </form>
+                </div>
                 {{-- <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Tahun Pelajaran</button> --}}
             </div>
             <div class="card-body" style="overflow-x:auto;">

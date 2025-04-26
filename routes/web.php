@@ -107,5 +107,10 @@ Route::post('/galeri', [GaleriController::class, 'store'])->name('galeri.store')
 Route::post('/galeri/update/{id}', [GaleriController::class, 'update'])->name('galeri.update');
 Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
 Route::resource('berita', BeritaController::class);
-
+Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
+Route::post('/guru/import', [GuruController::class, 'import'])->name('guru.import');
+Route::get('/download/template-siswa', function () {
+    $file = public_path('template/template_import_siswa.xlsx');
+    return response()->download($file);
+})->name('siswa.download-template');
 require __DIR__.'/auth.php';
