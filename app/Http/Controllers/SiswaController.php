@@ -13,6 +13,7 @@ use App\Models\JenisKelamin;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\RiwayatKelasSiswa;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
@@ -325,5 +326,21 @@ class SiswaController extends Controller
         Excel::import(new SiswaImport, $request->file('file'));
 
         return redirect()->back()->with('success', 'Data siswa berhasil diimport.');
+    }
+
+    public function showIdentitasDiri()
+    {
+        $user = Auth::user();
+        if ($user->role !== 'siswa') {
+            return redirect()->route('dashboard')->with('error', 'Hanya siswa yang dapat mengakses halaman ini.');
+        }
+        $siswa = Siswa::where('nisn', $user->nisn)
+            ->orWhere('nis', $user->nis)
+            ->first();
+
+        if (!$siswa) {
+            return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
+        }
+        return redirect()->route('siswas.show', ['id' => $siswa->id]);
     }
 }

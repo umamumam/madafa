@@ -52,6 +52,7 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('l
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
+Route::get('/profil-saya', [SiswaController::class, 'showIdentitasDiri'])->name('profil.saya');
 Route::get('/identitas-siswa', [ProfilController::class, 'identitasSiswa'])->name('profil.identitassiswa');
 Route::get('/identitas-siswa/cetak-pdf', [ProfilController::class, 'cetakIdentitasSiswaPdf'])->name('profil.identitassiswa.pdf');
 Route::get('/profil-guru', [ProfilController::class, 'showProfile'])->name('profil.guru');

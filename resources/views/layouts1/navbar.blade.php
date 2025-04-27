@@ -119,6 +119,12 @@
                         <span class="pc-mtext">Identitas Siswa</span>
                     </a>
                 </li>
+                <li class="pc-item">
+                    <a href="/profil-saya" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-id"></i></span>
+                        <span class="pc-mtext">Surat Pernyataan & Kartu</span>
+                    </a>
+                </li>
                 @endif
 
                 {{-- <li class="pc-item pc-caption">
