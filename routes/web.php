@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\UjianController;
+use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ProfilController;
@@ -115,4 +116,7 @@ Route::get('/download/template-siswa', function () {
     $file = public_path('template/template_import_siswa.xlsx');
     return response()->download($file);
 })->name('siswa.download-template');
+Route::resource('alumnis', AlumniController::class);
+Route::post('alumnis/export', [AlumniController::class, 'export'])->name('alumnis.export');
+Route::post('alumnis/import', [AlumniController::class, 'import'])->name('alumnis.import');
 require __DIR__.'/auth.php';
