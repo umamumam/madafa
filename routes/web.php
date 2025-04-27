@@ -109,6 +109,7 @@ Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galer
 Route::resource('berita', BeritaController::class);
 Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
 Route::post('/guru/import', [GuruController::class, 'import'])->name('guru.import');
+Route::post('/kdum/import', [KdumController::class, 'import'])->name('kdum.import');
 Route::get('/download/template-siswa', function () {
     $file = public_path('template/template_import_siswa.xlsx');
     return response()->download($file);

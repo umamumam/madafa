@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Kdum;
 use App\Models\Kelas;
 use App\Models\Nilai;
 use App\Models\Siswa;
-use App\Models\Penyemak;
 // use Barryvdh\DomPDF\PDF;
-use PDF;
+use App\Models\Penyemak;
 use App\Models\KdumDetail;
 use App\Models\Kompetensi;
 use Illuminate\Http\Request;
 use App\Models\TahunPelajaran;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KdumController extends Controller
 {
@@ -80,5 +81,16 @@ class KdumController extends Controller
 
         $pdf = PDF::loadView('kdum.kdum-all', compact('kdums'))->setPaper('a4', 'portrait');
         return $pdf->stream('KDUM_Semua_Peserta.pdf');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new \App\Imports\KdumImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data KDUM berhasil diimport.');
     }
 }

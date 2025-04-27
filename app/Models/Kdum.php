@@ -15,9 +15,15 @@ class Kdum extends Model
         'tahun_pelajaran_id'
     ];
 
+    public static $disableBooted = false;
+
     protected static function booted()
     {
         static::created(function ($kdum) {
+            // <<< CEK FLAG
+            if (self::$disableBooted) {
+                return; // kalau flag aktif, skip
+            }
             $kompetensis = \App\Models\Kompetensi::all();
 
             foreach ($kompetensis as $kompetensi) {
