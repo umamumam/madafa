@@ -98,7 +98,7 @@
     <table class="biodata-table">
         <tr>
             <td>1</td>
-            <td class="judul">NIY/NIP</td>
+            <td class="judul">Nomor Induk Pegawai</td>
             <td class="isi">: {{ $guru->niy_nip }}</td>
             <td class="foto" rowspan="7">
                 <img style="width: 3cm; height: 4cm;"
@@ -108,12 +108,12 @@
         </tr>
         <tr>
             <td>2</td>
-            <td class="judul">NIK</td>
+            <td class="judul">Nomor Induk Kependudukan</td>
             <td class="isi">: {{ $guru->nik }}</td>
         </tr>
         <tr>
             <td>3</td>
-            <td class="judul">Nama Guru</td>
+            <td class="judul">Nama Lengkap</td>
             <td class="isi">: {{ $guru->nama_guru }}</td>
         </tr>
         <tr>
@@ -139,49 +139,50 @@
         </tr>
         <tr>
             <td>8</td>
-            <td class="judul">Pendidikan Terakhir</td>
+            <td class="judul">Pendidikan</td>
             <td class="isi" colspan="2">: {{ $guru->inst_pend_terakhir ?? '-' }}</td>
         </tr>
-        <tr>
+        {{-- <tr>
             <td>9</td>
             <td class="judul">Inst. Pendidikan Terakhir</td>
             <td class="isi" colspan="2">: {{ $guru->inst_pend_terakhir ?? '-' }}</td>
-        </tr>
+        </tr> --}}
         <tr>
-            <td>10</td>
-            <td class="judul">Nama Satuan</td>
-            <td class="isi" colspan="2">: MA Darul Falah</td>
-        </tr>
-        <tr>
-            <td>11</td>
-            <td class="judul">TMT SK Awal</td>
-            <td class="isi" colspan="2">: {{ \Carbon\Carbon::parse($guru->tmt_sk_awal)->format('d/m/Y') }}</td>
-        </tr>
-        <tr>
-            <td>12</td>
+            <td>9</td>
             <td class="judul">Status Pendidik</td>
             <td class="isi" colspan="2">: {{ $guru->statusGuru->status ?? '-' }}</td>
         </tr>
+        {{-- <tr>
+            <td>9</td>
+            <td class="judul">Nama Satuan</td>
+            <td class="isi" colspan="2">: MA Darul Falah</td>
+        </tr> --}}
         <tr>
-            <td>13</td>
-            <td class="judul">NUPTK/PEG.ID</td>
+            <td>10</td>
+            <td class="judul">Tahun Masuk</td>
+            <td class="isi" colspan="2">: {{ \Carbon\Carbon::parse($guru->tmt_sk_awal)->format('d/m/Y') }}</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td class="judul"> No.NUPTK/NPK</td>
             <td class="isi" colspan="2">: {{ $guru->npk_nuptk_pegid ?? '-' }}</td>
         </tr>
         <tr>
-            <td>14</td>
-            <td class="judul">Mapel Utama</td>
+            <td rowspan="4">12</td>
+            <td class="judul">Pengampu Mapel</td>
+        </tr>
+        <tr>
+            <td>a. Mapel Utama</td>
             <td class="isi" colspan="2" style="font-family: Arial, Helvetica, sans-serif">: {{ $guru->mapel1->mapel ??
                 '-' }}</td>
         </tr>
         <tr>
-            <td>15</td>
-            <td class="judul">Mapel Kedua</td>
+            <td>b. Mapel Kedua</td>
             <td class="isi" colspan="2" style="font-family: Arial, Helvetica, sans-serif">: {{ $guru->mapel2->mapel ??
                 '-' }}</td>
         </tr>
         <tr>
-            <td>16</td>
-            <td class="judul">Mapel Ketiga</td>
+            <td>c. Mapel Ketiga</td>
             <td class="isi" colspan="2" style="font-family: Arial, Helvetica, sans-serif">: {{ $guru->mapel3->mapel ??
                 '-' }}</td>
         </tr>
