@@ -120,6 +120,7 @@ Route::get('/download/template-siswa', function () {
     return response()->download($file);
 })->name('siswa.download-template');
 Route::resource('alumnis', AlumniController::class);
+Route::get('alumnis-data', [AlumniController::class, 'data'])->name('alumnis.data');
 Route::post('alumnis/export', [AlumniController::class, 'export'])->name('alumnis.export');
 Route::post('alumnis/import', [AlumniController::class, 'import'])->name('alumnis.import');
 require __DIR__.'/auth.php';

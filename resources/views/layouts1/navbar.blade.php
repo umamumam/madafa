@@ -42,7 +42,8 @@
                         <li class="pc-item"><a class="pc-link" href="/ujian">Tanggal Ujian</a></li>
                         <li class="pc-item"><a class="pc-link" href="/galeri">Galeri Kegiatan</a></li>
                         <li class="pc-item"><a class="pc-link" href="/berita">Berita Terbaru</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/alumnis">Data Alumni</a></li>
+                        <li class="pc-item"><a class="pc-link" href="/alumnis">Alumni MTs DAFA</a></li>
+                        <li class="pc-item"><a class="pc-link" href="/alumnis-data">Edit Data Alumni MTs</a></li>
                     </ul>
                 </li>
                 @endif

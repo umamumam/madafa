@@ -9,7 +9,7 @@
     @if(session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
-    <div class="card mb-4">
+    {{-- <div class="card mb-4">
         <div class="card-header">
             <strong>Import File Alumni</strong>
         </div>
@@ -23,7 +23,7 @@
                 <button type="submit" class="btn btn-info mt-3">Import</button>
             </form>
         </div>
-    </div>
+    </div> --}}
     <div class="card mb-4">
         <div class="card-header">
             <strong>Alumni MTs Darul Falah</strong>
@@ -46,7 +46,7 @@
                                 <th>NISN</th>
                                 <th>Program</th>
                                 <th>Kelas</th>
-                                {{-- <th>Aksi</th>  <!-- Menambahkan kolom aksi untuk tombol edit dan delete --> --}}
+                                <th>Aksi</th>  <!-- Menambahkan kolom aksi untuk tombol edit dan delete -->
                             </tr>
                         </thead>
                         <tbody>
@@ -58,7 +58,7 @@
                                     <td>{{ $alumni->nisn }}</td>
                                     <td>{{ $alumni->program }}</td>
                                     <td>{{ $alumni->kelas }}</td>
-                                    {{-- <td>
+                                    <td>
                                         <a href="{{ route('alumnis.edit', $alumni->id) }}" class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
@@ -69,7 +69,7 @@
                                                 <i class="fas fa-trash-alt"></i> Hapus
                                             </button>
                                         </form>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>

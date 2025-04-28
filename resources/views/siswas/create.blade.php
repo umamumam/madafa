@@ -7,10 +7,10 @@
 
         <div class="card p-3 mb-4">
             <div class="row">
-                    <div class="col-md-4 mb-2">
+                    {{-- <div class="col-md-4 mb-2">
                         <label for="nis">NIS</label>
                         <input type="text" name="nis" class="form-control" required>
-                    </div>
+                    </div> --}}
                     <div class="col-md-4 mb-2">
                         <label for="nisn">NISN</label>
                         <input type="text" name="nisn" class="form-control">
@@ -60,18 +60,18 @@
                         <label for="kode_pos">Kode Pos</label>
                         <input type="text" name="kode_pos" class="form-control">
                     </div>
-                    <div class="col-md-4 mb-2">
+                    {{-- <div class="col-md-4 mb-2">
                         <label for="kelas_id">Kelas</label>
-                        <select name="kelas_id" class="form-control" required>
+                        <select name="kelas_id" class="form-control">
                             <option value="" selected disabled>-- Pilih Kelas --</option>
                             @foreach ($kelas as $kls)
                                 <option value="{{ $kls->id }}">{{ $kls->nama_kelas }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="col-md-4 mb-2">
                         <label for="program_id">Program</label>
-                        <select name="program_id" class="form-control" required>
+                        <select name="program_id" class="form-control">
                             <option value="" selected disabled>-- Pilih Program --</option>
                             @foreach ($programs as $program)
                                 <option value="{{ $program->id }}">{{ $program->program }}</option>

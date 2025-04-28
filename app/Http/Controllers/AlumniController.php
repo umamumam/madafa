@@ -15,6 +15,11 @@ class AlumniController extends Controller
         $alumnis = Alumni::all();
         return view('alumnis.index', compact('alumnis'));
     }
+    public function data()
+    {
+        $alumnis = Alumni::all();
+        return view('alumnis.data', compact('alumnis'));
+    }
 
     public function create()
     {
