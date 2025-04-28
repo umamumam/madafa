@@ -75,12 +75,9 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="/">Home</a></li>
-                            <li class="scroll-to-section">
-                                <a href="/alur" title="Pendaftaran Peserta Didik Baru" class="active">PPDB</a>
-                            </li>
-                            <li class="scroll-to-section"><a href="#about">About</a></li>
-                            <li class="scroll-to-section"><a href="#services">Services</a></li>
+                            <li class="scroll-to-section"><a href="/" class="{{ Request::is('/') ? 'active' : '' }}">Home</a></li>
+                            <li class="scroll-to-section"><a href="/alur" class="{{ Request::is('alur') ? 'active' : '' }}">PPDB</a></li>
+                            <li class="scroll-to-section"><a href="/visi" class="{{ Request::is('visi') ? 'active' : '' }}">Tentang</a></li>
                             {{-- <li class="scroll-to-section dropdown">
                                 <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     Berkas Pendaftaran
@@ -90,8 +87,9 @@
                                     <li><a class="dropdown-item" href="/naik">PESERTA NAIK TINGKAT</a></li>
                                 </ul>
                             </li> --}}
-                            <li class="scroll-to-section"><a href="#blog">Blog</a></li>
-                            <li class="scroll-to-section"><a href="#contact">Contact</a></li>
+                            <li class="scroll-to-section"><a href="#blog">Akademik</a></li>
+                            <li class="scroll-to-section"><a href="#contact">Program Unggulan</a></li>
+                            <li class="scroll-to-section"><a href="#contact">Kesiswaan</a></li>
                             <li class="scroll-to-section">
                                 <div class="border-first-button"><a href="/login">Login</a></div>
                             </li>
@@ -706,16 +704,57 @@
         </div>
     </div> --}}
 
-    <footer>
+    <footer style="background-color: #1c1c1c; color: #fff; padding: 50px 0; font-size: 14px;">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright © 2022 DigiMedia Co., Ltd. All Rights Reserved.
-                        <br>Design: <a href="https://templatemo.com" target="_parent"
-                            title="free css templates">TemplateMo</a>
-                        <br>Distributed By: <a href="https://themewagon.com" target="_blank"
-                            title="free css templates">ThemeWagon</a>
+                <!-- Kolom 1: Logo/Arab -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <img src="white.png" alt="" style="width: 70%; height: auto; display: block; margin: 0 auto;">
+                    <p style="font-style: italic; margin-top: 10px;">
+                        Teguh dalam Aqidah, Cerdas dalam Berpikir, dan Peka Terhadap Perkembangan
                     </p>
+                </div>
+
+                <!-- Kolom 2: Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 style="border-bottom: 2px solid #2ecc71; padding-bottom: 10px;">Quick Links</h4>
+                    <ul style="list-style: none; padding: 0; margin-top: 20px;">
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Kurikulum</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Buku-Buku Umum</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Buku PAI & Bahasa Arab</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Regulasi Madrasah</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Juknis & Pedoman</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 3: Lembaga Terkait -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4 style="border-bottom: 2px solid #2ecc71; padding-bottom: 10px;">Lembaga Terkait</h4>
+                    <ul style="list-style: none; padding: 0; margin-top: 20px;">
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">PAUD KB Mutiara Hati</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">RA Masyithoh</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">MI Darul Falah</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">MTs Darul Falah</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Ponpes</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 4: Hubungi Kami -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4 style="border-bottom: 2px solid #2ecc71; padding-bottom: 10px;">Hubungi Kami</h4>
+                    <ul style="list-style: none; padding: 0; margin-top: 20px;">
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">MA Darul Falah</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Jln. Raya Tayu – Jepara Km.17</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Ds. Sirahan Kec. Cluwak Kab. Pati Prov.Jawa Tengah</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Phone: 02914277748</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Email: darulfalah_sirahan@yahoo.co.id</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-12 text-center" style="margin-top: 30px; font-size: 13px; color: #ffffff;">
+                    Copyright © 2025 MA Darul Falah.
                 </div>
             </div>
         </div>

@@ -42,6 +42,9 @@ Route::get('/naik', function () {
 Route::get('/alur', function () {
     return view('alur');
 });
+Route::get('/visi', function () {
+    return view('visi');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

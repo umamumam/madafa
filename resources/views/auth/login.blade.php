@@ -99,7 +99,7 @@
                         </form>
 
                         <!-- Login with -->
-                        <div class="saprator mt-4 mb-3 text-center">
+                        {{-- <div class="saprator mt-4 mb-3 text-center">
                             <span>Login with</span>
                         </div>
                         <div class="row">
@@ -127,14 +127,14 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
                 <!-- Footer -->
                 <div class="auth-footer row">
                     <div class="col my-1">
-                        <p class="m-0">Copyright © <a href="#">Codedthemes</a></p>
+                        <p class="m-0">Copyright © <a href="#">MA Darul Falah</a></p>
                     </div>
                     <div class="col-auto my-1">
                         <ul class="list-inline footer-link mb-0">
