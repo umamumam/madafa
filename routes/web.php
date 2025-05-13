@@ -17,6 +17,7 @@ use App\Http\Controllers\PenyemakController;
 use App\Http\Controllers\KdumDetailController;
 use App\Http\Controllers\KompetensiController;
 use App\Http\Controllers\RaporLokalController;
+use App\Http\Controllers\DokumenSiswaController;
 use App\Http\Controllers\TahunPelajaranController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\EkstrakurikulerController;
@@ -123,4 +124,12 @@ Route::resource('alumnis', AlumniController::class);
 Route::get('alumnis-data', [AlumniController::class, 'data'])->name('alumnis.data');
 Route::post('alumnis/export', [AlumniController::class, 'export'])->name('alumnis.export');
 Route::post('alumnis/import', [AlumniController::class, 'import'])->name('alumnis.import');
-require __DIR__.'/auth.php';
+Route::get('/siswas/{id}/upload-dokumen', [DokumenSiswaController::class, 'showUploadForm'])
+    ->name('siswas.upload-dokumen');
+Route::post('/siswas/{id}/upload-dokumen', [DokumenSiswaController::class, 'upload'])
+    ->name('siswas.upload-dokumen.submit');
+Route::get('/siswas/{id}/preview-dokumen', [DokumenSiswaController::class, 'previewDokumen'])
+    ->name('siswas.preview-dokumen');
+Route::delete('/siswas/{id}/delete-dokumen/{docType}', [DokumenSiswaController::class, 'deleteDokumen'])
+    ->name('siswas.delete-dokumen');
+require __DIR__ . '/auth.php';

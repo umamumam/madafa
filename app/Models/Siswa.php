@@ -64,7 +64,6 @@ class Siswa extends Model
                     'kelas_id' => $siswa->kelas_id,
                     'tahun_pelajaran_id' => $tahunAktif->id,
                 ]);
-
             }
 
             if (!\App\Models\User::where('nisn', $siswa->nisn)->exists()) {
@@ -125,6 +124,10 @@ class Siswa extends Model
     public function riwayatKelas()
     {
         return $this->hasMany(RiwayatKelasSiswa::class);
+    }
+    public function dokumen()
+    {
+        return $this->hasOne(DokumenSiswa::class);
     }
 
     public function createRaporLokal()
