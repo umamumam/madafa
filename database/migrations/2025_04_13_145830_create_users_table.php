@@ -23,9 +23,9 @@ return new class extends Migration
             $table->string('nis')->nullable()->index();
             $table->string('idguru')->nullable()->index();
 
-            $table->foreign('nisn')->references('nisn')->on('siswas')->onDelete('set null');
-            $table->foreign('nis')->references('nis')->on('siswas')->onDelete('set null');
-            $table->foreign('idguru')->references('idguru')->on('gurus')->onDelete('set null');
+            $table->foreign('nisn')->references('nisn')->on('siswas')->onDelete('cascade');
+            $table->foreign('nis')->references('nis')->on('siswas')->onDelete('cascade');
+            $table->foreign('idguru')->references('idguru')->on('gurus')->onDelete('cascade');
 
             $table->enum('role', ['siswa', 'guru', 'wali kelas', 'admin', 'super admin'])->default('siswa');
             $table->timestamps();

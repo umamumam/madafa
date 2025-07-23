@@ -142,4 +142,8 @@ class Siswa extends Model
             ]);
         }
     }
+    public function pembayarans()
+    {
+        return $this->hasMany(Pembayaran::class);
+    }
 }

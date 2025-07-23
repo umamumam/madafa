@@ -60,7 +60,7 @@
                         <label for="kode_pos">Kode Pos</label>
                         <input type="text" name="kode_pos" class="form-control">
                     </div>
-                    {{-- <div class="col-md-4 mb-2">
+                    <div class="col-md-4 mb-2">
                         <label for="kelas_id">Kelas</label>
                         <select name="kelas_id" class="form-control">
                             <option value="" selected disabled>-- Pilih Kelas --</option>
@@ -68,7 +68,7 @@
                                 <option value="{{ $kls->id }}">{{ $kls->nama_kelas }}</option>
                             @endforeach
                         </select>
-                    </div> --}}
+                    </div>
                     <div class="col-md-4 mb-2">
                         <label for="program_id">Program</label>
                         <select name="program_id" class="form-control">

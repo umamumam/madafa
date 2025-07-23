@@ -119,4 +119,8 @@ class Guru extends Model
     {
         return $this->hasMany(RaporLokal::class, 'kepala_madrasah_id');
     }
+    public function pembayarans()
+    {
+        return $this->hasMany(Pembayaran::class);
+    }
 }

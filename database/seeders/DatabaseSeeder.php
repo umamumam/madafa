@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\StatusGuru;
 use App\Models\User;
+use App\Models\StatusGuru;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,9 +26,14 @@ class DatabaseSeeder extends Seeder
             KompetensiSeeder::class,
             MapelSeeder::class
         ]);
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        User::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role' => 'super admin',
+            'nisn' => null,
+            'nis' => null,
+            'idguru' => null,
         ]);
     }
 }

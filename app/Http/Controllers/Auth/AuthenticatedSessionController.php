@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,39 +27,38 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // $request->authenticate();
+        $credentials = $request->only('login', 'password');
 
-        // $request->session()->regenerate();
-
-        // return redirect()->intended(route('dashboard', absolute: false));
+        // Cari user berdasarkan email, NIS, NISN, atau ID Guru
         $user = User::where(function ($query) use ($request) {
-            $query->where('nis', $request->login)
+            $query->where('email', $request->login)
+                ->orWhere('nis', $request->login)
                 ->orWhere('nisn', $request->login)
                 ->orWhere('idguru', $request->login);
         })->first();
 
-        // Cek apakah user ditemukan dan password valid
-        // if ($user && Hash::check($request->password, $user->password)) {
-        //     Auth::login($user);
-        //     return redirect()->intended(route('dashboard'));
-        // }
+        // Jika user ditemukan dan password valid
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
 
-            if ($user->role === 'siswa') {
-                return redirect()->route('profil');
-            } elseif ($user->role === 'guru' || $user->role === 'wali kelas') {
-                return redirect()->route('profil.guru');
-            } elseif ($user->role === 'admin' || $user->role === 'super admin') {
-                return redirect()->route('dashboard');
+            // Redirect berdasarkan role
+            switch ($user->role) {
+                case 'siswa':
+                    return redirect()->route('profil');
+                case 'guru':
+                case 'wali kelas':
+                    return redirect()->route('profil.guru');
+                case 'admin':
+                case 'super admin':
+                    return redirect()->route('dashboard');
+                default:
+                    return redirect()->route('dashboard')->with('error', 'Role tidak dikenali.');
             }
-            return redirect()->route('dashboard')->with('error', 'Role tidak dikenali.');
         }
 
-
-        // Jika tidak ditemukan, kembali dengan error
+        // Jika autentikasi gagal
         return back()->withErrors([
-            'login' => 'The provided credentials do not match our records.',
+            'login' => 'Email/NIS/NISN/ID Guru atau password salah.',
         ]);
     }
 
@@ -72,7 +70,6 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');

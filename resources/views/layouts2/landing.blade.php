@@ -75,11 +75,15 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="/" class="{{ Request::is('/') ? 'active' : '' }}">Home</a></li>
-                            <li class="scroll-to-section"><a href="/alur" class="{{ Request::is('alur') ? 'active' : '' }}">PPDB</a></li>
-                            <li class="scroll-to-section"><a href="/visi" class="{{ Request::is('visi') ? 'active' : '' }}">Tentang</a></li>
+                            <li class="scroll-to-section"><a href="/"
+                                    class="{{ Request::is('/') ? 'active' : '' }}">Home</a></li>
+                            <li class="scroll-to-section"><a href="/alur"
+                                    class="{{ Request::is('alur') ? 'active' : '' }}">PPDB</a></li>
+                            <li class="scroll-to-section"><a href="/visi"
+                                    class="{{ Request::is('visi') ? 'active' : '' }}">Tentang</a></li>
                             {{-- <li class="scroll-to-section dropdown">
-                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button"
+                                    aria-expanded="false">
                                     Berkas Pendaftaran
                                 </a>
                                 <ul class="dropdown-menu">
@@ -117,7 +121,8 @@
                                     <div class="col-lg-12">
                                         <h6>Welcome</h6>
                                         <h2>MADRASAH ALIYAH DARUL FALAH</h2>
-                                        <p style="text-align: justify;"><b>MA Darul Falah</b> merupakan salah satu unit pelaksanaan teknis dibidang
+                                        <p style="text-align: justify;"><b>MA Darul Falah</b> merupakan salah satu unit
+                                            pelaksanaan teknis dibidang
                                             pendidikan berazazkan islami ikut serta dalam mengemban tugas dalam
                                             mencerdaskan bangsa. MA Darul Falah senantiasa berusaha untuk memperbaiki
                                             diri dalam peningkatan mutu pendidikan dan mutu pelayanan. Diantara
@@ -151,6 +156,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                    @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
                     @yield('content')
                 </div>
             </div>
@@ -176,7 +196,8 @@
                                         <div class="first-thumb active">
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-01.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-01.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Apartments
                                             </div>
@@ -184,7 +205,8 @@
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-02.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-02.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Food &amp; Life
                                             </div>
@@ -192,7 +214,8 @@
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-03.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-03.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Cars
                                             </div>
@@ -200,7 +223,8 @@
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-04.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-04.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Shopping
                                             </div>
@@ -208,7 +232,8 @@
                                         <div class="last-thumb">
                                             <div class="thumb">
                                                 <span class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/service-icon-01.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/service-icon-01.png') }}"
+                                                        alt="">
                                                 </span>
                                                 Traveling
                                             </div>
@@ -246,7 +271,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -282,7 +308,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image-02.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image-02.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -318,7 +345,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image-03.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image-03.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -354,7 +382,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image-04.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image-04.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -390,7 +419,8 @@
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('digimedia/assets/images/services-image.jpg') }}" alt="">
+                                                                <img src="{{ asset('digimedia/assets/images/services-image.jpg') }}"
+                                                                    alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -571,7 +601,8 @@
                             <div class="col-lg-12">
                                 <div class="post-item">
                                     <div class="thumb">
-                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-02.jpg') }}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-02.jpg') }}"
+                                                alt=""></a>
                                     </div>
                                     <div class="right-content">
                                         <span class="category">SEO Analysis</span>
@@ -586,7 +617,8 @@
                             <div class="col-lg-12">
                                 <div class="post-item">
                                     <div class="thumb">
-                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-03.jpg') }}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-03.jpg') }}"
+                                                alt=""></a>
                                     </div>
                                     <div class="right-content">
                                         <span class="category">SEO Analysis</span>
@@ -601,7 +633,8 @@
                             <div class="col-lg-12">
                                 <div class="post-item last-post-item">
                                     <div class="thumb">
-                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-04.jpg') }}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('digimedia/assets/images/blog-post-04.jpg') }}"
+                                                alt=""></a>
                                     </div>
                                     <div class="right-content">
                                         <span class="category">SEO Analysis</span>
@@ -652,7 +685,8 @@
                                         <div class="col-lg-4">
                                             <div class="info-post">
                                                 <div class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/phone-icon.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/phone-icon.png') }}"
+                                                        alt="">
                                                     <a href="#">010-020-0340</a>
                                                 </div>
                                             </div>
@@ -660,7 +694,8 @@
                                         <div class="col-lg-4">
                                             <div class="info-post">
                                                 <div class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/email-icon.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/email-icon.png') }}"
+                                                        alt="">
                                                     <a href="#">our@email.com</a>
                                                 </div>
                                             </div>
@@ -668,30 +703,36 @@
                                         <div class="col-lg-4">
                                             <div class="info-post">
                                                 <div class="icon">
-                                                    <img src="{{ asset('digimedia/assets/images/location-icon.png') }}" alt="">
+                                                    <img src="{{ asset('digimedia/assets/images/location-icon.png') }}"
+                                                        alt="">
                                                     <a href="#">123 Rio de Janeiro</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <fieldset>
-                                                <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
+                                                <input type="name" name="name" id="name" placeholder="Name"
+                                                    autocomplete="on" required>
                                             </fieldset>
                                             <fieldset>
-                                                <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
+                                                <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*"
+                                                    placeholder="Your Email" required="">
                                             </fieldset>
                                             <fieldset>
-                                                <input type="subject" name="subject" id="subject" placeholder="Subject" autocomplete="on">
+                                                <input type="subject" name="subject" id="subject" placeholder="Subject"
+                                                    autocomplete="on">
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-6">
                                             <fieldset>
-                                                <textarea name="message" type="text" class="form-control" id="message" placeholder="Message" required=""></textarea>
+                                                <textarea name="message" type="text" class="form-control" id="message"
+                                                    placeholder="Message" required=""></textarea>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <button type="submit" id="form-submit" class="main-button">Send Message Now</button>
+                                                <button type="submit" id="form-submit" class="main-button">Send Message
+                                                    Now</button>
                                             </fieldset>
                                         </div>
                                     </div>
@@ -721,7 +762,8 @@
                     <ul style="list-style: none; padding: 0; margin-top: 20px;">
                         <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Kurikulum</a></li>
                         <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Buku-Buku Umum</a></li>
-                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Buku PAI & Bahasa Arab</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Buku PAI & Bahasa Arab</a>
+                        </li>
                         <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Regulasi Madrasah</a></li>
                         <li><a href="#" style="color: #ffffff; text-decoration: none;">Info Juknis & Pedoman</a></li>
                     </ul>
@@ -744,10 +786,13 @@
                     <h4 style="border-bottom: 2px solid #2ecc71; padding-bottom: 10px;">Hubungi Kami</h4>
                     <ul style="list-style: none; padding: 0; margin-top: 20px;">
                         <li><a href="#" style="color: #ffffff; text-decoration: none;">MA Darul Falah</a></li>
-                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Jln. Raya Tayu – Jepara Km.17</a></li>
-                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Ds. Sirahan Kec. Cluwak Kab. Pati Prov.Jawa Tengah</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Jln. Raya Tayu – Jepara Km.17</a>
+                        </li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Ds. Sirahan Kec. Cluwak Kab. Pati
+                                Prov.Jawa Tengah</a></li>
                         <li><a href="#" style="color: #ffffff; text-decoration: none;">Phone: 02914277748</a></li>
-                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Email: darulfalah_sirahan@yahoo.co.id</a></li>
+                        <li><a href="#" style="color: #ffffff; text-decoration: none;">Email:
+                                darulfalah_sirahan@yahoo.co.id</a></li>
                     </ul>
                 </div>
             </div>

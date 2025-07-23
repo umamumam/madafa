@@ -50,7 +50,7 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nis' => 'required|unique:siswas',
+            'nis' => 'nullable|unique:siswas',
             'nisn' => 'nullable|unique:siswas',
             'nik_siswa' => 'nullable',
             'nama_siswa' => 'required',
@@ -58,7 +58,7 @@ class SiswaController extends Controller
             'jeniskelamin_id' => 'required|exists:jenis_kelamins,id',
             'tempat_lahir' => 'nullable|string|max:255',
             'tgl_lahir' => 'nullable|date',
-            'kelas_id' => 'required|exists:kelas,id',
+            'kelas_id' => 'nullable|exists:kelas,id',
             'program_id' => 'required|exists:programs,id',
             'anak_ke' => 'nullable|integer',
             'no_kk' => 'nullable|string|max:20',
@@ -129,8 +129,8 @@ class SiswaController extends Controller
             'no_kks' => $request->no_kks,
             'no_pkh' => $request->no_pkh,
         ]);
-        return redirect()->route('siswas.show', $siswa->id)->with('success', 'Data siswa berhasil ditambahkan');
-        // return redirect()->route('siswas.index')->with('success', 'Data siswa berhasil ditambahkan');
+        // return redirect()->route('siswas.show', $siswa->id)->with('success', 'Data siswa berhasil ditambahkan');
+        return redirect()->route('siswas.index')->with('success', 'Data siswa berhasil ditambahkan');
     }
 
     // Menampilkan form edit siswa

@@ -10,7 +10,8 @@
                 <div class="d-flex flex-wrap align-items-center gap-2">
                     <a href="{{ route('siswas.create') }}" class="btn btn-primary">Tambah Siswa</a>
                     <a href="{{ url('riwayat-kelas/mass-update') }}" class="btn btn-danger">Update Kelas</a>
-                    <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center gap-2">
+                    <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data"
+                        class="d-flex align-items-center gap-2">
                         @csrf
                         <input type="file" name="file" required class="form-control">
                         <button type="submit" class="btn btn-success">Import</button>
@@ -19,7 +20,8 @@
                         Download Template
                     </a>
                 </div>
-                {{-- <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah Tahun Pelajaran</button> --}}
+                {{-- <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">Tambah
+                    Tahun Pelajaran</button> --}}
             </div>
             <div class="card-body" style="overflow-x:auto;">
                 <table id="res-config" class="display table table-striped table-hover dt-responsive nowrap"
@@ -39,42 +41,52 @@
                     </thead>
                     <tbody>
                         @foreach($siswas as $key => $siswa)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>
-                                    @if ($siswa->foto)
-                                    <img src="{{ $siswa->foto ? asset('storage/' . str_replace('public/', '', $siswa->foto)) : asset('images/default.png') }}" alt="Foto Siswa" width="100">
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>
+                                @if ($siswa->foto)
+                                <img src="{{ $siswa->foto ? asset('storage/' . str_replace('public/', '', $siswa->foto)) : asset('images/default.png') }}"
+                                    alt="Foto Siswa" width="100">
 
-                                        {{-- <img src="{{ asset('storage/' . $siswa->foto) }}" alt="Foto" width="60" height="60" style="object-fit: cover; border-radius: 5px;"> --}}
-                                    @else
-                                        <span class="text-muted">Tidak ada</span>
-                                    @endif
-                                </td>
-                                <td>{{ $siswa->nis }}</td>
-                                <td>{{ $siswa->nisn }}</td>
-                                <td>{{ $siswa->nama_siswa }}</td>
-                                <td>{{ $siswa->jeniskelamin->jeniskelamin ?? '-' }}</td>
-                                <td>{{ $siswa->kelas->nama_kelas ?? '-' }}</td>
-                                <td>{{ $siswa->program->program ?? '-' }}</td>
-                                <td>
-                                    <a href="{{ route('siswas.edit', $siswa->id) }}" class="btn btn-warning btn-sm">
-                                        <i class="fa fa-edit"></i> Edit
-                                    </a>
-                                    <a href="{{ route('siswas.show', $siswa->id) }}" class="btn btn-success btn-sm">
-                                        <i class="fa fa-eye"></i> Surat & Kartu
-                                    </a>
-                                    <a href="{{ route('siswa.riwayat.kelas', $siswa->id) }}" class="btn btn-info btn-sm">
-                                        <i class="fa fa-history"></i> Riwayat Kelas
-                                    </a>
-                                    <form action="{{ route('siswas.destroy', $siswa->id) }}" method="POST" style="display:inline;">
+                                {{-- <img src="{{ asset('storage/' . $siswa->foto) }}" alt="Foto" width="60" height="60"
+                                    style="object-fit: cover; border-radius: 5px;"> --}}
+                                @else
+                                <span class="text-muted">Tidak ada</span>
+                                @endif
+                            </td>
+                            <td>{{ $siswa->nis }}</td>
+                            <td>{{ $siswa->nisn }}</td>
+                            <td>{{ $siswa->nama_siswa }}</td>
+                            <td>{{ $siswa->jeniskelamin->jeniskelamin ?? '-' }}</td>
+                            <td>{{ $siswa->kelas->nama_kelas ?? '-' }}</td>
+                            <td>{{ $siswa->program->program ?? '-' }}</td>
+                            <td>
+                                <a href="{{ route('siswas.edit', $siswa->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <a href="{{ route('siswas.show', $siswa->id) }}" class="btn btn-success btn-sm">
+                                    <i class="fa fa-eye"></i> Surat & Kartu
+                                </a>
+                                <a href="{{ route('siswa.riwayat.kelas', $siswa->id) }}" class="btn btn-info btn-sm">
+                                    <i class="fa fa-history"></i> Riwayat Kelas
+                                </a>
+                                <a href="{{ route('pembayaran.index', ['siswa_id' => $siswa->id]) }}"
+                                    class="btn btn-primary btn-sm">
+                                    <i class="fa fa-money-bill-wave"></i> Pembayaran
+                                </a>
+                                <form action="{{ route('siswas.destroy', $siswa->id) }}" method="POST"
+                                    style="display:inline;">
+                                    <form action="{{ route('siswas.destroy', $siswa->id) }}" method="POST"
+                                        style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Yakin ingin menghapus?')">
                                             <i class="fa fa-trash"></i> Hapus
                                         </button>
                                     </form>
-                                </td>
-                            </tr>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
