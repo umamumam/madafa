@@ -91,6 +91,12 @@
                         <span class="pc-mtext">Penyemak</span>
                     </a>
                 </li>
+                <li class="pc-item">
+                    <a href="/laporan/pembayaran" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-clipboard-list"></i></i></span>
+                        <span class="pc-mtext">Laporan Pembayaran</span>
+                    </a>
+                </li>
                 @endif
                 @if(Auth::check() && Auth::user()->role === 'super admin')
                 <li class="pc-item">

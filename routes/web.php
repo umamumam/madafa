@@ -23,6 +23,7 @@ use App\Http\Controllers\TahunPelajaranController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\RaporLokalDetailController;
+use App\Http\Controllers\LaporanPembayaranController;
 use App\Http\Controllers\RiwayatKelasSiswaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -142,4 +143,7 @@ Route::get('/siswas/{id}/preview-dokumen', [DokumenSiswaController::class, 'prev
     ->name('siswas.preview-dokumen');
 Route::delete('/siswas/{id}/delete-dokumen/{docType}', [DokumenSiswaController::class, 'deleteDokumen'])
     ->name('siswas.delete-dokumen');
+Route::get('/laporan/pembayaran', [LaporanPembayaranController::class, 'index'])->name('laporan.pembayaran');
+Route::get('/laporan/pembayaran/cetak', [LaporanPembayaranController::class, 'cetak'])->name('laporan.pembayaran.cetak');
+Route::get('/laporan/pembayaran/export', [LaporanPembayaranController::class, 'exportExcel'])->name('pembayaran.export.excel');
 require __DIR__ . '/auth.php';
