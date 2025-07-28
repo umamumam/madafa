@@ -123,4 +123,8 @@ class Guru extends Model
     {
         return $this->hasMany(Pembayaran::class);
     }
+    public function tabungans()
+    {
+        return $this->hasMany(Tabungan::class);
+    }
 }

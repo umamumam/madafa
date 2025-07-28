@@ -74,6 +74,10 @@
                                     class="btn btn-primary btn-sm">
                                     <i class="fa fa-money-bill-wave"></i> Pembayaran
                                 </a>
+                                <a href="{{ route('tabungan.index', ['siswa_id' => $siswa->id]) }}"
+                                    class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-wallet"></i> Tabungan
+                                </a>
                                 <form action="{{ route('siswas.destroy', $siswa->id) }}" method="POST"
                                     style="display:inline;">
                                     <form action="{{ route('siswas.destroy', $siswa->id) }}" method="POST"

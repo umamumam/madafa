@@ -16,6 +16,19 @@ return new class extends Migration
             $table->foreignId('siswa_id')->constrained()->cascadeOnDelete();
             $table->foreignId('guru_id')->nullable()->constrained()->nullOnDelete();
             $table->string('jenis_pembayaran')->nullable();
+            // tagihan
+            $table->integer('tagihan_spp')->nullable();
+            $table->integer('tagihan_dana_abadi')->nullable();
+            $table->integer('tagihan_bop_smt1')->nullable();
+            $table->integer('tagihan_bop_smt2')->nullable();
+            $table->integer('tagihan_buku_lks')->nullable();
+            $table->integer('tagihan_kitab')->nullable();
+            $table->integer('tagihan_seragam')->nullable();
+            $table->integer('tagihan_infaq_madrasah')->nullable();
+            $table->integer('tagihan_infaq_kalender')->nullable();
+            $table->integer('tagihan_lainlain')->nullable();
+            // bayar
+            $table->Integer('nominal_beasiswa')->nullable();
             $table->Integer('nominal_spp')->nullable();
             $table->Integer('nominal_dana_abadi')->nullable();
             $table->Integer('nominal_bop_smt1')->nullable();
@@ -24,7 +37,7 @@ return new class extends Migration
             $table->Integer('nominal_kitab')->nullable();
             $table->Integer('nominal_seragam')->nullable();
             $table->Integer('nominal_infaq_madrasah')->nullable();
-            $table->Integer('nominal_infaq_kelender')->nullable();
+            $table->Integer('nominal_infaq_kalender')->nullable();
             $table->Integer('nominal_lainlain')->nullable();
 
             $table->date('tgl_bayar');

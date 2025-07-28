@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PenyemakController;
+use App\Http\Controllers\TabunganController;
 use App\Http\Controllers\KdumDetailController;
 use App\Http\Controllers\KompetensiController;
 use App\Http\Controllers\PembayaranController;
@@ -81,6 +82,7 @@ Route::prefix('siswas/{siswa_id}/pembayaran')->group(function () {
     Route::get('/', [PembayaranController::class, 'index'])->name('pembayaran.index');
     Route::get('/create', [PembayaranController::class, 'create'])->name('pembayaran.create');
     Route::post('/', [PembayaranController::class, 'store'])->name('pembayaran.store');
+    Route::get('/{pembayaran}', [PembayaranController::class, 'show'])->name('pembayaran.show');
     Route::get('/{pembayaran_id}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
     Route::put('/{pembayaran_id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
     Route::delete('/{pembayaran_id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
@@ -143,7 +145,15 @@ Route::get('/siswas/{id}/preview-dokumen', [DokumenSiswaController::class, 'prev
     ->name('siswas.preview-dokumen');
 Route::delete('/siswas/{id}/delete-dokumen/{docType}', [DokumenSiswaController::class, 'deleteDokumen'])
     ->name('siswas.delete-dokumen');
+Route::get('/pembayaran/{siswa_id}/{pembayaran_id}/cetak-rincian', [PembayaranController::class, 'cetakRincian'])->name('pembayaran.cetakRincian');
 Route::get('/laporan/pembayaran', [LaporanPembayaranController::class, 'index'])->name('laporan.pembayaran');
 Route::get('/laporan/pembayaran/cetak', [LaporanPembayaranController::class, 'cetak'])->name('laporan.pembayaran.cetak');
 Route::get('/laporan/pembayaran/export', [LaporanPembayaranController::class, 'exportExcel'])->name('pembayaran.export.excel');
+Route::prefix('siswas/{siswa_id}/tabungan')->name('tabungan.')->group(function () {
+    Route::get('/', [TabunganController::class, 'index'])->name('index');
+    Route::post('/', [TabunganController::class, 'store'])->name('store');
+    Route::delete('/{tabungan_id}', [TabunganController::class, 'destroy'])->name('destroy');
+});
+Route::get('/tabungan/{siswa_id}/cetak', [TabunganController::class, 'cetakLaporan'])->name('tabungan.cetak');
+Route::get('/siswa/{siswa_id}/tabungan/{tabungan_id}/kwitansi', [TabunganController::class, 'cetakKwitansi'])->name('tabungan.cetakKwitansi');
 require __DIR__ . '/auth.php';

@@ -146,4 +146,12 @@ class Siswa extends Model
     {
         return $this->hasMany(Pembayaran::class);
     }
+    public function tabungans()
+    {
+        return $this->hasMany(Tabungan::class);
+    }
+    public function getTotalTabunganSaldoAttribute()
+    {
+        return $this->tabungans()->sum('jumlah_setor');
+    }
 }

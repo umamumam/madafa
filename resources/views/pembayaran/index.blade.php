@@ -115,6 +115,10 @@
                                         class="btn btn-sm btn-warning px-2 py-1" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
+                                    <a href="{{ route('pembayaran.show', [$siswa->id, $pembayaran->id]) }}"
+                                        class="btn btn-sm btn-primary px-2 py-1" title="Lihat Detail">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                     <a href="{{ route('pembayaran.kuitansi', [$siswa->id, $pembayaran->id]) }}"
                                         target="_blank" class="btn btn-sm btn-info px-2 py-1" title="Kuitansi">
                                         <i class="fas fa-file-pdf"></i>

@@ -39,105 +39,63 @@
                 <div class="row">
                     <label class="form-label">Jenis Pembayaran</label>
 
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="SPP"
-                                class="form-check-input jenis-checkbox" id="spp">
-                            <label class="form-check-label" for="spp">SPP</label>
-                            <input type="number" name="nominal_spp" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal SPP" disabled>
-                        </div>
+                    @php
+                        $paymentTypes = [
+                            'SPP' => ['tagihan_spp', 'nominal_spp'],
+                            'Dana Abadi' => ['tagihan_dana_abadi', 'nominal_dana_abadi'],
+                            'BOP Semester 1' => ['tagihan_bop_smt1', 'nominal_bop_smt1'],
+                            'BOP Semester 2' => ['tagihan_bop_smt2', 'nominal_bop_smt2'],
+                            'Buku LKS' => ['tagihan_buku_lks', 'nominal_buku_lks'],
+                            'Kitab' => ['tagihan_kitab', 'nominal_kitab'],
+                            'Seragam' => ['tagihan_seragam', 'nominal_seragam'],
+                            'Infaq Madrasah' => ['tagihan_infaq_madrasah', 'nominal_infaq_madrasah'],
+                            'Infaq Kalender' => ['tagihan_infaq_kalender', 'nominal_infaq_kalender'],
+                            'Kolektif' => ['tagihan_lainlain', 'nominal_lainlain']
+                        ];
+                    @endphp
+
+                    {{-- Input baru untuk Nominal Beasiswa --}}
+                    <div class="col-md-12 mb-3">
+                        <label for="nominal_beasiswa" class="form-label">Nominal Beasiswa</label>
+                        <input type="number" name="nominal_beasiswa" id="nominal_beasiswa"
+                            class="form-control"
+                            placeholder="Nominal Beasiswa"
+                            min="0"
+                            value="{{ old('nominal_beasiswa', 0) }}">
+                        @error('nominal_beasiswa')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    @foreach($paymentTypes as $type => $fields)
                     <div class="col-md-6 mb-3">
                         <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="Dana Abadi"
-                                class="form-check-input jenis-checkbox" id="dana_abadi">
-                            <label class="form-check-label" for="dana_abadi">Dana Abadi</label>
-                            <input type="number" name="nominal_dana_abadi" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal Dana Abadi" disabled>
-                        </div>
-                    </div>
+                            <input type="checkbox" name="jenis_pembayaran[]" value="{{ $type }}"
+                                class="form-check-input jenis-checkbox" id="{{ str_replace(' ', '_', strtolower($type)) }}"
+                                {{ in_array($type, old('jenis_pembayaran', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="{{ str_replace(' ', '_', strtolower($type)) }}">{{ $type }}</label>
 
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="BOP Semester 1"
-                                class="form-check-input jenis-checkbox" id="bop_smt1">
-                            <label class="form-check-label" for="bop_smt1">BOP Semester 1</label>
-                            <input type="number" name="nominal_bop_smt1" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal BOP Semester 1" disabled>
+                            <div class="row mt-1">
+                                <div class="col-md-6">
+                                    <input type="number" name="{{ $fields[0] }}"
+                                        class="form-control tagihan-input"
+                                        placeholder="Tagihan {{ $type }}"
+                                        min="0"
+                                        value="{{ old($fields[0]) }}"
+                                        id="{{ $fields[0] }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" name="{{ $fields[1] }}"
+                                        class="form-control nominal-input"
+                                        placeholder="Nominal {{ $type }}"
+                                        min="0"
+                                        value="{{ old($fields[1]) }}"
+                                        id="{{ $fields[1] }}">
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="BOP Semester 2"
-                                class="form-check-input jenis-checkbox" id="bop_smt2">
-                            <label class="form-check-label" for="bop_smt2">BOP Semester 2</label>
-                            <input type="number" name="nominal_bop_smt2" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal BOP Semester 2" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="Buku LKS"
-                                class="form-check-input jenis-checkbox" id="buku_lks">
-                            <label class="form-check-label" for="buku_lks">Buku LKS</label>
-                            <input type="number" name="nominal_buku_lks" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal Buku LKS" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="Kitab"
-                                class="form-check-input jenis-checkbox" id="kitab">
-                            <label class="form-check-label" for="kitab">Kitab</label>
-                            <input type="number" name="nominal_kitab" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal Kitab" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="Seragam"
-                                class="form-check-input jenis-checkbox" id="seragam">
-                            <label class="form-check-label" for="seragam">Seragam</label>
-                            <input type="number" name="nominal_seragam" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal Seragam" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="Infaq Madrasah"
-                                class="form-check-input jenis-checkbox" id="infaq_madrasah">
-                            <label class="form-check-label" for="infaq_madrasah">Infaq Madrasah</label>
-                            <input type="number" name="nominal_infaq_madrasah" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal Infaq Madrasah" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="Infaq Kalender"
-                                class="form-check-input jenis-checkbox" id="infaq_kalender">
-                            <label class="form-check-label" for="infaq_kalender">Infaq Kalender</label>
-                            <input type="number" name="nominal_infaq_kelender" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal Infaq Kalender" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" name="jenis_pembayaran[]" value="Lain-lain"
-                                class="form-check-input jenis-checkbox" id="lain_lain">
-                            <label class="form-check-label" for="lain_lain">Lain-lain</label>
-                            <input type="number" name="nominal_lainlain" class="form-control mt-1 nominal-input"
-                                placeholder="Nominal Lain-lain" disabled>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
                 <div class="row">
@@ -174,36 +132,127 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    // Aktifkan input nominal saat checkbox dipilih
-    document.querySelectorAll('.jenis-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const nominalInput = this.closest('.form-check').querySelector('.nominal-input');
-            nominalInput.disabled = !this.checked;
-            nominalInput.required = this.checked;
-            if (!this.checked) {
-                nominalInput.value = '';
+        const sppCheckbox = document.getElementById('spp');
+        const tagihanSppInput = document.getElementById('tagihan_spp');
+        const nominalSppInput = document.getElementById('nominal_spp');
+        const nominalBeasiswaInput = document.getElementById('nominal_beasiswa');
+
+        // Simpan nilai 'old' dari PHP untuk akses JavaScript
+        const oldValues = {
+            @foreach(old() as $key => $value)
+                '{{ $key }}': @json($value),
+            @endforeach
+        };
+
+        /**
+         * Fungsi untuk memperbarui placeholder dan batas maksimum nominal SPP.
+         */
+        function updateSppNominalPlaceholder() {
+            const tagihanSpp = parseFloat(tagihanSppInput.value) || 0;
+            const nominalBeasiswa = parseFloat(nominalBeasiswaInput.value) || 0;
+            let calculatedSpp = tagihanSpp - nominalBeasiswa;
+
+            // Pastikan nominal_spp tidak kurang dari nol
+            calculatedSpp = Math.max(0, calculatedSpp);
+
+            // Set placeholder untuk nominal_spp
+            nominalSppInput.placeholder = 'Nominal SPP (: ' + calculatedSpp + ')';
+            nominalSppInput.max = calculatedSpp; // Batasi input agar tidak melebihi nilai yang dihitung
+        }
+
+        // --- Pengaturan kondisi awal (saat halaman dimuat) ---
+        document.querySelectorAll('.jenis-checkbox').forEach(checkbox => {
+            const parent = checkbox.closest('.form-check');
+            const nominalInput = parent.querySelector('.nominal-input');
+            const tagihanInput = parent.querySelector('.tagihan-input');
+
+            // Set status checked berdasarkan input lama (old input)
+            if (oldValues['jenis_pembayaran'] && oldValues['jenis_pembayaran'].includes(checkbox.value)) {
+                checkbox.checked = true;
+            }
+
+            // Aktifkan/nonaktifkan input nominal berdasarkan status checkbox
+            if (checkbox.checked) {
+                nominalInput.disabled = false;
+                nominalInput.required = true;
+                if (checkbox.id !== 'spp') { // Untuk selain SPP, set max dari tagihan
+                    nominalInput.max = parseFloat(tagihanInput.value) || '';
+                    // Set nilai nominal dari oldValues jika ada, atau dari tagihan jika belum ada
+                    if (oldValues[nominalInput.name] !== undefined) {
+                        nominalInput.value = oldValues[nominalInput.name];
+                    } else if (tagihanInput.value) {
+                        nominalInput.value = tagihanInput.value;
+                    }
+                }
+            } else {
+                nominalInput.disabled = true;
+                nominalInput.required = false;
+                nominalInput.value = ''; // Kosongkan nilai jika dinonaktifkan
+                nominalInput.max = ''; // Hapus batasan max
+                nominalInput.placeholder = 'Nominal ' + checkbox.labels[0].textContent; // Kembalikan placeholder default
+            }
+        });
+
+        // Lakukan perhitungan awal untuk placeholder nominal SPP saat halaman dimuat
+        updateSppNominalPlaceholder();
+
+
+        // --- Event Listener ---
+
+        // Listener untuk checkbox jenis pembayaran (termasuk SPP)
+        document.querySelectorAll('.jenis-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const parent = this.closest('.form-check');
+                const nominalInput = parent.querySelector('.nominal-input');
+                const tagihanInput = parent.querySelector('.tagihan-input');
+
+                if (this.checked) {
+                    nominalInput.disabled = false;
+                    nominalInput.required = true;
+                    if (this.id === 'spp') {
+                        updateSppNominalPlaceholder(); // Panggil fungsi khusus untuk SPP
+                        // Jangan set nominalInput.value di sini, biarkan pengguna input manual
+                    } else {
+                        // Untuk jenis pembayaran lain, set max ke nilai tagihan
+                        nominalInput.max = parseFloat(tagihanInput.value) || '';
+                        // Jika nominalInput.value kosong, set ke tagihanInput.value sebagai default
+                        if (!nominalInput.value && tagihanInput.value) {
+                            nominalInput.value = tagihanInput.value;
+                        }
+                    }
+                } else {
+                    nominalInput.disabled = true;
+                    nominalInput.required = false;
+                    nominalInput.value = ''; // Kosongkan nilai saat dinonaktifkan
+                    nominalInput.max = ''; // Hapus batasan max
+                    nominalInput.placeholder = 'Nominal ' + checkbox.labels[0].textContent; // Kembalikan placeholder default
+                }
+            });
+        });
+
+        // Listener untuk input tagihan_spp
+        tagihanSppInput.addEventListener('input', function() {
+            updateSppNominalPlaceholder(); // Hitung ulang placeholder nominal_spp saat tagihan_spp berubah
+        });
+
+        // Listener untuk input nominal_beasiswa
+        nominalBeasiswaInput.addEventListener('input', updateSppNominalPlaceholder); // Hitung ulang placeholder SPP saat beasiswa berubah
+
+        // Listener umum untuk input nominal lainnya (selain SPP) untuk memastikan tidak melebihi tagihan
+        document.querySelectorAll('.nominal-input').forEach(input => {
+            if (input.id !== 'nominal_spp') {
+                input.addEventListener('input', function() {
+                    const tagihanInput = this.closest('.form-check').querySelector('.tagihan-input');
+                    const nominalValue = parseFloat(this.value) || 0;
+                    const tagihanValue = parseFloat(tagihanInput.value) || 0;
+
+                    // Pastikan nominal tidak melebihi tagihan
+                    if (nominalValue > tagihanValue) {
+                        this.value = tagihanValue;
+                    }
+                });
             }
         });
     });
-
-    // Set nilai old jika ada error validation
-    @if(old('jenis_pembayaran'))
-        @foreach(old('jenis_pembayaran') as $jenis)
-            const checkbox = document.querySelector(`input[name="jenis_pembayaran[]"][value="{{ $jenis }}"]`);
-            if (checkbox) {
-                checkbox.checked = true;
-                const nominalInput = checkbox.closest('.form-check').querySelector('.nominal-input');
-                nominalInput.disabled = false;
-                nominalInput.required = true;
-
-                // Set nilai nominal jika ada
-                const nominalName = nominalInput.name;
-                @if(old(nominalName))
-                    nominalInput.value = "{{ old(nominalName) }}";
-                @endif
-            }
-        @endforeach
-    @endif
-});
 </script>
 @endsection
