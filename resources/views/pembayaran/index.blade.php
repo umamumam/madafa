@@ -12,7 +12,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">Riwayat Pembayaran - {{ $siswa->nama_siswa }}</h4>
                 <div>
-                    <a href="{{ route('siswas.index') }}" class="btn btn-light btn-sm">
+                    <a href="/pembayaran" class="btn btn-light btn-sm">
                         <i class="fas fa-arrow-left me-1"></i> Kembali
                     </a>
                     <a href="{{ route('pembayaran.create', $siswa->id) }}" class="btn btn-success btn-sm ms-2">
@@ -108,7 +108,7 @@
                                     {{ $pembayaran->status }}
                                 </span>
                             </td>
-                            <td>{{ $pembayaran->petugas->nama ?? $pembayaran->guru->nama_guru ?? '-' }}</td>
+                            <td>{{ $pembayaran->petugas ?? '-' }}</td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-1">
                                     <a href="{{ route('pembayaran.edit', [$siswa->id, $pembayaran->id]) }}"

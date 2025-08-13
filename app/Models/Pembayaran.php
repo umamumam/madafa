@@ -13,7 +13,7 @@ class Pembayaran extends Model
 
     protected $fillable = [
         'siswa_id',
-        'guru_id',
+        'petugas',
         'jenis_pembayaran',
         // Tagihan fields
         'tagihan_spp',
@@ -25,6 +25,7 @@ class Pembayaran extends Model
         'tagihan_seragam',
         'tagihan_infaq_madrasah',
         'tagihan_infaq_kalender',
+        'tagihan_outing_class',
         'tagihan_lainlain',
         // Pembayaran fields
         'nominal_beasiswa',
@@ -37,6 +38,7 @@ class Pembayaran extends Model
         'nominal_seragam',
         'nominal_infaq_madrasah',
         'nominal_infaq_kalender',
+        'nominal_outing_class',
         'nominal_lainlain',
         'tgl_bayar',
         'status',
@@ -55,6 +57,7 @@ class Pembayaran extends Model
         'tagihan_seragam' => 'integer',
         'tagihan_infaq_madrasah' => 'integer',
         'tagihan_infaq_kalender' => 'integer',
+        'tagihan_outing_class' => 'integer',
         'tagihan_lainlain' => 'integer',
         'nominal_beasiswa' => 'integer',
         'nominal_spp' => 'integer',
@@ -66,6 +69,7 @@ class Pembayaran extends Model
         'nominal_seragam' => 'integer',
         'nominal_infaq_madrasah' => 'integer',
         'nominal_infaq_kalender' => 'integer',
+        'nominal_outing_class' => 'integer',
         'nominal_lainlain' => 'integer',
     ];
 
@@ -93,12 +97,12 @@ class Pembayaran extends Model
         return $this->belongsTo(Siswa::class);
     }
 
-    public function guru()
-    {
-        return $this->belongsTo(Guru::class);
-    }
 
-    // Calculate total payment
+    // public function guru()
+    // {
+    //     return $this->belongsTo(Guru::class);
+    // }
+
     public function getTotalAttribute()
     {
         return collect([
@@ -111,11 +115,11 @@ class Pembayaran extends Model
             $this->nominal_seragam,
             $this->nominal_infaq_madrasah,
             $this->nominal_infaq_kalender,
+            $this->nominal_outing_class,
             $this->nominal_lainlain
         ])->sum();
     }
 
-    // Calculate total tagihan
     public function getTotalTagihanAttribute()
     {
         return collect([
@@ -128,11 +132,11 @@ class Pembayaran extends Model
             $this->tagihan_seragam,
             $this->tagihan_infaq_madrasah,
             $this->tagihan_infaq_kalender,
+            $this->tagihan_outing_class,
             $this->tagihan_lainlain
         ])->sum();
     }
 
-    // Calculate sisa tagihan
     public function getSisaTagihanAttribute()
     {
         return $this->getTotalTagihanAttribute() - $this->getTotalAttribute();

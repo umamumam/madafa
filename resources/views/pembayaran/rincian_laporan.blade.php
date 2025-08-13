@@ -281,7 +281,7 @@
                 <td>&nbsp;</td> <td>&nbsp;</td> <td>
                     <p class="mb-0">Sirahan, {{ \Carbon\Carbon::parse($pembayaran->tgl_bayar)->isoFormat('D MMMM YYYY') }}</p>
                     <p>Petugas,</p>
-                    <p class="fw-bold name-line"><u>{{ $pembayaran->guru->nama_guru ?? 'N/A' }}</u></p>
+                    <p class="fw-bold name-line"><u>{{ $pembayaran->petugas ?? 'N/A' }}</u></p>
                 </td>
             </tr>
         </table>

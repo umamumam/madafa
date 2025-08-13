@@ -38,12 +38,12 @@
                         <tr>
                             <td style="width: 35%;">Nama Wali</td>
                             <td style="width: 5%;">:</td>
-                            <td style="width: 60%;">{{ $pembayaran->siswa->nama_ayah ?? '-' }}</td>
+                            <td style="width: 60%;">{{ $siswa->nama_ayah ?? '-' }}</td>
                         </tr>
                         <tr>
                             <td>Asal Madrasah</td>
                             <td>:</td>
-                            <td>{{ $pembayaran->siswa->asal_sekolah ?? '-' }}</td>
+                            <td>{{ $siswa->asal_sekolah ?? '-' }}</td>
                         </tr>
                         <tr>
                             <td>Kelas</td>
@@ -60,10 +60,10 @@
                     <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
                         <i class="fas fa-plus"></i> Tambah Setoran
                     </button>
-                    <a href="{{ route('siswas.index') }}" class="btn btn-secondary me-2">
+                    <a href="/pembayaran" class="btn btn-secondary me-2">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
-                    <a href="{{ route('tabungan.cetak', $siswa->id) }}" class="btn btn-success">
+                    <a href="{{ route('tabungan.cetak', $siswa->id) }}" class="btn btn-success" target="_blank">
                         <i class="fas fa-print"></i> Cetak Laporan
                     </a>
                 </div>
@@ -83,9 +83,10 @@
                     <thead class="table-primary text-center">
                         <tr>
                             <th style="width: 5%;">No.</th>
-                            <th style="width: 25%;">Tanggal Setor</th>
-                            <th style="width: 25%;">Jumlah Setor</th>
-                            <th style="width: 25%;">Saldo Setelah Setor</th>
+                            <th style="width: 20%;">Tanggal Setor</th>
+                            <th style="width: 20%;">Jumlah Setor</th>
+                            <th style="width: 20%;">Saldo Setelah Setor</th>
+                            <th style="width: 20%;">Petugas</th>
                             <th style="width: 15%;" class="d-print-none">Aksi</th>
                         </tr>
                     </thead>
@@ -104,8 +105,9 @@
                                 @endphp
                                 Rp {{ number_format($currentSaldo, 0, ',', '.') }}
                             </td>
+                            <td>{{ $tabungan->petugas }}</td>
                             <td class="text-center d-print-none">
-                                <div class="d-flex justify-content-center align-items-center gap-1"> {{-- Added flex container --}}
+                                <div class="d-flex justify-content-center align-items-center gap-1">
                                     <a href="{{ route('tabungan.cetakKwitansi', [$siswa->id, $tabungan->id]) }}" class="btn btn-sm btn-info" target="_blank">
                                         <i class="fas fa-receipt"></i> Kwitansi
                                     </a>
@@ -122,7 +124,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center text-muted">Belum ada transaksi tabungan.</td>
+                            <td colspan="6" class="text-center text-muted">Belum ada transaksi tabungan.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -151,19 +153,16 @@
                             <label for="jumlah_setor" class="form-label">Jumlah Setor</label>
                             <input type="number" name="jumlah_setor" class="form-control" min="0" required>
                         </div>
-                        {{-- Tambahan: Dropdown pilihan guru --}}
+                        {{-- Pilihan Petugas --}}
                         <div class="mb-3">
-                            <label for="guru_id" class="form-label">Guru Pencatat</label>
-                            <select name="guru_id" id="guru_id"
-                                class="form-control @error('guru_id') is-invalid @enderror">
-                                <option value="">-- Pilih Guru --</option>
-                                @foreach($gurus as $guru)
-                                <option value="{{ $guru->id }}" {{ old('guru_id')==$guru->id ? 'selected' : '' }}>
-                                    {{ $guru->nama_guru }}
-                                </option>
-                                @endforeach
+                            <label for="petugas" class="form-label">Petugas Pencatat</label>
+                            <select name="petugas" id="petugas" class="form-control @error('petugas') is-invalid @enderror">
+                                <option value="">-- Pilih Petugas --</option>
+                                <option value="Anis Maimanah" {{ old('petugas') == 'Anis Maimanah' ? 'selected' : '' }}>Anis Maimanah</option>
+                                <option value="M. Fahruddin" {{ old('petugas') == 'M. Fahruddin' ? 'selected' : '' }}>M. Fahruddin</option>
+                                <option value="Lainnya" {{ old('petugas') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                             </select>
-                            @error('guru_id')
+                            @error('petugas')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

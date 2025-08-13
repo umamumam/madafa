@@ -137,7 +137,7 @@
                         <div class="bold italic">Rp{{ number_format($tabungan->jumlah_setor, 0, ',', '.') }}</div>
                         <hr>
                         <div class="pt-1">
-                            <i>{{ $guruPencatat }}</i><br>
+                            <i>{{ $petugasPencatat }}</i><br>
                             {{ \Carbon\Carbon::parse($tabungan->tgl_setor)->format('d/m/Y') }}
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                         <div class="right">
                             Sirahan, {{ \Carbon\Carbon::parse($tabungan->tgl_setor)->format('d F Y') }}<br>
                             Penerima,<br><br><br>
-                            {{ $guruPencatat }}
+                            {{ $petugasPencatat }}
                         </div>
                     </div>
 

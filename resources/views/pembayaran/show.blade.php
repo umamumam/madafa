@@ -196,7 +196,7 @@
                         }}</p>
                     <p>Petugas,</p>
                     <br><br><br>
-                    <p class="fw-bold mb-0"><u>{{ $pembayaran->guru->nama_guru ?? 'N/A' }}</u></p>
+                    <p class="fw-bold mb-0"><u>{{ $pembayaran->petugas ?? 'N/A' }}</u></p>
                 </div>
             </div>
         </div>

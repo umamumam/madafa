@@ -185,7 +185,7 @@
                         <div class="right">
                             Sirahan, {{ \Carbon\Carbon::parse($pembayaran->tgl_bayar)->format('d F Y') }}<br>
                             Penerima,<br><br><br>
-                            {{ $pembayaran->guru->nama_guru ?? 'Petugas Belum Dipilih' }}
+                            {{ $pembayaran->petugas ?? 'Petugas Belum Dipilih' }}
                         </div>
                     </div>
 

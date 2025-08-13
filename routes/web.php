@@ -78,6 +78,7 @@ Route::resource('mapel', MapelController::class);
 Route::resource('jabatan', JabatanController::class);
 Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
 Route::get('/siswas/{id}/riwayat-kelas', [SiswaController::class, 'showRiwayatKelas'])->name('siswa.riwayat.kelas');
+Route::get('/pembayaran', [PembayaranController::class, 'daftar'])->name('pembayaran.daftar');
 Route::prefix('siswas/{siswa_id}/pembayaran')->group(function () {
     Route::get('/', [PembayaranController::class, 'index'])->name('pembayaran.index');
     Route::get('/create', [PembayaranController::class, 'create'])->name('pembayaran.create');

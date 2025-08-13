@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tabungans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('siswa_id')->constrained('siswas')->cascadeOnDelete();
-            $table->foreignId('guru_id')->nullable()->constrained('gurus')->nullOnDelete();
+            $table->enum('petugas', ['Anis Maimanah', 'M. Fahruddin', 'Lainnya']);
             $table->date('tgl_setor');
             $table->integer('jumlah_setor');
             $table->timestamps();

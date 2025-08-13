@@ -1,64 +1,116 @@
-<table>
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama Siswa</th>
-            <th>Tanggal Bayar</th>
-            <th>Status</th>
-            <th>SPP</th>
-            <th>Dana Abadi</th>
-            <th>BOP SMT1</th>
-            <th>BOP SMT2</th>
-            <th>Buku LKS</th>
-            <th>Kitab</th>
-            <th>Seragam</th>
-            <th>Infaq Madrasah</th>
-            <th>Infaq Kalender</th>
-            <th>Lain-lain</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @php $no = 1; @endphp
-        @foreach ($pembayarans as $item)
-        <tr>
-            <td>{{ $no++ }}</td>
-            <td>{{ $item->siswa->nama ?? '-' }}</td>
-            <td>{{ $item->tgl_bayar }}</td>
-            <td>{{ $item->status }}</td>
-            <td>{{ $item->nominal_spp }}</td>
-            <td>{{ $item->nominal_dana_abadi }}</td>
-            <td>{{ $item->nominal_bop_smt1 }}</td>
-            <td>{{ $item->nominal_bop_smt2 }}</td>
-            <td>{{ $item->nominal_buku_lks }}</td>
-            <td>{{ $item->nominal_kitab }}</td>
-            <td>{{ $item->nominal_seragam }}</td>
-            <td>{{ $item->nominal_infaq_madrasah }}</td>
-            <td>{{ $item->nominal_infaq_kelender }}</td>
-            <td>{{ $item->nominal_lainlain }}</td>
-            <td>
-                {{
-                    $item->nominal_spp + $item->nominal_dana_abadi + $item->nominal_bop_smt1 +
-                    $item->nominal_bop_smt2 + $item->nominal_buku_lks + $item->nominal_kitab +
-                    $item->nominal_seragam + $item->nominal_infaq_madrasah +
-                    $item->nominal_infaq_kelender + $item->nominal_lainlain
-                }}
-            </td>
-        </tr>
-        @endforeach
-        <tr>
-            <td colspan="4"><strong>Total Keseluruhan</strong></td>
-            <td><strong>{{ $totals['spp'] }}</strong></td>
-            <td><strong>{{ $totals['dana_abadi'] }}</strong></td>
-            <td><strong>{{ $totals['bop_smt1'] }}</strong></td>
-            <td><strong>{{ $totals['bop_smt2'] }}</strong></td>
-            <td><strong>{{ $totals['buku_lks'] }}</strong></td>
-            <td><strong>{{ $totals['kitab'] }}</strong></td>
-            <td><strong>{{ $totals['seragam'] }}</strong></td>
-            <td><strong>{{ $totals['infaq_madrasah'] }}</strong></td>
-            <td><strong>{{ $totals['infaq_kelender'] }}</strong></td>
-            <td><strong>{{ $totals['lainlain'] }}</strong></td>
-            <td><strong>{{ $totalAll }}</strong></td>
-        </tr>
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laporan Pembayaran</title>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 10px; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h2 { margin-bottom: 5px; }
+        .header p { margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid #000; }
+        th, td { padding: 4px; text-align: left; vertical-align: top; }
+        th { background-color: #f2f2f2; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .footer { margin-top: 20px; text-align: right; }
+        .total-row { font-weight: bold; }
+        .total-cell { font-size: 11px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>LAPORAN PEMBAYARAN MA DARUL FALAH</h2>
+        <p>Periode: {{ \Carbon\Carbon::parse($startDate)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($endDate)->format('d/m/Y') }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Tgl. Transaksi</th>
+                <th class="text-center">Nama Siswa</th>
+                <th class="text-center">Uraian</th>
+                <th class="text-center">Beasiswa</th>
+                <th class="text-center">SPP</th>
+                <th class="text-center">Abadi</th>
+                <th class="text-center">BOP1</th>
+                <th class="text-center">BOP2</th>
+                <th class="text-center">LKS</th>
+                <th class="text-center">Kitab</th>
+                <th class="text-center">Seragam</th>
+                <th class="text-center">Infaq M.</th>
+                <th class="text-center">Infaq Kal.</th>
+                <th class="text-center">Outing Class</th>
+                <th class="text-center">Lain-lain</th>
+                <th class="text-center">Total (Rp)</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Petugas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($pembayarans as $key => $p)
+                @php
+                    $total =
+                        $p->nominal_beasiswa +
+                        $p->nominal_spp +
+                        $p->nominal_dana_abadi +
+                        $p->nominal_bop_smt1 +
+                        $p->nominal_bop_smt2 +
+                        $p->nominal_buku_lks +
+                        $p->nominal_kitab +
+                        $p->nominal_seragam +
+                        $p->nominal_infaq_madrasah +
+                        $p->nominal_infaq_kalender +
+                        $p->nominal_outing_class +
+                        $p->nominal_lainlain;
+                @endphp
+                <tr>
+                    <td class="text-center">{{ $key + 1 }}</td>
+                    <td>{{ \Carbon\Carbon::parse($p->tgl_bayar)->format('d/m/Y') }}</td>
+                    <td>{{ $p->siswa->nama_siswa ?? '-' }}</td>
+                    <td>{{ $p->keterangan }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_beasiswa, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_spp, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_dana_abadi, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_bop_smt1, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_bop_smt2, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_buku_lks, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_kitab, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_seragam, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_infaq_madrasah, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_infaq_kalender, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_outing_class, 0, ',', '.') }}</td>
+                    <td class="text-right">{{ number_format($p->nominal_lainlain, 0, ',', '.') }}</td>
+                    <td class="text-right total-cell">{{ number_format($total, 0, ',', '.') }}</td>
+                    <td class="text-center">{{ $p->status }}</td>
+                    <td>{{ $p->petugas ?? '-' }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr class="total-row">
+                <td colspan="4">TOTAL KESELURUHAN</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_beasiswa'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_spp'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_dana_abadi'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_bop_smt1'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_bop_smt2'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_buku_lks'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_kitab'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_seragam'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_infaq_madrasah'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_infaq_kalender'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_outing_class'), 0, ',', '.') }}</td>
+                <td class="text-right">{{ number_format($pembayarans->sum('nominal_lainlain'), 0, ',', '.') }}</td>
+                <td class="text-right total-cell">{{ number_format($totalAll, 0, ',', '.') }}</td>
+                <td colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="footer">
+        <p>Dicetak pada: {{ now()->format('d/m/Y H:i:s') }}</p>
+    </div>
+</body>
+</html>

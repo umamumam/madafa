@@ -20,18 +20,15 @@
                 <h5 class="mb-0">Detail Pembayaran - {{ $siswa->nama_siswa }}</h5>
             </div>
             <div class="card-body">
-                <!-- Input petugas -->
                 <div class="mb-3">
                     <label class="form-label">Petugas</label>
-                    <select name="guru_id" class="form-control">
+                    <select name="petugas" class="form-control">
                         <option value="">-- Pilih Petugas --</option>
-                        @foreach($gurus as $guru)
-                        <option value="{{ $guru->id }}" {{ old('guru_id')==$guru->id ? 'selected' : '' }}>
-                            {{ $guru->nama_guru }}
-                        </option>
-                        @endforeach
+                        <option value="Anis Maimanah" {{ old('petugas')=='Anis Maimanah' ? 'selected' : '' }}>Anis Maimanah</option>
+                        <option value="M. Fahruddin" {{ old('petugas')=='M. Fahruddin' ? 'selected' : '' }}>M. Fahruddin</option>
+                        <option value="Lainnya" {{ old('petugas')=='Lainnya' ? 'selected' : '' }}>Lainnya</option>
                     </select>
-                    @error('guru_id')
+                    @error('petugas')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
@@ -50,11 +47,11 @@
                             'Seragam' => ['tagihan_seragam', 'nominal_seragam'],
                             'Infaq Madrasah' => ['tagihan_infaq_madrasah', 'nominal_infaq_madrasah'],
                             'Infaq Kalender' => ['tagihan_infaq_kalender', 'nominal_infaq_kalender'],
-                            'Kolektif' => ['tagihan_lainlain', 'nominal_lainlain']
+                            'Outing Class' => ['tagihan_outing_class', 'nominal_outing_class'],
+                            'Lainlain' => ['tagihan_lainlain', 'nominal_lainlain'],
                         ];
                     @endphp
 
-                    {{-- Input baru untuk Nominal Beasiswa --}}
                     <div class="col-md-12 mb-3">
                         <label for="nominal_beasiswa" class="form-label">Nominal Beasiswa</label>
                         <input type="number" name="nominal_beasiswa" id="nominal_beasiswa"
@@ -137,47 +134,37 @@
         const nominalSppInput = document.getElementById('nominal_spp');
         const nominalBeasiswaInput = document.getElementById('nominal_beasiswa');
 
-        // Simpan nilai 'old' dari PHP untuk akses JavaScript
         const oldValues = {
             @foreach(old() as $key => $value)
                 '{{ $key }}': @json($value),
             @endforeach
         };
 
-        /**
-         * Fungsi untuk memperbarui placeholder dan batas maksimum nominal SPP.
-         */
         function updateSppNominalPlaceholder() {
             const tagihanSpp = parseFloat(tagihanSppInput.value) || 0;
             const nominalBeasiswa = parseFloat(nominalBeasiswaInput.value) || 0;
             let calculatedSpp = tagihanSpp - nominalBeasiswa;
 
-            // Pastikan nominal_spp tidak kurang dari nol
             calculatedSpp = Math.max(0, calculatedSpp);
 
-            // Set placeholder untuk nominal_spp
             nominalSppInput.placeholder = 'Nominal SPP (: ' + calculatedSpp + ')';
-            nominalSppInput.max = calculatedSpp; // Batasi input agar tidak melebihi nilai yang dihitung
+            nominalSppInput.max = calculatedSpp;
         }
 
-        // --- Pengaturan kondisi awal (saat halaman dimuat) ---
         document.querySelectorAll('.jenis-checkbox').forEach(checkbox => {
             const parent = checkbox.closest('.form-check');
             const nominalInput = parent.querySelector('.nominal-input');
             const tagihanInput = parent.querySelector('.tagihan-input');
 
-            // Set status checked berdasarkan input lama (old input)
             if (oldValues['jenis_pembayaran'] && oldValues['jenis_pembayaran'].includes(checkbox.value)) {
                 checkbox.checked = true;
             }
 
-            // Aktifkan/nonaktifkan input nominal berdasarkan status checkbox
             if (checkbox.checked) {
                 nominalInput.disabled = false;
                 nominalInput.required = true;
-                if (checkbox.id !== 'spp') { // Untuk selain SPP, set max dari tagihan
+                if (checkbox.id !== 'spp') {
                     nominalInput.max = parseFloat(tagihanInput.value) || '';
-                    // Set nilai nominal dari oldValues jika ada, atau dari tagihan jika belum ada
                     if (oldValues[nominalInput.name] !== undefined) {
                         nominalInput.value = oldValues[nominalInput.name];
                     } else if (tagihanInput.value) {
@@ -187,19 +174,14 @@
             } else {
                 nominalInput.disabled = true;
                 nominalInput.required = false;
-                nominalInput.value = ''; // Kosongkan nilai jika dinonaktifkan
-                nominalInput.max = ''; // Hapus batasan max
-                nominalInput.placeholder = 'Nominal ' + checkbox.labels[0].textContent; // Kembalikan placeholder default
+                nominalInput.value = '';
+                nominalInput.max = '';
+                nominalInput.placeholder = 'Nominal ' + checkbox.labels[0].textContent;
             }
         });
 
-        // Lakukan perhitungan awal untuk placeholder nominal SPP saat halaman dimuat
         updateSppNominalPlaceholder();
 
-
-        // --- Event Listener ---
-
-        // Listener untuk checkbox jenis pembayaran (termasuk SPP)
         document.querySelectorAll('.jenis-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 const parent = this.closest('.form-check');
@@ -210,12 +192,9 @@
                     nominalInput.disabled = false;
                     nominalInput.required = true;
                     if (this.id === 'spp') {
-                        updateSppNominalPlaceholder(); // Panggil fungsi khusus untuk SPP
-                        // Jangan set nominalInput.value di sini, biarkan pengguna input manual
+                        updateSppNominalPlaceholder();
                     } else {
-                        // Untuk jenis pembayaran lain, set max ke nilai tagihan
                         nominalInput.max = parseFloat(tagihanInput.value) || '';
-                        // Jika nominalInput.value kosong, set ke tagihanInput.value sebagai default
                         if (!nominalInput.value && tagihanInput.value) {
                             nominalInput.value = tagihanInput.value;
                         }
@@ -223,22 +202,19 @@
                 } else {
                     nominalInput.disabled = true;
                     nominalInput.required = false;
-                    nominalInput.value = ''; // Kosongkan nilai saat dinonaktifkan
-                    nominalInput.max = ''; // Hapus batasan max
-                    nominalInput.placeholder = 'Nominal ' + checkbox.labels[0].textContent; // Kembalikan placeholder default
+                    nominalInput.value = '';
+                    nominalInput.max = '';
+                    nominalInput.placeholder = 'Nominal ' + checkbox.labels[0].textContent;
                 }
             });
         });
 
-        // Listener untuk input tagihan_spp
         tagihanSppInput.addEventListener('input', function() {
-            updateSppNominalPlaceholder(); // Hitung ulang placeholder nominal_spp saat tagihan_spp berubah
+            updateSppNominalPlaceholder();
         });
 
-        // Listener untuk input nominal_beasiswa
-        nominalBeasiswaInput.addEventListener('input', updateSppNominalPlaceholder); // Hitung ulang placeholder SPP saat beasiswa berubah
+        nominalBeasiswaInput.addEventListener('input', updateSppNominalPlaceholder);
 
-        // Listener umum untuk input nominal lainnya (selain SPP) untuk memastikan tidak melebihi tagihan
         document.querySelectorAll('.nominal-input').forEach(input => {
             if (input.id !== 'nominal_spp') {
                 input.addEventListener('input', function() {
@@ -246,7 +222,6 @@
                     const nominalValue = parseFloat(this.value) || 0;
                     const tagihanValue = parseFloat(tagihanInput.value) || 0;
 
-                    // Pastikan nominal tidak melebihi tagihan
                     if (nominalValue > tagihanValue) {
                         this.value = tagihanValue;
                     }

@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Siswa;
 use App\Models\Tabungan;
 use App\Models\Pembayaran;
-use App\Models\Guru; // Import model Guru
 use Illuminate\Http\Request;
 use App\Models\TahunPelajaran;
 use Barryvdh\DomPDF\Facade\Pdf;
-// use Illuminate\Support\Facades\Auth; // Tidak diperlukan lagi jika guru_id dipilih manual
 
 class TabunganController extends Controller
 {
@@ -27,15 +25,12 @@ class TabunganController extends Controller
 
         $totalSaldo = $tabungans->sum('jumlah_setor');
 
-        $gurus = Guru::orderBy('nama_guru', 'asc')->get(); // Ambil semua data guru
-
         return view('tabungan.index', [
             'siswa' => $siswa,
             'tabungans' => $tabungans,
             'totalSaldo' => $totalSaldo,
             'tahunPelajaran' => $tahunPelajaran,
             'pembayaran' => $pembayaran,
-            'gurus' => $gurus, // Kirim data guru ke view
         ]);
     }
 
@@ -44,14 +39,12 @@ class TabunganController extends Controller
         $request->validate([
             'tgl_setor'    => 'required|date',
             'jumlah_setor' => 'required|integer|min:0',
-            'guru_id'      => 'nullable|exists:gurus,id', // Validasi guru_id dari input form
+            'petugas'      => 'required|in:Anis Maimanah,M. Fahruddin,Lainnya',
         ]);
-
-        // $guruId = Auth::check() ? Auth::id() : null; // Baris ini dihapus/dinonaktifkan
 
         Tabungan::create([
             'siswa_id'     => $siswa_id,
-            'guru_id'      => $request->guru_id, // Ambil guru_id langsung dari request
+            'petugas'      => $request->petugas,
             'tgl_setor'    => $request->tgl_setor,
             'jumlah_setor' => $request->jumlah_setor,
         ]);
@@ -90,10 +83,11 @@ class TabunganController extends Controller
             ->setPaper('a4', 'portrait');
         return $pdf->stream('laporan-tabungan-' . $siswa->nis . '.pdf');
     }
+
     public function cetakKwitansi($siswa_id, $tabungan_id)
     {
         $siswa = Siswa::with('kelas')->findOrFail($siswa_id);
-        $tabungan = Tabungan::with('guru')->where('siswa_id', $siswa_id)->findOrFail($tabungan_id);
+        $tabungan = Tabungan::where('siswa_id', $siswa_id)->findOrFail($tabungan_id);
         $saldoSebelumnya = Tabungan::where('siswa_id', $siswa_id)
             ->where('tgl_setor', '<', $tabungan->tgl_setor)
             ->sum('jumlah_setor');
@@ -107,7 +101,7 @@ class TabunganController extends Controller
             'tabungan' => $tabungan,
             'saldoSetelahSetorIni' => $saldoSetelahSetorIni,
             'tanggalCetak' => now()->translatedFormat('d F Y H:i:s'),
-            'guruPencatat' => $tabungan->guru ? $tabungan->guru->nama_guru : 'Tidak Diketahui',
+            'petugasPencatat' => $tabungan->petugas ?? 'Tidak Diketahui',
         ];
         $pdf = Pdf::loadView('tabungan.kwitansi', $data)
             ->setPaper('a4', 'portrait');

@@ -1,4 +1,4 @@
-@extends('layouts2.landing')
+@extends('layouts1.app')
 
 @section('content')
     <h1>PPDB</h1>

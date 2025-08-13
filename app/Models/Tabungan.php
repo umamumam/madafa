@@ -8,25 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Tabungan extends Model
 {
     use HasFactory;
+
     protected $table = 'tabungans';
+
     protected $fillable = [
         'siswa_id',
-        'guru_id',
+        'petugas',
         'tgl_setor',
         'jumlah_setor',
     ];
+
     protected $casts = [
         'tgl_setor' => 'date',
         'jumlah_setor' => 'integer',
     ];
+
     public function siswa()
     {
         return $this->belongsTo(Siswa::class);
     }
-    public function guru()
-    {
-        return $this->belongsTo(Guru::class);
-    }
+
     public function getTotalSaldoAttribute()
     {
         return $this->where('siswa_id', $this->siswa_id)->sum('jumlah_setor');

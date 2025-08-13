@@ -9,7 +9,8 @@
         <div class="navbar-content">
             <ul class="pc-navbar">
                 <li class="pc-item">
-                    <a href="{{ (Auth::check() && Auth::user()->role === 'siswa') ? url('/profil') : url('/dashboard') }}" class="pc-link">
+                    <a href="{{ (Auth::check() && Auth::user()->role === 'siswa') ? url('/profil') : url('/dashboard') }}"
+                        class="pc-link">
                         <span class="pc-micon"><i class="ti ti-home"></i></span>
                         <span class="pc-mtext">Dashboard</span>
                     </a>
@@ -31,7 +32,7 @@
                     </ul>
                 </li>
                 @endif
-                @if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'super admin'))
+                {{-- @if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'super admin'))
                 <li class="pc-item pc-hasmenu">
                     <a href="#!" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-list"></i></span>
@@ -46,7 +47,7 @@
                         <li class="pc-item"><a class="pc-link" href="/alumnis-data">Edit Data Alumni MTs</a></li>
                     </ul>
                 </li>
-                @endif
+                @endif --}}
 
                 <li class="pc-item pc-caption">
                     <label>Dafatar Menu</label>
@@ -65,6 +66,19 @@
                         <span class="pc-mtext">Guru</span>
                     </a>
                 </li>
+                @if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'super admin'))
+                <li class="pc-item pc-hasmenu">
+                    <a href="#!" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-list"></i></span>
+                        <span class="pc-mtext">Pembayaran</span>
+                        <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+                    </a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item"><a class="pc-link" href="/pembayaran">Pembayaran</a></li>
+                        <li class="pc-item"><a class="pc-link" href="/laporan/pembayaran">Laporan Pembayaran</a></li>
+                    </ul>
+                </li>
+                @endif
                 <li class="pc-item">
                     <a href="/kdum" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-clipboard-list"></i></span>
@@ -91,12 +105,12 @@
                         <span class="pc-mtext">Penyemak</span>
                     </a>
                 </li>
-                <li class="pc-item">
+                {{-- <li class="pc-item">
                     <a href="/laporan/pembayaran" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-clipboard-list"></i></i></span>
                         <span class="pc-mtext">Laporan Pembayaran</span>
                     </a>
-                </li>
+                </li> --}}
                 @endif
                 @if(Auth::check() && Auth::user()->role === 'super admin')
                 <li class="pc-item">

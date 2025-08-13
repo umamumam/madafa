@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('siswa_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('guru_id')->nullable()->constrained()->nullOnDelete();
+            $table->enum('petugas', ['Anis Maimanah', 'M. Fahruddin', 'Lainnya']);
             $table->string('jenis_pembayaran')->nullable();
             // tagihan
             $table->integer('tagihan_spp')->nullable();
@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('tagihan_seragam')->nullable();
             $table->integer('tagihan_infaq_madrasah')->nullable();
             $table->integer('tagihan_infaq_kalender')->nullable();
+            $table->integer('tagihan_outing_class')->nullable();
             $table->integer('tagihan_lainlain')->nullable();
             // bayar
             $table->Integer('nominal_beasiswa')->nullable();
@@ -38,6 +39,7 @@ return new class extends Migration
             $table->Integer('nominal_seragam')->nullable();
             $table->Integer('nominal_infaq_madrasah')->nullable();
             $table->Integer('nominal_infaq_kalender')->nullable();
+            $table->Integer('nominal_outing_class')->nullable();
             $table->Integer('nominal_lainlain')->nullable();
 
             $table->date('tgl_bayar');

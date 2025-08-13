@@ -23,9 +23,8 @@
                         <label class="form-label">Status</label>
                         <select name="status" class="form-control">
                             <option value="all" {{ $status=='all' ? 'selected' : '' }}>Semua Status</option>
-                            <option value="Lunas" {{ $status=='Lunas' ? 'selected' : '' }}>Lunas</option>
-                            <option value="Belum Lunas" {{ $status=='Belum Lunas' ? 'selected' : '' }}>Belum Lunas
-                            </option>
+                            <option value="Cash" {{ $status=='Cash' ? 'selected' : '' }}>Cash</option>
+                            <option value="Transfer" {{ $status=='Transfer' ? 'selected' : '' }}>Transfer</option>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -69,6 +68,7 @@
                             <th>Tgl. Transaksi</th>
                             <th>Nama Siswa</th>
                             <th>Keterangan</th>
+                            <th>Beasiswa</th>
                             <th>SPP</th>
                             <th>Dana Abadi</th>
                             <th>BOP SMT1</th>
@@ -78,6 +78,7 @@
                             <th>Seragam</th>
                             <th>Infaq Madrasah</th>
                             <th>Infaq Kalender</th>
+                            <th>Outing Class</th>
                             <th>Lain-lain</th>
                             <th>Total</th>
                             <th>Status</th>
@@ -87,7 +88,8 @@
                     <tbody>
                         @foreach($pembayarans as $index => $pembayaran)
                         @php
-                        $total = $pembayaran->nominal_spp +
+                        $total = $pembayaran->nominal_beasiswa +
+                        $pembayaran->nominal_spp +
                         $pembayaran->nominal_dana_abadi +
                         $pembayaran->nominal_bop_smt1 +
                         $pembayaran->nominal_bop_smt2 +
@@ -95,7 +97,8 @@
                         $pembayaran->nominal_kitab +
                         $pembayaran->nominal_seragam +
                         $pembayaran->nominal_infaq_madrasah +
-                        $pembayaran->nominal_infaq_kelender +
+                        $pembayaran->nominal_infaq_kalender +
+                        $pembayaran->nominal_outing_class +
                         $pembayaran->nominal_lainlain;
                         @endphp
                         <tr>
@@ -103,6 +106,7 @@
                             <td>{{ \Carbon\Carbon::parse($pembayaran->tgl_bayar)->format('d/m/Y') }}</td>
                             <td>{{ $pembayaran->siswa->nama_siswa }}</td>
                             <td>{{ $pembayaran->keterangan }}</td>
+                            <td class="text-end">{{ number_format($pembayaran->nominal_beasiswa, 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($pembayaran->nominal_spp, 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($pembayaran->nominal_dana_abadi, 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($pembayaran->nominal_bop_smt1, 0, ',', '.') }}</td>
@@ -112,22 +116,26 @@
                             <td class="text-end">{{ number_format($pembayaran->nominal_seragam, 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($pembayaran->nominal_infaq_madrasah, 0, ',', '.') }}
                             </td>
-                            <td class="text-end">{{ number_format($pembayaran->nominal_infaq_kelender, 0, ',', '.') }}
+                            <td class="text-end">{{ number_format($pembayaran->nominal_infaq_kalender, 0, ',', '.') }}
+                            </td>
+                            <td class="text-end">{{ number_format($pembayaran->nominal_outing_class, 0, ',', '.') }}
                             </td>
                             <td class="text-end">{{ number_format($pembayaran->nominal_lainlain, 0, ',', '.') }}</td>
                             <td class="text-end fw-bold">{{ number_format($total, 0, ',', '.') }}</td>
                             <td>
-                                <span class="badge bg-{{ $pembayaran->status == 'Lunas' ? 'success' : 'warning' }}">
+                                <span class="badge bg-{{ $pembayaran->status == 'Cash' ? 'success' : 'warning' }}">
                                     {{ $pembayaran->status }}
                                 </span>
                             </td>
-                            <td>{{ $pembayaran->guru->nama_guru ?? '-' }}</td>
+                            <td>{{ $pembayaran->petugas ?? '-' }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                     <tfoot class="table-primary">
                         <tr>
                             <th colspan="4">TOTAL</th>
+                            <th class="text-end">{{ number_format($pembayarans->sum('nominal_beasiswa'), 0, ',', '.') }}
+                            </th>
                             <th class="text-end">{{ number_format($pembayarans->sum('nominal_spp'), 0, ',', '.') }}</th>
                             <th class="text-end">{{ number_format($pembayarans->sum('nominal_dana_abadi'), 0, ',', '.')
                                 }}</th>
@@ -143,8 +151,11 @@
                             </th>
                             <th class="text-end">{{ number_format($pembayarans->sum('nominal_infaq_madrasah'), 0, ',',
                                 '.') }}</th>
-                            <th class="text-end">{{ number_format($pembayarans->sum('nominal_infaq_kelender'), 0, ',',
+                            <th class="text-end">{{ number_format($pembayarans->sum('nominal_infaq_kalender'), 0, ',',
                                 '.') }}</th>
+                            <th class="text-end">{{ number_format($pembayarans->sum('nominal_outing_class'), 0, ',',
+                                '.') }}
+                            </th>
                             <th class="text-end">{{ number_format($pembayarans->sum('nominal_lainlain'), 0, ',', '.') }}
                             </th>
                             <th class="text-end fw-bold">{{ number_format($totalAll, 0, ',', '.') }}</th>

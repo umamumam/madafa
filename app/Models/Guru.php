@@ -119,12 +119,12 @@ class Guru extends Model
     {
         return $this->hasMany(RaporLokal::class, 'kepala_madrasah_id');
     }
-    public function pembayarans()
-    {
-        return $this->hasMany(Pembayaran::class);
-    }
-    public function tabungans()
-    {
-        return $this->hasMany(Tabungan::class);
-    }
+    // public function pembayarans()
+    // {
+    //     return $this->hasMany(Pembayaran::class);
+    // }
+    // public function tabungans()
+    // {
+    //     return $this->hasMany(Tabungan::class);
+    // }
 }

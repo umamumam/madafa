@@ -19,7 +19,7 @@ class LaporanPembayaranController extends Controller
         $status = $request->input('status', 'all');
         $siswaId = $request->input('siswa_id');
 
-        $query = Pembayaran::with(['siswa', 'guru'])
+        $query = Pembayaran::with(['siswa'])
             ->whereBetween('tgl_bayar', [$startDate, $endDate])
             ->orderBy('tgl_bayar', 'desc');
 
@@ -37,6 +37,7 @@ class LaporanPembayaranController extends Controller
         // Hitung total keseluruhan untuk tampilan jika dibutuhkan
         $totalAll = $pembayarans->sum(function ($item) {
             return
+                $item->nominal_beasiswa +
                 $item->nominal_spp +
                 $item->nominal_dana_abadi +
                 $item->nominal_bop_smt1 +
@@ -45,7 +46,8 @@ class LaporanPembayaranController extends Controller
                 $item->nominal_kitab +
                 $item->nominal_seragam +
                 $item->nominal_infaq_madrasah +
-                $item->nominal_infaq_kelender +
+                $item->nominal_infaq_kalender +
+                $item->nominal_outing_class +
                 $item->nominal_lainlain;
         });
 
@@ -67,7 +69,7 @@ class LaporanPembayaranController extends Controller
         $status = $request->input('status', 'all');
         $siswaId = $request->input('siswa_id');
 
-        $query = Pembayaran::with(['siswa', 'guru'])
+        $query = Pembayaran::with(['siswa'])
             ->whereBetween('tgl_bayar', [$startDate, $endDate])
             ->orderBy('tgl_bayar', 'desc');
 
@@ -90,7 +92,8 @@ class LaporanPembayaranController extends Controller
             'kitab' => $pembayarans->sum('nominal_kitab'),
             'seragam' => $pembayarans->sum('nominal_seragam'),
             'infaq_madrasah' => $pembayarans->sum('nominal_infaq_madrasah'),
-            'infaq_kelender' => $pembayarans->sum('nominal_infaq_kelender'),
+            'infaq_kalender' => $pembayarans->sum('nominal_infaq_kalender'),
+            'outing_class' => $pembayarans->sum('nominal_outing_class'),
             'lainlain' => $pembayarans->sum('nominal_lainlain'),
         ];
         $totalAll = array_sum($totals);
@@ -116,7 +119,7 @@ class LaporanPembayaranController extends Controller
         $status = $request->input('status', 'all');
         $siswaId = $request->input('siswa_id');
 
-        $query = Pembayaran::with(['siswa', 'guru'])
+        $query = Pembayaran::with(['siswa'])
             ->whereBetween('tgl_bayar', [$startDate, $endDate])
             ->orderBy('tgl_bayar', 'desc');
 
@@ -139,7 +142,8 @@ class LaporanPembayaranController extends Controller
             'kitab' => $pembayarans->sum('nominal_kitab'),
             'seragam' => $pembayarans->sum('nominal_seragam'),
             'infaq_madrasah' => $pembayarans->sum('nominal_infaq_madrasah'),
-            'infaq_kelender' => $pembayarans->sum('nominal_infaq_kelender'),
+            'infaq_kalender' => $pembayarans->sum('nominal_infaq_kalender'),
+            'outing_class' => $pembayarans->sum('nominal_outing_class'),
             'lainlain' => $pembayarans->sum('nominal_lainlain'),
         ];
         $totalAll = array_sum($totals);
