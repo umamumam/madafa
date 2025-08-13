@@ -152,11 +152,11 @@ Route::delete('/siswas/{id}/delete-dokumen/{docType}', [DokumenSiswaController::
 Route::get('/laporan/pembayaran', [LaporanPembayaranController::class, 'index'])->name('laporan.pembayaran');
 Route::get('/laporan/pembayaran/cetak', [LaporanPembayaranController::class, 'cetak'])->name('laporan.pembayaran.cetak');
 Route::get('/laporan/pembayaran/export', [LaporanPembayaranController::class, 'exportExcel'])->name('pembayaran.export.excel');
-Route::prefix('siswas/{siswa_id}/tabungan')->name('tabungan.')->group(function () {
+Route::prefix('siswas/{siswa_nis}/tabungan')->name('tabungan.')->group(function () {
     Route::get('/', [TabunganController::class, 'index'])->name('index');
     Route::post('/', [TabunganController::class, 'store'])->name('store');
     Route::delete('/{tabungan_id}', [TabunganController::class, 'destroy'])->name('destroy');
 });
-Route::get('/tabungan/{siswa_id}/cetak', [TabunganController::class, 'cetakLaporan'])->name('tabungan.cetak');
-Route::get('/siswa/{siswa_id}/tabungan/{tabungan_id}/kwitansi', [TabunganController::class, 'cetakKwitansi'])->name('tabungan.cetakKwitansi');
+Route::get('/tabungan/{siswa_nis}/cetak', [TabunganController::class, 'cetakLaporan'])->name('tabungan.cetak');
+Route::get('/siswa/{siswa_nis}/tabungan/{tabungan_id}/kwitansi', [TabunganController::class, 'cetakKwitansi'])->name('tabungan.cetakKwitansi');
 require __DIR__ . '/auth.php';

@@ -47,7 +47,7 @@
                                     class="btn btn-primary btn-sm">
                                     <i class="fa fa-money-bill-wave"></i> Pembayaran
                                 </a>
-                                <a href="{{ route('tabungan.index', ['siswa_id' => $siswa->id]) }}"
+                                <a href="{{ route('tabungan.index', ['siswa_nis' => $siswa->nis]) }}"
                                     class="btn btn-secondary btn-sm">
                                     <i class="fas fa-wallet"></i> Tabungan
                                 </a>

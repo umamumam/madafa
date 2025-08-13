@@ -12,7 +12,7 @@ class Tabungan extends Model
     protected $table = 'tabungans';
 
     protected $fillable = [
-        'siswa_id',
+        'siswa_nis',
         'petugas',
         'tgl_setor',
         'jumlah_setor',
@@ -25,7 +25,7 @@ class Tabungan extends Model
 
     public function siswa()
     {
-        return $this->belongsTo(Siswa::class);
+        return $this->belongsTo(Siswa::class, 'siswa_nis', 'nis');
     }
 
     public function getTotalSaldoAttribute()

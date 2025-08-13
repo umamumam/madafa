@@ -63,7 +63,7 @@
                     <a href="/pembayaran" class="btn btn-secondary me-2">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
-                    <a href="{{ route('tabungan.cetak', $siswa->id) }}" class="btn btn-success" target="_blank">
+                    <a href="{{ route('tabungan.cetak', $siswa->nis) }}" class="btn btn-success" target="_blank">
                         <i class="fas fa-print"></i> Cetak Laporan
                     </a>
                 </div>
@@ -108,10 +108,10 @@
                             <td>{{ $tabungan->petugas }}</td>
                             <td class="text-center d-print-none">
                                 <div class="d-flex justify-content-center align-items-center gap-1">
-                                    <a href="{{ route('tabungan.cetakKwitansi', [$siswa->id, $tabungan->id]) }}" class="btn btn-sm btn-info" target="_blank">
+                                    <a href="{{ route('tabungan.cetakKwitansi', [$siswa->nis, $tabungan->id]) }}" class="btn btn-sm btn-info" target="_blank">
                                         <i class="fas fa-receipt"></i> Kwitansi
                                     </a>
-                                    <form action="{{ route('tabungan.destroy', [$siswa->id, $tabungan->id]) }}"
+                                    <form action="{{ route('tabungan.destroy', [$siswa->nis, $tabungan->id]) }}"
                                         method="POST" onsubmit="return confirm('Yakin ingin menghapus setoran ini?')">
                                         @csrf
                                         @method('DELETE')
@@ -136,7 +136,7 @@
     {{-- Modal Tambah Setoran --}}
     <div class="modal fade" id="tambahModal" tabindex="-1">
         <div class="modal-dialog">
-            <form action="{{ route('tabungan.store', $siswa->id) }}" method="POST">
+            <form action="{{ route('tabungan.store', $siswa->nis) }}" method="POST">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">

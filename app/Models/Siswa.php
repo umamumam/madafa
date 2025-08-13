@@ -148,7 +148,7 @@ class Siswa extends Model
     }
     public function tabungans()
     {
-        return $this->hasMany(Tabungan::class);
+        return $this->hasMany(Tabungan::class, 'siswa_nis', 'nis');
     }
     public function getTotalTabunganSaldoAttribute()
     {

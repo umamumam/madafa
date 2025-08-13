@@ -11,15 +11,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class TabunganController extends Controller
 {
-    public function index($siswa_id)
+    public function index($siswa_nis)
     {
-        $siswa = Siswa::with('kelas')->findOrFail($siswa_id);
-
+        $siswa = Siswa::with('kelas')->where('nis', $siswa_nis)->firstOrFail();
         $tahunPelajaran = TahunPelajaran::where('active', true)->first();
+        $pembayaran = Pembayaran::where('siswa_nis', $siswa_nis)->first();
 
-        $pembayaran = Pembayaran::where('siswa_id', $siswa_id)->first();
-
-        $tabungans = Tabungan::where('siswa_id', $siswa_id)
+        $tabungans = Tabungan::where('siswa_nis', $siswa_nis)
             ->orderBy('tgl_setor', 'asc')
             ->get();
 
@@ -34,7 +32,7 @@ class TabunganController extends Controller
         ]);
     }
 
-    public function store(Request $request, $siswa_id)
+    public function store(Request $request, $siswa_nis)
     {
         $request->validate([
             'tgl_setor'    => 'required|date',
@@ -43,34 +41,35 @@ class TabunganController extends Controller
         ]);
 
         Tabungan::create([
-            'siswa_id'     => $siswa_id,
+            'siswa_nis'    => $siswa_nis,
             'petugas'      => $request->petugas,
             'tgl_setor'    => $request->tgl_setor,
             'jumlah_setor' => $request->jumlah_setor,
         ]);
 
-        return redirect()->route('tabungan.index', $siswa_id)
+        return redirect()->route('tabungan.index', $siswa_nis)
             ->with('success', 'Setoran berhasil ditambahkan.');
     }
 
-    public function destroy($siswa_id, $tabungan_id)
+    public function destroy($siswa_nis, $tabungan_id)
     {
-        $tabungan = Tabungan::where('siswa_id', $siswa_id)->findOrFail($tabungan_id);
+        $tabungan = Tabungan::where('siswa_nis', $siswa_nis)->findOrFail($tabungan_id);
         $tabungan->delete();
 
-        return redirect()->route('tabungan.index', $siswa_id)
+        return redirect()->route('tabungan.index', $siswa_nis)
             ->with('success', 'Data tabungan berhasil dihapus.');
     }
 
-    public function cetakLaporan($siswa_id)
+    public function cetakLaporan($siswa_nis)
     {
-        $siswa = Siswa::with('kelas')->findOrFail($siswa_id);
+        $siswa = Siswa::with('kelas')->where('nis', $siswa_nis)->firstOrFail();
         $tahunPelajaran = TahunPelajaran::where('active', true)->first();
-        $pembayaran = Pembayaran::where('siswa_id', $siswa_id)->first();
-        $tabungans = Tabungan::where('siswa_id', $siswa_id)
+        $pembayaran = Pembayaran::where('siswa_nis', $siswa_nis)->first();
+        $tabungans = Tabungan::where('siswa_nis', $siswa_nis)
             ->orderBy('tgl_setor', 'asc')
             ->get();
         $totalSaldo = $tabungans->sum('jumlah_setor');
+
         $data = [
             'siswa' => $siswa,
             'tabungans' => $tabungans,
@@ -79,23 +78,28 @@ class TabunganController extends Controller
             'pembayaran' => $pembayaran,
             'tanggalCetak' => now()->translatedFormat('d F Y H:i:s')
         ];
+
         $pdf = Pdf::loadView('tabungan.laporan', $data)
             ->setPaper('a4', 'portrait');
         return $pdf->stream('laporan-tabungan-' . $siswa->nis . '.pdf');
     }
 
-    public function cetakKwitansi($siswa_id, $tabungan_id)
+    public function cetakKwitansi($siswa_nis, $tabungan_id)
     {
-        $siswa = Siswa::with('kelas')->findOrFail($siswa_id);
-        $tabungan = Tabungan::where('siswa_id', $siswa_id)->findOrFail($tabungan_id);
-        $saldoSebelumnya = Tabungan::where('siswa_id', $siswa_id)
+        $siswa = Siswa::with('kelas')->where('nis', $siswa_nis)->firstOrFail();
+        $tabungan = Tabungan::where('siswa_nis', $siswa_nis)->findOrFail($tabungan_id);
+
+        $saldoSebelumnya = Tabungan::where('siswa_nis', $siswa_nis)
             ->where('tgl_setor', '<', $tabungan->tgl_setor)
             ->sum('jumlah_setor');
-        $saldoSebelumnya += Tabungan::where('siswa_id', $siswa_id)
+
+        $saldoSebelumnya += Tabungan::where('siswa_nis', $siswa_nis)
             ->where('tgl_setor', $tabungan->tgl_setor)
             ->where('id', '<', $tabungan->id)
             ->sum('jumlah_setor');
+
         $saldoSetelahSetorIni = $saldoSebelumnya + $tabungan->jumlah_setor;
+
         $data = [
             'siswa' => $siswa,
             'tabungan' => $tabungan,
@@ -103,6 +107,7 @@ class TabunganController extends Controller
             'tanggalCetak' => now()->translatedFormat('d F Y H:i:s'),
             'petugasPencatat' => $tabungan->petugas ?? 'Tidak Diketahui',
         ];
+
         $pdf = Pdf::loadView('tabungan.kwitansi', $data)
             ->setPaper('a4', 'portrait');
         return $pdf->stream('kwitansi-tabungan-' . $siswa->nis . '-' . $tabungan->id . '.pdf');
