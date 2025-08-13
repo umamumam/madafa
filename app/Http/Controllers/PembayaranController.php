@@ -12,12 +12,11 @@ use App\Models\TahunPelajaran;
 
 class PembayaranController extends Controller
 {
-    // Menampilkan semua pembayaran untuk siswa tertentu
-    public function index($siswa_id)
+    public function index($siswa_nis)
     {
         $siswa = Siswa::with(['pembayarans' => function ($query) {
             $query->orderBy('tgl_bayar', 'desc');
-        }])->findOrFail($siswa_id);
+        }])->where('nis', $siswa_nis)->firstOrFail();
 
         return view('pembayaran.index', compact('siswa'));
     }
@@ -30,16 +29,14 @@ class PembayaranController extends Controller
         return view('pembayaran.daftar', compact('siswas'));
     }
 
-    // Menampilkan form tambah pembayaran
-    public function create($siswa_id)
+    public function create($siswa_nis)
     {
-        $siswa = Siswa::findOrFail($siswa_id);
+        $siswa = Siswa::where('nis', $siswa_nis)->firstOrFail();
         $gurus = Guru::all();
         return view('pembayaran.create', compact('siswa', 'gurus'));
     }
 
-    // Menyimpan pembayaran baru
-    public function store(Request $request, $siswa_id)
+    public function store(Request $request, $siswa_nis)
     {
         $validated = $request->validate([
             'petugas' => 'required|string',
@@ -81,8 +78,8 @@ class PembayaranController extends Controller
         ]);
 
         Pembayaran::create([
-            'siswa_id' => $siswa_id,
-            'petugas' => $request->petugas, // Menggunakan 'petugas' dari form
+            'siswa_nis' => $siswa_nis,
+            'petugas' => $request->petugas,
             'jenis_pembayaran' => implode(', ', $request->jenis_pembayaran),
 
             // Tagihan
@@ -117,122 +114,128 @@ class PembayaranController extends Controller
             'keterangan' => $request->keterangan
         ]);
 
-        return redirect()->route('pembayaran.index', $siswa_id)
+        return redirect()->route('pembayaran.index', $siswa_nis)
             ->with('success', 'Pembayaran berhasil ditambahkan!');
     }
 
-    // Menampilkan form edit pembayaran
-    public function edit($siswa_id, $pembayaran_id)
+    public function edit($id)
     {
-        $pembayaran = Pembayaran::where('siswa_id', $siswa_id)->findOrFail($pembayaran_id);
+        $pembayaran = Pembayaran::findOrFail($id);
+        $siswa = $pembayaran->siswa;
         $selectedJenis = array_map('trim', explode(',', $pembayaran->jenis_pembayaran));
         $gurus = Guru::all();
-        $siswa = Siswa::findOrFail($siswa_id);
+
         return view('pembayaran.edit', compact('pembayaran', 'siswa', 'selectedJenis', 'gurus'));
     }
 
-    // Update data pembayaran
-    public function update(Request $request, $siswa_id, $pembayaran_id)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'petugas' => 'required|string',
-            'jenis_pembayaran' => 'required|array|min:1',
-            'jenis_pembayaran.*' => 'in:SPP,Infaq,Seragam,Kitab,Kolektif,Dana Abadi,BOP Semester 1,BOP Semester 2,Buku LKS,Infaq Madrasah,Infaq Kalender,Outing Class,Lain-lain',
+        try {
+            $validated = $request->validate([
+                'petugas' => 'required|string',
+                'jenis_pembayaran' => 'required|array|min:1',
+                'jenis_pembayaran.*' => 'in:SPP,Infaq,Seragam,Kitab,Kolektif,Dana Abadi,BOP Semester 1,BOP Semester 2,Buku LKS,Infaq Madrasah,Infaq Kalender,Outing Class,Lain-lain',
 
-            // Validasi tagihan
-            'tagihan_spp' => 'nullable|numeric|min:0',
-            'tagihan_dana_abadi' => 'nullable|numeric|min:0',
-            'tagihan_bop_smt1' => 'nullable|numeric|min:0',
-            'tagihan_bop_smt2' => 'nullable|numeric|min:0',
-            'tagihan_buku_lks' => 'nullable|numeric|min:0',
-            'tagihan_kitab' => 'nullable|numeric|min:0',
-            'tagihan_seragam' => 'nullable|numeric|min:0',
-            'tagihan_infaq_madrasah' => 'nullable|numeric|min:0',
-            'tagihan_infaq_kalender' => 'nullable|numeric|min:0',
-            'tagihan_outing_class' => 'nullable|numeric|min:0',
-            'tagihan_lainlain' => 'nullable|numeric|min:0',
+                // Validasi tagihan
+                'tagihan_spp' => 'nullable|numeric|min:0',
+                'tagihan_dana_abadi' => 'nullable|numeric|min:0',
+                'tagihan_bop_smt1' => 'nullable|numeric|min:0',
+                'tagihan_bop_smt2' => 'nullable|numeric|min:0',
+                'tagihan_buku_lks' => 'nullable|numeric|min:0',
+                'tagihan_kitab' => 'nullable|numeric|min:0',
+                'tagihan_seragam' => 'nullable|numeric|min:0',
+                'tagihan_infaq_madrasah' => 'nullable|numeric|min:0',
+                'tagihan_infaq_kalender' => 'nullable|numeric|min:0',
+                'tagihan_outing_class' => 'nullable|numeric|min:0',
+                'tagihan_lainlain' => 'nullable|numeric|min:0',
 
-            // Validasi nominal beasiswa baru
-            'nominal_beasiswa' => 'nullable|numeric|min:0',
+                // Validasi nominal beasiswa
+                'nominal_beasiswa' => 'nullable|numeric|min:0',
 
-            // Validasi pembayaran
-            'nominal_spp' => 'nullable|required_if:jenis_pembayaran,SPP|numeric|min:0',
-            'nominal_dana_abadi' => 'nullable|required_if:jenis_pembayaran,Dana Abadi|numeric|min:0|lte:tagihan_dana_abadi',
-            'nominal_bop_smt1' => 'nullable|required_if:jenis_pembayaran,BOP Semester 1|numeric|min:0|lte:tagihan_bop_smt1',
-            'nominal_bop_smt2' => 'nullable|required_if:jenis_pembayaran,BOP Semester 2|numeric|min:0|lte:tagihan_bop_smt2',
-            'nominal_buku_lks' => 'nullable|required_if:jenis_pembayaran,Buku LKS|numeric|min:0|lte:tagihan_buku_lks',
-            'nominal_kitab' => 'nullable|required_if:jenis_pembayaran,Kitab|numeric|min:0|lte:tagihan_kitab',
-            'nominal_seragam' => 'nullable|required_if:jenis_pembayaran,Seragam|numeric|min:0|lte:tagihan_seragam',
-            'nominal_infaq_madrasah' => 'nullable|required_if:jenis_pembayaran,Infaq Madrasah|numeric|min:0|lte:tagihan_infaq_madrasah',
-            'nominal_infaq_kalender' => 'nullable|required_if:jenis_pembayaran,Infaq Kalender|numeric|min:0|lte:tagihan_infaq_kalender',
-            'nominal_outing_class' => 'nullable|required_if:jenis_pembayaran,Outing Class|numeric|min:0|lte:tagihan_outing_class',
-            'nominal_lainlain' => 'nullable|required_if:jenis_pembayaran,Lain-lain|numeric|min:0|lte:tagihan_lainlain',
+                // Validasi pembayaran
+                'nominal_spp' => 'nullable|required_if:jenis_pembayaran,SPP|numeric|min:0',
+                'nominal_dana_abadi' => 'nullable|required_if:jenis_pembayaran,Dana Abadi|numeric|min:0|lte:tagihan_dana_abadi',
+                'nominal_bop_smt1' => 'nullable|required_if:jenis_pembayaran,BOP Semester 1|numeric|min:0|lte:tagihan_bop_smt1',
+                'nominal_bop_smt2' => 'nullable|required_if:jenis_pembayaran,BOP Semester 2|numeric|min:0|lte:tagihan_bop_smt2',
+                'nominal_buku_lks' => 'nullable|required_if:jenis_pembayaran,Buku LKS|numeric|min:0|lte:tagihan_buku_lks',
+                'nominal_kitab' => 'nullable|required_if:jenis_pembayaran,Kitab|numeric|min:0|lte:tagihan_kitab',
+                'nominal_seragam' => 'nullable|required_if:jenis_pembayaran,Seragam|numeric|min:0|lte:tagihan_seragam',
+                'nominal_infaq_madrasah' => 'nullable|required_if:jenis_pembayaran,Infaq Madrasah|numeric|min:0|lte:tagihan_infaq_madrasah',
+                'nominal_infaq_kalender' => 'nullable|required_if:jenis_pembayaran,Infaq Kalender|numeric|min:0|lte:tagihan_infaq_kalender',
+                'nominal_outing_class' => 'nullable|required_if:jenis_pembayaran,Outing Class|numeric|min:0|lte:tagihan_outing_class',
+                'nominal_lainlain' => 'nullable|required_if:jenis_pembayaran,Lain-lain|numeric|min:0|lte:tagihan_lainlain',
 
-            'tgl_bayar' => 'required|date',
-            'status' => 'required|in:Cash,Transfer',
-            'keterangan' => 'nullable|string|max:255',
-        ]);
+                'tgl_bayar' => 'required|date',
+                'status' => 'required|in:Cash,Transfer',
+                'keterangan' => 'nullable|string|max:255',
+            ]);
 
-        $pembayaran = Pembayaran::where('siswa_id', $siswa_id)
-            ->findOrFail($pembayaran_id);
+            $pembayaran = Pembayaran::findOrFail($id);
+            $siswa_nis = $pembayaran->siswa_nis;
 
-        $pembayaran->update([
-            'petugas' => $request->petugas, // Menggunakan 'petugas' dari form
-            'jenis_pembayaran' => implode(', ', $request->jenis_pembayaran),
+            $pembayaran->update([
+                'petugas' => $request->petugas,
+                'jenis_pembayaran' => implode(', ', $request->jenis_pembayaran),
 
-            // Tagihan
-            'tagihan_spp' => $request->tagihan_spp ?? 0,
-            'tagihan_dana_abadi' => $request->tagihan_dana_abadi ?? 0,
-            'tagihan_bop_smt1' => $request->tagihan_bop_smt1 ?? 0,
-            'tagihan_bop_smt2' => $request->tagihan_bop_smt2 ?? 0,
-            'tagihan_buku_lks' => $request->tagihan_buku_lks ?? 0,
-            'tagihan_kitab' => $request->tagihan_kitab ?? 0,
-            'tagihan_seragam' => $request->tagihan_seragam ?? 0,
-            'tagihan_infaq_madrasah' => $request->tagihan_infaq_madrasah ?? 0,
-            'tagihan_infaq_kalender' => $request->tagihan_infaq_kalender ?? 0,
-            'tagihan_outing_class' => $request->tagihan_outing_class ?? 0,
-            'tagihan_lainlain' => $request->tagihan_lainlain ?? 0,
+                // Tagihan
+                'tagihan_spp' => $request->tagihan_spp ?? 0,
+                'tagihan_dana_abadi' => $request->tagihan_dana_abadi ?? 0,
+                'tagihan_bop_smt1' => $request->tagihan_bop_smt1 ?? 0,
+                'tagihan_bop_smt2' => $request->tagihan_bop_smt2 ?? 0,
+                'tagihan_buku_lks' => $request->tagihan_buku_lks ?? 0,
+                'tagihan_kitab' => $request->tagihan_kitab ?? 0,
+                'tagihan_seragam' => $request->tagihan_seragam ?? 0,
+                'tagihan_infaq_madrasah' => $request->tagihan_infaq_madrasah ?? 0,
+                'tagihan_infaq_kalender' => $request->tagihan_infaq_kalender ?? 0,
+                'tagihan_outing_class' => $request->tagihan_outing_class ?? 0,
+                'tagihan_lainlain' => $request->tagihan_lainlain ?? 0,
 
-            // Pembayaran
-            'nominal_beasiswa' => $request->nominal_beasiswa ?? 0,
-            'nominal_spp' => $request->nominal_spp ?? 0,
-            'nominal_dana_abadi' => $request->nominal_dana_abadi ?? 0,
-            'nominal_bop_smt1' => $request->nominal_bop_smt1 ?? 0,
-            'nominal_bop_smt2' => $request->nominal_bop_smt2 ?? 0,
-            'nominal_buku_lks' => $request->nominal_buku_lks ?? 0,
-            'nominal_kitab' => $request->nominal_kitab ?? 0,
-            'nominal_seragam' => $request->nominal_seragam ?? 0,
-            'nominal_infaq_madrasah' => $request->nominal_infaq_madrasah ?? 0,
-            'nominal_infaq_kalender' => $request->nominal_infaq_kalender ?? 0,
-            'nominal_outing_class' => $request->nominal_outing_class ?? 0,
-            'nominal_lainlain' => $request->nominal_lainlain ?? 0,
+                // Pembayaran
+                'nominal_beasiswa' => $request->nominal_beasiswa ?? 0,
+                'nominal_spp' => $request->nominal_spp ?? 0,
+                'nominal_dana_abadi' => $request->nominal_dana_abadi ?? 0,
+                'nominal_bop_smt1' => $request->nominal_bop_smt1 ?? 0,
+                'nominal_bop_smt2' => $request->nominal_bop_smt2 ?? 0,
+                'nominal_buku_lks' => $request->nominal_buku_lks ?? 0,
+                'nominal_kitab' => $request->nominal_kitab ?? 0,
+                'nominal_seragam' => $request->nominal_seragam ?? 0,
+                'nominal_infaq_madrasah' => $request->nominal_infaq_madrasah ?? 0,
+                'nominal_infaq_kalender' => $request->nominal_infaq_kalender ?? 0,
+                'nominal_outing_class' => $request->nominal_outing_class ?? 0,
+                'nominal_lainlain' => $request->nominal_lainlain ?? 0,
 
-            'tgl_bayar' => $request->tgl_bayar,
-            'status' => $request->status,
-            'keterangan' => $request->keterangan
-        ]);
+                'tgl_bayar' => $request->tgl_bayar,
+                'status' => $request->status,
+                'keterangan' => $request->keterangan
+            ]);
 
-        return redirect()->route('pembayaran.index', $siswa_id)
-            ->with('success', 'Pembayaran berhasil diperbarui!');
+            return redirect()->route('pembayaran.index', $siswa_nis)
+                ->with('success', 'Pembayaran berhasil diperbarui!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()
+                ->withErrors($e->validator)
+                ->withInput();
+        } catch (\Exception $e) {
+            return back()
+                ->with('error', 'Gagal memperbarui pembayaran: ' . $e->getMessage());
+        }
     }
 
-    // Hapus pembayaran
-    public function destroy($siswa_id, $pembayaran_id)
+    public function destroy($siswa_nis, $pembayaran_id)
     {
-        Pembayaran::where('siswa_id', $siswa_id)
+        Pembayaran::where('siswa_nis', $siswa_nis)
             ->findOrFail($pembayaran_id)
             ->delete();
 
-        return redirect()->route('pembayaran.index', $siswa_id)
+        return redirect()->route('pembayaran.index', $siswa_nis)
             ->with('success', 'Pembayaran berhasil dihapus!');
     }
 
-    // Fungsi untuk mencetak kuitansi pembayaran (yang sudah ada)
-    public function cetakKuitansi(Request $request, $siswa_id, $pembayaran_id)
+    public function cetakKuitansi(Request $request, $siswa_nis, $pembayaran_id)
     {
         Carbon::setLocale('id');
         $pembayaran = Pembayaran::with('siswa')
-            ->where('siswa_id', $siswa_id)
+            ->where('siswa_nis', $siswa_nis)
             ->findOrFail($pembayaran_id);
         $tahunPelajaran = TahunPelajaran::where('active', true)->first();
         $jenis_pembayaran = [
@@ -275,27 +278,24 @@ class PembayaranController extends Controller
         return $pdf->stream('kuitansi-pembayaran.pdf');
     }
 
-    // Menampilkan detail pembayaran (yang sudah ada)
-    public function show($siswa_id, $pembayaran_id)
+    public function show($siswa_nis, $pembayaran_id)
     {
         $tahunPelajaran = TahunPelajaran::where('active', true)->first();
         $pembayaran = Pembayaran::with(['siswa.kelas'])
-            ->where('siswa_id', $siswa_id)
+            ->where('siswa_nis', $siswa_nis)
             ->findOrFail($pembayaran_id);
         return view('pembayaran.show', compact('pembayaran', 'tahunPelajaran'));
     }
 
-    // Fungsi baru untuk mencetak laporan rincian pembayaran
-    public function cetakRincian(Request $request, $siswa_id, $pembayaran_id)
+    public function cetakRincian(Request $request, $siswa_nis, $pembayaran_id)
     {
         Carbon::setLocale('id');
 
         $tahunPelajaran = TahunPelajaran::where('active', true)->first();
         $pembayaran = Pembayaran::with(['siswa.kelas'])
-            ->where('siswa_id', $siswa_id)
+            ->where('siswa_nis', $siswa_nis)
             ->findOrFail($pembayaran_id);
 
-        // Definisi item pembayaran dan field terkait
         $paymentItemsDefinition = [
             'Syahriyah' => ['tagihan_field' => 'tagihan_spp', 'nominal_field' => 'nominal_spp'],
             'Dana Abadi' => ['tagihan_field' => 'tagihan_dana_abadi', 'nominal_field' => 'nominal_dana_abadi'],

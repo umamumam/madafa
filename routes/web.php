@@ -79,16 +79,19 @@ Route::resource('jabatan', JabatanController::class);
 Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
 Route::get('/siswas/{id}/riwayat-kelas', [SiswaController::class, 'showRiwayatKelas'])->name('siswa.riwayat.kelas');
 Route::get('/pembayaran', [PembayaranController::class, 'daftar'])->name('pembayaran.daftar');
-Route::prefix('siswas/{siswa_id}/pembayaran')->group(function () {
+Route::get('/pembayaran/{id}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
+Route::put('/pembayaran/{id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
+Route::prefix('siswas/{siswa_nis}/pembayaran')->group(function () {
     Route::get('/', [PembayaranController::class, 'index'])->name('pembayaran.index');
     Route::get('/create', [PembayaranController::class, 'create'])->name('pembayaran.create');
     Route::post('/', [PembayaranController::class, 'store'])->name('pembayaran.store');
-    Route::get('/{pembayaran}', [PembayaranController::class, 'show'])->name('pembayaran.show');
-    Route::get('/{pembayaran_id}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
-    Route::put('/{pembayaran_id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
+    Route::get('/{pembayaran_id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
+    // Route::get('/{pembayaran_id}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
+    // Route::put('/{pembayaran_id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
     Route::delete('/{pembayaran_id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
     Route::get('/{pembayaran_id}/kuitansi', [PembayaranController::class, 'cetakKuitansi'])->name('pembayaran.kuitansi');
 });
+Route::get('/pembayaran/{siswa_nis}/{pembayaran_id}/cetak-rincian', [PembayaranController::class, 'cetakRincian'])->name('pembayaran.cetakRincian');
 Route::resource('siswas', SiswaController::class);
 Route::get('siswas/{id}', [SiswaController::class, 'show'])->name('siswas.show');
 Route::get('/siswa/edit-siswa/{id}', [SiswaController::class, 'editSiswa'])->name('siswas.edit-siswa');
@@ -146,7 +149,6 @@ Route::get('/siswas/{id}/preview-dokumen', [DokumenSiswaController::class, 'prev
     ->name('siswas.preview-dokumen');
 Route::delete('/siswas/{id}/delete-dokumen/{docType}', [DokumenSiswaController::class, 'deleteDokumen'])
     ->name('siswas.delete-dokumen');
-Route::get('/pembayaran/{siswa_id}/{pembayaran_id}/cetak-rincian', [PembayaranController::class, 'cetakRincian'])->name('pembayaran.cetakRincian');
 Route::get('/laporan/pembayaran', [LaporanPembayaranController::class, 'index'])->name('laporan.pembayaran');
 Route::get('/laporan/pembayaran/cetak', [LaporanPembayaranController::class, 'cetak'])->name('laporan.pembayaran.cetak');
 Route::get('/laporan/pembayaran/export', [LaporanPembayaranController::class, 'exportExcel'])->name('pembayaran.export.excel');

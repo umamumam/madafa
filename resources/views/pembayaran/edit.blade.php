@@ -12,7 +12,7 @@
         </ul>
     </div>
     @endif
-    <form method="POST" action="{{ route('pembayaran.update', [$siswa->id, $pembayaran->id]) }}">
+    <form method="POST" action="{{ route('pembayaran.update', [$pembayaran->id]) }}">
         @csrf
         @method('PUT')
 
@@ -123,7 +123,7 @@
         <button type="submit" class="btn btn-primary">
             <i class="fas fa-save"></i> Perbarui Pembayaran
         </button>
-        <a href="{{ route('pembayaran.index', $siswa->id) }}" class="btn btn-secondary">
+        <a href="{{ route('pembayaran.index', $siswa->nis) }}" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Kembali
         </a>
     </form>

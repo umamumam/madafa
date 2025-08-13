@@ -43,7 +43,7 @@
                                 <a href="{{ route('siswa.riwayat.kelas', $siswa->id) }}" class="btn btn-info btn-sm">
                                     <i class="fa fa-history"></i> Riwayat Kelas
                                 </a> --}}
-                                <a href="{{ route('pembayaran.index', ['siswa_id' => $siswa->id]) }}"
+                                <a href="{{ route('pembayaran.index', ['siswa_nis' => $siswa->nis]) }}"
                                     class="btn btn-primary btn-sm">
                                     <i class="fa fa-money-bill-wave"></i> Pembayaran
                                 </a>

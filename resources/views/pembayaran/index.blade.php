@@ -15,7 +15,7 @@
                     <a href="/pembayaran" class="btn btn-light btn-sm">
                         <i class="fas fa-arrow-left me-1"></i> Kembali
                     </a>
-                    <a href="{{ route('pembayaran.create', $siswa->id) }}" class="btn btn-success btn-sm ms-2">
+                    <a href="{{ route('pembayaran.create', $siswa->nis) }}" class="btn btn-success btn-sm ms-2">
                         <i class="fas fa-plus me-1"></i> Tambah Pembayaran
                     </a>
                 </div>
@@ -111,19 +111,23 @@
                             <td>{{ $pembayaran->petugas ?? '-' }}</td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-1">
-                                    <a href="{{ route('pembayaran.edit', [$siswa->id, $pembayaran->id]) }}"
+                                    {{-- <a href="{{ route('pembayaran.edit', ['siswa_nis' => $siswa->nis, 'pembayaran_id' => $pembayaran->id]) }}"
+                                        class="btn btn-sm btn-warning px-2 py-1" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a> --}}
+                                    <a href="{{ route('pembayaran.edit', $pembayaran->id) }}"
                                         class="btn btn-sm btn-warning px-2 py-1" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('pembayaran.show', [$siswa->id, $pembayaran->id]) }}"
+                                    <a href="{{ route('pembayaran.show', [$siswa->nis, $pembayaran->id]) }}"
                                         class="btn btn-sm btn-primary px-2 py-1" title="Lihat Detail">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('pembayaran.kuitansi', [$siswa->id, $pembayaran->id]) }}"
+                                    <a href="{{ route('pembayaran.kuitansi', [$siswa->nis, $pembayaran->id]) }}"
                                         target="_blank" class="btn btn-sm btn-info px-2 py-1" title="Kuitansi">
                                         <i class="fas fa-file-pdf"></i>
                                     </a>
-                                    <form action="{{ route('pembayaran.destroy', [$siswa->id, $pembayaran->id]) }}"
+                                    <form action="{{ route('pembayaran.destroy', [$siswa->nis, $pembayaran->id]) }}"
                                         method="POST">
                                         @csrf
                                         @method('DELETE')

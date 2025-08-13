@@ -68,7 +68,8 @@
                 'Seragam' => ['tagihan_field' => 'tagihan_seragam', 'nominal_field' => 'nominal_seragam'],
                 'Infaq Madrasah' => ['tagihan_field' => 'tagihan_infaq_madrasah', 'nominal_field' => 'nominal_infaq_madrasah'],
                 'Infaq Kalender' => ['tagihan_field' => 'tagihan_infaq_kalender', 'nominal_field' => 'nominal_infaq_kalender'],
-                'Outing Class Dll' => ['tagihan_field' => 'tagihan_lainlain', 'nominal_field' => 'nominal_lainlain'],
+                'Outing Class' => ['tagihan_field' => 'tagihan_outing_class', 'nominal_field' => 'nominal_outing_class'],
+                'Kolektif' => ['tagihan_field' => 'tagihan_lainlain', 'nominal_field' => 'nominal_lainlain'],
             ];
 
             $displayItems = [];
@@ -203,10 +204,10 @@
     </div>
 
     <div class="mt-4 d-print-none">
-        <a href="{{ route('pembayaran.cetakRincian', [$pembayaran->siswa_id, $pembayaran->id]) }}" class="btn btn-success" target="_blank">
+        <a href="{{ route('pembayaran.cetakRincian', [$pembayaran->siswa_nis, $pembayaran->id]) }}" class="btn btn-success" target="_blank">
             <i class="fas fa-print"></i> Cetak PDF
         </a>
-        <a href="{{ route('pembayaran.index', $pembayaran->siswa_id) }}" class="btn btn-secondary"> <i
+        <a href="{{ route('pembayaran.index', $pembayaran->siswa_nis) }}" class="btn btn-secondary"> <i
                 class="fas fa-arrow-left"></i> Kembali
         </a>
     </div>

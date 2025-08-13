@@ -144,7 +144,7 @@ class Siswa extends Model
     }
     public function pembayarans()
     {
-        return $this->hasMany(Pembayaran::class);
+        return $this->hasMany(Pembayaran::class, 'siswa_nis', 'nis');
     }
     public function tabungans()
     {

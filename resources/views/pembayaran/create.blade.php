@@ -12,7 +12,7 @@
         </ul>
     </div>
     @endif
-    <form method="POST" action="{{ route('pembayaran.store', $siswa->id) }}">
+    <form method="POST" action="{{ route('pembayaran.store', $siswa->nis) }}">
         @csrf
 
         <div class="card mb-3">

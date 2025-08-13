@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('siswa_id')->constrained()->cascadeOnDelete();
+            // $table->foreignId('siswa_id')->constrained()->cascadeOnDelete();
+            $table->string('siswa_nis')->nullable();
+            $table->foreign('siswa_nis')->references('nis')->on('siswas')->onDelete('cascade');
             $table->enum('petugas', ['Anis Maimanah', 'M. Fahruddin', 'Lainnya']);
             $table->string('jenis_pembayaran')->nullable();
             // tagihan
