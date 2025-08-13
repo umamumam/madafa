@@ -11,13 +11,13 @@ class KdumDetailController extends Controller
     {
         $request->validate([
             'nilai_id' => 'nullable|exists:nilais,id',
-            'penyemak_id' => 'nullable|exists:penyemaks,id',
+            'guru_id' => 'nullable|exists:gurus,id',
         ]);
 
         $detail = KdumDetail::findOrFail($id);
         $detail->update([
             'nilai_id' => $request->nilai_id,
-            'penyemak_id' => $request->penyemak_id,
+            'guru_id' => $request->guru_id,
         ]);
 
         return redirect()->back()->with('success', 'Nilai dan penyemak berhasil diperbarui.');

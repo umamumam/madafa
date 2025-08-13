@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use PDF;
+use App\Models\Guru;
 use App\Models\Kdum;
 use App\Models\Kelas;
 use App\Models\Nilai;
 use App\Models\Siswa;
-// use Barryvdh\DomPDF\PDF;
-use App\Models\Penyemak;
 use App\Models\KdumDetail;
 use App\Models\Kompetensi;
 use Illuminate\Http\Request;
@@ -26,10 +25,10 @@ class KdumController extends Controller
 
     public function showDetail($id)
     {
-        $kdum = Kdum::with(['siswa', 'kelas', 'tahunPelajaran', 'details.kompetensi', 'details.nilai', 'details.penyemak'])
+        $kdum = Kdum::with(['siswa', 'kelas', 'tahunPelajaran', 'details.kompetensi', 'details.nilai', 'details.guru'])
             ->findOrFail($id);
-        $penyemaks = Penyemak::with('guru')->get();
-        return view('kdum.detail', compact('kdum', 'penyemaks'));
+        $gurus = Guru::all();
+        return view('kdum.detail', compact('kdum', 'gurus'));
     }
 
     public function showBySiswa()
@@ -45,14 +44,14 @@ class KdumController extends Controller
         if (!$siswa) {
             return back()->with('error', 'Data siswa tidak ditemukan.');
         }
-        $kdum = \App\Models\Kdum::with(['siswa.jenisKelamin', 'kelas.program', 'tahunPelajaran', 'details.kompetensi', 'details.nilai', 'details.penyemak'])
+        $kdum = \App\Models\Kdum::with(['siswa.jenisKelamin', 'kelas.program', 'tahunPelajaran', 'details.kompetensi', 'details.nilai', 'details.guru'])
             ->where('siswa_id', $siswa->id)
             ->first();
         if (!$kdum) {
             return back()->with('error', 'KDUM belum dibuat untuk siswa ini.');
         }
-        $penyemaks = \App\Models\Penyemak::with('guru')->get();
-        return view('kdum.siswa-detail', compact('kdum', 'penyemaks'));
+        $gurus = Guru::all();
+        return view('kdum.siswa-detail', compact('kdum', 'gurus'));
     }
     public function exportPdf($id)
     {
@@ -63,7 +62,7 @@ class KdumController extends Controller
             'tahunPelajaran',
             'details.kompetensi',
             'details.nilai',
-            'details.penyemak',
+            'details.guru',
         ])->findOrFail($id);
 
         $pdf = PDF::loadView('kdum.export-pdf', compact('kdum'));
@@ -76,7 +75,7 @@ class KdumController extends Controller
             'raporTerbaru.tahunPelajaran',
             'details.kompetensi',
             'details.nilai',
-            'details.penyemak.guru'
+            'details.guru'
         ])->get();
 
         $pdf = PDF::loadView('kdum.kdum-all', compact('kdums'))->setPaper('a4', 'portrait');

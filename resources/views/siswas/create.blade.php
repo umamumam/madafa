@@ -7,10 +7,10 @@
 
         <div class="card p-3 mb-4">
             <div class="row">
-                    {{-- <div class="col-md-4 mb-2">
+                    <div class="col-md-4 mb-2">
                         <label for="nis">NIS</label>
                         <input type="text" name="nis" class="form-control" required>
-                    </div> --}}
+                    </div>
                     <div class="col-md-4 mb-2">
                         <label for="nisn">NISN</label>
                         <input type="text" name="nisn" class="form-control">

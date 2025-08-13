@@ -98,9 +98,9 @@ class Guru extends Model
     {
         return $this->belongsTo(Jabatan::class, 'jabatan_3_id');
     }
-    public function penyemaks()
+    public function kdumDetails()
     {
-        return $this->hasMany(Penyemak::class, 'guru_id');
+        return $this->hasMany(KdumDetail::class, 'guru_id');
     }
     public function users()
     {

@@ -17,21 +17,19 @@
                         <thead style="background-color: #e9f5ff;">
                             <tr>
                                 <th style="width: 50px;">No</th>
-                                {{-- <th>Urutan</th> --}}
                                 <th>Kompetensi</th>
                                 <th>Nilai</th>
-                                <th>Penyemak</th>
+                                <th>Guru</th>
                                 <th style="width: 300px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($kdum->details as $detail)
                             <tr>
-                                {{-- <td>{{ $loop->iteration }}</td> --}}
                                 <td>{{ $detail->kompetensi->urutan }}</td>
                                 <td>{{ $detail->kompetensi->nama_kompetensi }}</td>
                                 <td>{{ $detail->nilai->abjad ?? '-' }}</td>
-                                <td>{{ $detail->penyemak->guru->nama_guru ?? '-' }}</td>
+                                <td>{{ $detail->guru->nama_guru ?? '-' }}</td>
                                 <td>
                                     <form action="{{ route('kdumdetail.update', $detail->id) }}" method="POST" class="d-flex flex-wrap align-items-center gap-2">
                                         @csrf
@@ -46,33 +44,25 @@
                                             @endforeach
                                         </select>
 
-                                        {{-- <select name="penyemak_id" class="form-select form-select-sm" style="width: auto;">
-                                            <option value="">Penyemak</option>
-                                            @foreach($penyemaks as $penyemak)
-                                            <option value="{{ $penyemak->id }}" @selected($detail->penyemak_id == $penyemak->id)>
-                                                {{ $penyemak->guru->nama_guru }}
-                                            </option>
-                                            @endforeach
-                                        </select> --}}
                                         <div class="position-relative" style="width: 300px;">
-                                            <input type="text" class="form-control form-control-sm" id="penyemak_input_{{ $detail->id }}"
-                                                name="penyemak_input" placeholder="Ketik nama penyemak..."
-                                                value="{{ $detail->penyemak->guru->nama_guru ?? '' }}" oninput="filterPenyemak({{ $detail->id }})"
+                                            <input type="text" class="form-control form-control-sm" id="guru_input_{{ $detail->id }}"
+                                                name="guru_input" placeholder="Ketik nama guru..."
+                                                value="{{ $detail->guru->nama_guru ?? '' }}" oninput="filterGuru({{ $detail->id }})"
                                                 autocomplete="off">
-                                            <input type="hidden" name="penyemak_id" id="penyemak_id_{{ $detail->id }}" value="{{ $detail->penyemak_id }}">
-                                            <ul id="penyemak_list_{{ $detail->id }}" class="dropdown-menu show"
+                                            <input type="hidden" name="guru_id" id="guru_id_{{ $detail->id }}" value="{{ $detail->guru_id }}">
+                                            <ul id="guru_list_{{ $detail->id }}" class="dropdown-menu show"
                                                 style="display: none; width: 100%; position: absolute; z-index: 999; max-height: 200px; overflow-y: auto;">
-                                                <li class="penyemak_item_{{ $detail->id }}">
+                                                <li class="guru_item_{{ $detail->id }}">
                                                     <a href="javascript:void(0);" class="dropdown-item text-danger"
-                                                        onclick="hapusPenyemak({{ $detail->id }})">
+                                                        onclick="hapusGuru({{ $detail->id }})">
                                                         -- Hapus Pilihan --
                                                     </a>
                                                 </li>
-                                                @foreach($penyemaks as $penyemak)
-                                                <li class="penyemak_item_{{ $detail->id }}">
+                                                @foreach($gurus as $guru)
+                                                <li class="guru_item_{{ $detail->id }}">
                                                     <a href="javascript:void(0);" class="dropdown-item"
-                                                        onclick="pilihPenyemak('{{ $penyemak->id }}', '{{ $penyemak->guru->nama_guru }}', {{ $detail->id }})">
-                                                        {{ $penyemak->guru->nama_guru }}
+                                                        onclick="pilihGuru('{{ $guru->id }}', '{{ $guru->nama_guru }}', {{ $detail->id }})">
+                                                        {{ $guru->nama_guru }}
                                                     </a>
                                                 </li>
                                                 @endforeach
@@ -99,10 +89,10 @@
     </div>
 </div>
 <script>
-    function filterPenyemak(id) {
-        let input = document.getElementById("penyemak_input_" + id).value.toLowerCase();
-        let list = document.getElementById("penyemak_list_" + id);
-        let items = document.querySelectorAll(".penyemak_item_" + id);
+    function filterGuru(id) {
+        let input = document.getElementById("guru_input_" + id).value.toLowerCase();
+        let list = document.getElementById("guru_list_" + id);
+        let items = document.querySelectorAll(".guru_item_" + id);
 
         let visibleCount = 0;
         for (let item of items) {
@@ -118,24 +108,24 @@
         list.style.display = visibleCount > 0 ? "block" : "none";
     }
 
-    function pilihPenyemak(id, nama, detailId) {
-        document.getElementById("penyemak_input_" + detailId).value = nama;
-        document.getElementById("penyemak_id_" + detailId).value = id;
-        document.getElementById("penyemak_list_" + detailId).style.display = "none";
+    function pilihGuru(id, nama, detailId) {
+        document.getElementById("guru_input_" + detailId).value = nama;
+        document.getElementById("guru_id_" + detailId).value = id;
+        document.getElementById("guru_list_" + detailId).style.display = "none";
     }
 
     document.addEventListener("click", function (event) {
-        document.querySelectorAll("[id^=penyemak_list_]").forEach(list => {
+        document.querySelectorAll("[id^=guru_list_]").forEach(list => {
             if (!list.contains(event.target) &&
-                !document.getElementById("penyemak_input_" + list.id.split("_")[2]).contains(event.target)) {
+                !document.getElementById("guru_input_" + list.id.split("_")[2]).contains(event.target)) {
                 list.style.display = "none";
             }
         });
     });
-    function hapusPenyemak(id) {
-        document.getElementById(`penyemak_input_${id}`).value = '';
-        document.getElementById(`penyemak_id_${id}`).value = '';
-        document.getElementById(`penyemak_list_${id}`).style.display = "none";
+    function hapusGuru(id) {
+        document.getElementById(`guru_input_${id}`).value = '';
+        document.getElementById(`guru_id_${id}`).value = '';
+        document.getElementById(`guru_list_${id}`).style.display = "none";
     }
 
 </script>

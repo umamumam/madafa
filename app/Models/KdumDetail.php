@@ -13,7 +13,7 @@ class KdumDetail extends Model
         'kdum_id',
         'kompetensi_id',
         'nilai_id',
-        'penyemak_id',
+        'guru_id',
     ];
 
     public function kdum()
@@ -26,9 +26,9 @@ class KdumDetail extends Model
         return $this->belongsTo(Nilai::class);
     }
 
-    public function penyemak()
+    public function guru()
     {
-        return $this->belongsTo(Penyemak::class);
+        return $this->belongsTo(Guru::class);
     }
     public function kompetensi()
     {

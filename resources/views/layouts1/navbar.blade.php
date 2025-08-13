@@ -99,12 +99,12 @@
                 </li>
                 @endif
                 @if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'super admin'))
-                <li class="pc-item">
+                {{-- <li class="pc-item">
                     <a href="/penyemak" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-clipboard-list"></i></i></span>
                         <span class="pc-mtext">Penyemak</span>
                     </a>
-                </li>
+                </li> --}}
                 {{-- <li class="pc-item">
                     <a href="/laporan/pembayaran" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-clipboard-list"></i></i></span>

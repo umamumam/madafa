@@ -62,7 +62,7 @@
                 <td style="text-align: center;">{{ $index + 1 }}</td>
                 <td>{{ $detail->kompetensi->nama_kompetensi ?? '-' }}</td>
                 <td style="text-align: center;">{{ $detail->nilai->abjad ?? '-' }}</td>
-                <td>{{ $detail->penyemak->guru->nama_guru ?? '-' }}</td>
+                <td>{{ $detail->guru->nama_guru ?? '-' }}</td>
             </tr>
             @endforeach
         </tbody>
