@@ -43,14 +43,23 @@
                                 <a href="{{ route('siswa.riwayat.kelas', $siswa->id) }}" class="btn btn-info btn-sm">
                                     <i class="fa fa-history"></i> Riwayat Kelas
                                 </a> --}}
-                                <a href="{{ route('pembayaran.index', ['siswa_nis' => $siswa->nis]) }}"
-                                    class="btn btn-primary btn-sm">
-                                    <i class="fa fa-money-bill-wave"></i> Pembayaran
-                                </a>
-                                <a href="{{ route('tabungan.index', ['siswa_nis' => $siswa->nis]) }}"
-                                    class="btn btn-secondary btn-sm">
-                                    <i class="fas fa-wallet"></i> Tabungan
-                                </a>
+                                @if($siswa->nis)
+                                    <a href="{{ route('pembayaran.index', ['siswa_nis' => $siswa->nis]) }}"
+                                        class="btn btn-primary btn-sm">
+                                        <i class="fa fa-money-bill-wave"></i> Pembayaran
+                                    </a>
+                                    <a href="{{ route('tabungan.index', ['siswa_nis' => $siswa->nis]) }}"
+                                        class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-wallet"></i> Tabungan
+                                    </a>
+                                @else
+                                    <button class="btn btn-primary btn-sm" disabled title="NIS belum diisi">
+                                        <i class="fa fa-money-bill-wave"></i> Pembayaran
+                                    </button>
+                                    <button class="btn btn-secondary btn-sm" disabled title="NIS belum diisi">
+                                        <i class="fas fa-wallet"></i> Tabungan
+                                    </button>
+                                @endif
                                 {{-- <form action="{{ route('siswas.destroy', $siswa->id) }}" method="POST"
                                     style="display:inline;">
                                     <form action="{{ route('siswas.destroy', $siswa->id) }}" method="POST"

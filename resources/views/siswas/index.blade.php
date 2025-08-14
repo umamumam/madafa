@@ -65,7 +65,7 @@
                                     <i class="fa fa-edit"></i> Edit
                                 </a>
                                 <a href="{{ route('siswas.show', $siswa->id) }}" class="btn btn-success btn-sm">
-                                    <i class="fa fa-eye"></i> Surat & Kartu
+                                    <i class="fa fa-eye"></i> Identitas
                                 </a>
                                 <a href="{{ route('siswa.riwayat.kelas', $siswa->id) }}" class="btn btn-info btn-sm">
                                     <i class="fa fa-history"></i> Riwayat Kelas

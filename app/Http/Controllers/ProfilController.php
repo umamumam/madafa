@@ -273,9 +273,9 @@ class ProfilController extends Controller
     public function cetakIdentitasSiswaPdf()
     {
         $user = Auth::user();
-        if ($user->role !== 'siswa') {
-            return redirect()->route('dashboard')->with('error', 'Hanya siswa yang dapat mencetak data ini.');
-        }
+        // if ($user->role !== 'siswa') {
+        //     return redirect()->route('dashboard')->with('error', 'Hanya siswa yang dapat mencetak data ini.');
+        // }
         $guru = Guru::whereHas('jabatan1', function ($query) {
             $query->where('jabatan', 'Kepala Madrasah');
         })->select('niy_nip')->first();

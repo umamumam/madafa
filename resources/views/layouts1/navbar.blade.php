@@ -135,16 +135,16 @@
                         <span class="pc-mtext">Rapor Saya</span>
                     </a>
                 </li>
-                <li class="pc-item">
+                {{-- <li class="pc-item">
                     <a href="/identitas-siswa" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-id"></i></span>
                         <span class="pc-mtext">Identitas Siswa</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="pc-item">
                     <a href="/profil-saya" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-id"></i></span>
-                        <span class="pc-mtext">Surat Pernyataan & Kartu</span>
+                        <span class="pc-mtext">Identitas Siswa</span>
                     </a>
                 </li>
                 @endif
