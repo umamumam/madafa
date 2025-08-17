@@ -16,7 +16,7 @@ return new class extends Migration
             // $table->foreignId('siswa_id')->constrained()->cascadeOnDelete();
             $table->string('siswa_nis')->nullable();
             $table->foreign('siswa_nis')->references('nis')->on('siswas')->onDelete('cascade');
-            $table->enum('petugas', ['Anis Maimanah', 'M. Fahruddin', 'Lainnya']);
+            $table->enum('petugas', ['Anis Maimanah', 'M. Fahruddin', 'Lainnya', '-'])->default('-');
             $table->string('jenis_pembayaran')->nullable();
             // tagihan
             $table->integer('tagihan_spp')->nullable();
@@ -44,7 +44,7 @@ return new class extends Migration
             $table->Integer('nominal_outing_class')->nullable();
             $table->Integer('nominal_lainlain')->nullable();
 
-            $table->date('tgl_bayar');
+            $table->date('tgl_bayar')->nullable();
             $table->enum('status', ['Cash', 'Transfer'])->default('Cash');
             $table->text('keterangan')->nullable();
             $table->timestamps();

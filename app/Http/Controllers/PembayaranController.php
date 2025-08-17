@@ -9,6 +9,8 @@ use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\TahunPelajaran;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PembayaranImport;
 
 class PembayaranController extends Controller
 {
@@ -27,6 +29,35 @@ class PembayaranController extends Controller
             $query->orderBy('tgl_bayar', 'desc');
         }])->get();
         return view('pembayaran.daftar', compact('siswas'));
+    }
+
+    public function pembayaran()
+    {
+        $pembayarans = Pembayaran::with('siswa')
+            ->orderBy('tgl_bayar', 'desc')
+            ->get();
+        return view('pembayaran.pembayaran', compact('pembayarans'));
+    }
+public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        try {
+            Excel::import(new PembayaranImport, $request->file('file'));
+
+            return redirect()->back()->with('success', 'Data pembayaran berhasil diimpor!');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $errors = [];
+            foreach ($failures as $failure) {
+                $errors[] = 'Baris ' . $failure->row() . ': ' . implode(', ', $failure->errors());
+            }
+            return redirect()->back()->with('error', 'Gagal mengimpor data. ' . implode(' | ', $errors));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengimpor data. Pastikan format file Anda benar. Error: ' . $e->getMessage());
+        }
     }
 
     public function create($siswa_nis)
@@ -72,7 +103,7 @@ class PembayaranController extends Controller
             'nominal_outing_class' => 'nullable|required_if:jenis_pembayaran,Outing Class|numeric|min:0|lte:tagihan_outing_class',
             'nominal_lainlain' => 'nullable|required_if:jenis_pembayaran,Lain-lain|numeric|min:0|lte:tagihan_lainlain',
 
-            'tgl_bayar' => 'required|date',
+            'tgl_bayar' => 'nullable|date',
             'status' => 'required|in:Cash,Transfer',
             'keterangan' => 'nullable|string|max:255',
         ]);
@@ -165,7 +196,7 @@ class PembayaranController extends Controller
                 'nominal_outing_class' => 'nullable|required_if:jenis_pembayaran,Outing Class|numeric|min:0|lte:tagihan_outing_class',
                 'nominal_lainlain' => 'nullable|required_if:jenis_pembayaran,Lain-lain|numeric|min:0|lte:tagihan_lainlain',
 
-                'tgl_bayar' => 'required|date',
+                'tgl_bayar' => 'nullable|date',
                 'status' => 'required|in:Cash,Transfer',
                 'keterangan' => 'nullable|string|max:255',
             ]);
@@ -261,7 +292,7 @@ class PembayaranController extends Controller
             'total' => $total,
             'tanggal' => now()->translatedFormat('d F Y H:i:s'),
             'kode_transaksi' => 'INV-' . str_pad($pembayaran->id, 5, '0', STR_PAD_LEFT),
-            'petugas' => $pembayaran->petugas, // Menggunakan 'petugas' dari model
+            'petugas' => $pembayaran->petugas,
             'tahun_pelajaran' => $tahunPelajaran?->tahun ?? '-'
         ];
         $pdf = Pdf::loadView('pembayaran.kuitansi', $data)

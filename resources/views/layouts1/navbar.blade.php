@@ -74,7 +74,8 @@
                         <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                     </a>
                     <ul class="pc-submenu">
-                        <li class="pc-item"><a class="pc-link" href="/pembayaran">Pembayaran</a></li>
+                        <li class="pc-item"><a class="pc-link" href="/pembayaranku">Import Data Pembayaran</a></li>
+                        <li class="pc-item"><a class="pc-link" href="/pembayaran">Daftar Pembayaran</a></li>
                         <li class="pc-item"><a class="pc-link" href="/laporan/pembayaran">Laporan Pembayaran</a></li>
                     </ul>
                 </li>

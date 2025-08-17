@@ -27,6 +27,7 @@
                         <option value="Anis Maimanah" {{ old('petugas')=='Anis Maimanah' ? 'selected' : '' }}>Anis Maimanah</option>
                         <option value="M. Fahruddin" {{ old('petugas')=='M. Fahruddin' ? 'selected' : '' }}>M. Fahruddin</option>
                         <option value="Lainnya" {{ old('petugas')=='Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                        <option value="-" {{ old('petugas')=='-' ? 'selected' : '' }}>-</option>
                     </select>
                     @error('petugas')
                     <div class="text-danger">{{ $message }}</div>
@@ -48,7 +49,7 @@
                             'Infaq Madrasah' => ['tagihan_infaq_madrasah', 'nominal_infaq_madrasah'],
                             'Infaq Kalender' => ['tagihan_infaq_kalender', 'nominal_infaq_kalender'],
                             'Outing Class' => ['tagihan_outing_class', 'nominal_outing_class'],
-                            'Lainlain' => ['tagihan_lainlain', 'nominal_lainlain'],
+                            'Lain-lain' => ['tagihan_lainlain', 'nominal_lainlain'],
                         ];
                     @endphp
 
@@ -98,7 +99,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Tanggal Bayar <span style="color: red">*</span></label>
-                        <input type="date" name="tgl_bayar" class="form-control" required
+                        <input type="date" name="tgl_bayar" class="form-control"
                             value="{{ old('tgl_bayar', date('Y-m-d')) }}">
                     </div>
 

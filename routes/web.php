@@ -78,7 +78,9 @@ Route::resource('mapel', MapelController::class);
 Route::resource('jabatan', JabatanController::class);
 Route::resource('ekstrakurikuler', EkstrakurikulerController::class);
 Route::get('/siswas/{id}/riwayat-kelas', [SiswaController::class, 'showRiwayatKelas'])->name('siswa.riwayat.kelas');
+Route::post('/pembayaran/import', [PembayaranController::class, 'import'])->name('pembayaran.import');
 Route::get('/pembayaran', [PembayaranController::class, 'daftar'])->name('pembayaran.daftar');
+Route::get('/pembayaranku', [PembayaranController::class, 'pembayaran'])->name('pembayaran.pembayaran');
 Route::get('/pembayaran/{id}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
 Route::put('/pembayaran/{id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
 Route::prefix('siswas/{siswa_nis}/pembayaran')->group(function () {
