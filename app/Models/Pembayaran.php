@@ -74,24 +74,24 @@ class Pembayaran extends Model
         'nominal_lainlain' => 'integer',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        /**
-         * Event 'saving' akan dipicu sebelum model disimpan (baik saat membuat atau memperbarui).
-         * Di sini kita akan menghitung ulang nominal_spp.
-         */
-        static::saving(function ($model) {
-            // Pastikan tagihan_spp dan nominal_beasiswa diperlakukan sebagai 0 jika null
-            $tagihanSpp = $model->tagihan_spp ?? 0;
-            $nominalBeasiswa = $model->nominal_beasiswa ?? 0;
+    //     /**
+    //      * Event 'saving' akan dipicu sebelum model disimpan (baik saat membuat atau memperbarui).
+    //      * Di sini kita akan menghitung ulang nominal_spp.
+    //      */
+    //     static::saving(function ($model) {
+    //         // Pastikan tagihan_spp dan nominal_beasiswa diperlakukan sebagai 0 jika null
+    //         $tagihanSpp = $model->tagihan_spp ?? 0;
+    //         $nominalBeasiswa = $model->nominal_beasiswa ?? 0;
 
-            // Hitung nominal_spp dengan mengurangi nominal_beasiswa dari tagihan_spp.
-            // Pastikan nominal_spp tidak kurang dari 0.
-            $model->nominal_spp = max(0, $tagihanSpp - $nominalBeasiswa);
-        });
-    }
+    //         // Hitung nominal_spp dengan mengurangi nominal_beasiswa dari tagihan_spp.
+    //         // Pastikan nominal_spp tidak kurang dari 0.
+    //         $model->nominal_spp = max(0, $tagihanSpp - $nominalBeasiswa);
+    //     });
+    // }
 
     public function siswa()
     {
