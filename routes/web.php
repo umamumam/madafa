@@ -104,6 +104,8 @@ Route::get('/kartu/{id}', [App\Http\Controllers\SiswaController::class, 'cetakKa
 Route::resource('gurus', GuruController::class);
 Route::resource('penyemak', PenyemakController::class);
 Route::resource('users', UserController::class);
+Route::get('/kdum/laporan', [KdumController::class, 'Laporan'])->name('kdum.laporan');
+Route::get('/kdum/laporan/cetak', [KdumController::class, 'cetakLaporan'])->name('kdum.laporan.cetak');
 Route::get('/kdum', [KdumController::class, 'index'])->name('kdum.index');
 Route::get('/kdum/{id}/detail', [KdumController::class, 'showDetail'])->name('kdum.detail');
 Route::get('/kdum/{id}/preview', [KdumController::class, 'preview'])->name('kdum.preview');

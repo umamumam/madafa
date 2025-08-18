@@ -92,4 +92,51 @@ class KdumController extends Controller
 
         return redirect()->back()->with('success', 'Data KDUM berhasil diimport.');
     }
+
+    public function Laporan()
+    {
+        $siswas = Siswa::with([
+            'kdums' => function ($query) {
+                $query->latest()->limit(1);
+            },
+            'kdums.details.kompetensi',
+            'kdums.details.nilai',
+            'kelas'
+        ])->get();
+
+        $kompetensiList = Kompetensi::orderBy('urutan')->get();
+        $tahunPelajaran = TahunPelajaran::where('active', true)->first();
+
+        $data = [
+            'siswas' => $siswas,
+            'kompetensiList' => $kompetensiList,
+            'tahunPelajaran' => $tahunPelajaran,
+        ];
+
+        return view('kdum.laporan', $data);
+    }
+
+    public function cetakLaporan(Request $request)
+    {
+        $siswas = Siswa::with([
+            'kdums' => function ($query) {
+                $query->latest()->limit(1);
+            },
+            'kdums.details.kompetensi',
+            'kdums.details.nilai',
+            'kelas'
+        ])->get();
+
+        $kompetensiList = Kompetensi::orderBy('urutan')->get();
+        $tahunPelajaran = TahunPelajaran::where('active', true)->first();
+
+        $data = [
+            'siswas' => $siswas,
+            'kompetensiList' => $kompetensiList,
+            'tahunPelajaran' => $tahunPelajaran,
+        ];
+
+        $pdf = PDF::loadView('kdum.laporan_kdum', $data);
+        return $pdf->stream('laporan_kdum_peserta.pdf');
+    }
 }

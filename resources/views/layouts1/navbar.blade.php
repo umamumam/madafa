@@ -80,11 +80,16 @@
                     </ul>
                 </li>
                 @endif
-                <li class="pc-item">
-                    <a href="/kdum" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-clipboard-list"></i></span>
+                <li class="pc-item pc-hasmenu">
+                    <a href="#!" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-list"></i></span>
                         <span class="pc-mtext">KDUM</span>
+                        <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                     </a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item"><a class="pc-link" href="/kdum">KDUM</a></li>
+                        <li class="pc-item"><a class="pc-link" href="/kdum/laporan">Laporan KDUM</a></li>
+                    </ul>
                 </li>
                 <li class="pc-item">
                     <a href="/rapor-lokal" class="pc-link">
