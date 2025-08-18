@@ -9,13 +9,23 @@ use Illuminate\Support\Facades\Auth;
 use PDF;
 use Mpdf\Mpdf;
 use Illuminate\Support\Facades\View;
+use App\Models\Kelas;
 
 class RaporLokalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $raporLokals = RaporLokal::with(['siswa', 'kelas', 'tahunPelajaran'])->get();
-        return view('rapor-lokal.index', compact('raporLokals'));
+        $selectedKelasId = $request->input('kelas_id');
+        $raporLokalsQuery = RaporLokal::with(['siswa', 'kelas', 'tahunPelajaran']);
+
+        if ($selectedKelasId) {
+            $raporLokalsQuery->where('kelas_id', $selectedKelasId);
+        }
+
+        $raporLokals = $raporLokalsQuery->get();
+        $kelas = Kelas::all();
+
+        return view('rapor-lokal.index', compact('raporLokals', 'kelas', 'selectedKelasId'));
     }
 
     public function showDetail($id)
@@ -110,22 +120,6 @@ class RaporLokalController extends Controller
         return view('rapor-lokal.siswa-detail', compact('rapor', 'semester', 'kelasList'));
     }
 
-
-
-    // public function exportPdf($id)
-    // {
-    //     $rapor = RaporLokal::with([
-    //         'siswa.jenisKelamin',
-    //         'kelas.program',
-    //         'kelas.waliKelas',
-    //         'tahunPelajaran',
-    //         'details.mapel',
-    //         'details.nilai',
-    //     ])->findOrFail($id);
-
-    //     $pdf = PDF::loadView('rapor-lokal.export-pdf', compact('rapor'));
-    //     return $pdf->stream('RaporLokal_' . $rapor->siswa->nama_siswa . '.pdf');
-    // }
     public function exportPdf($id)
     {
         $rapor = RaporLokal::with([
@@ -147,6 +141,7 @@ class RaporLokalController extends Controller
         $mpdf->WriteHTML($html);
         return response($mpdf->Output('', 'S'))->header('Content-Type', 'application/pdf');
     }
+
     public function exportAllRapor()
     {
         $rapors = RaporLokal::with([
@@ -157,10 +152,8 @@ class RaporLokalController extends Controller
             'details.nilai'
         ])->get();
 
-        // Render HTML dari view
         $html = View::make('rapor-lokal.export-all', compact('rapors'))->render();
 
-        // Buat instance mpdf dengan pengaturan
         $mpdf = new Mpdf([
             'default_font' => 'Arial',
             'margin_top' => 5,
@@ -168,13 +161,11 @@ class RaporLokalController extends Controller
             'margin_right' => 10,
             'margin_bottom' => 10,
             'format' => 'A4',
-            'orientation' => 'P' // Portrait
+            'orientation' => 'P'
         ]);
 
-        // Tulis HTML ke PDF
         $mpdf->WriteHTML($html);
 
-        // Kembalikan response PDF langsung tanpa download
         return response($mpdf->Output('', 'S'))->header('Content-Type', 'application/pdf');
     }
 }

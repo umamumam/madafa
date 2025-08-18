@@ -32,6 +32,28 @@ class GuruController extends Controller
         return view('gurus.index', compact('gurus'));
     }
 
+    public function show($id)
+    {
+        $guru = Guru::with([
+            'jeniskelamin',
+            'statusGuru',
+            'pendidikanTerakhir',
+            'mapel1',
+            'mapel2',
+            'mapel3',
+            'jabatan1',
+            'jabatan2',
+            'jabatan3',
+        ])->findOrFail($id);
+
+        $fotoPath = $guru->foto ? asset('storage/' . $guru->foto) : asset('mantis/assets/images/user/avatar-5.jpg');
+
+        return view('gurus.show', [
+            'guru' => $guru,
+            'fotoPath' => $fotoPath,
+        ]);
+    }
+
     public function create()
     {
         $jeniskelimans = JenisKelamin::all();

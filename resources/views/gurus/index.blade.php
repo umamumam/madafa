@@ -63,6 +63,9 @@
                                     <a href="{{ route('gurus.edit', $guru->id) }}" class="btn btn-warning btn-sm">
                                         <i class="fa fa-edit"></i> Edit
                                     </a>
+                                    <a href="{{ route('gurus.show', $guru->id) }}" class="btn btn-info btn-sm">
+                                        <i class="fa fa-eye"></i> Detail
+                                    </a>
                                     <form action="{{ route('gurus.destroy', $guru->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
