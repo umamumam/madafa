@@ -54,18 +54,40 @@
                     <i class="ti ti-dashboard"></i>
                 </li>
                 @if(Auth::check() && in_array(Auth::user()->role, ['admin', 'super admin', 'guru']))
-                <li class="pc-item">
+                <li class="pc-item pc-hasmenu">
+                    <a href="#!" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-users"></i></span>
+                        <span class="pc-mtext">Siswa</span>
+                        <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+                    </a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item"><a class="pc-link" href="/siswas">Data Siswa</a></li>
+                        <li class="pc-item"><a class="pc-link" href="/laporan-siswa">Laporan Siswa</a></li>
+                    </ul>
+                </li>
+                <li class="pc-item pc-hasmenu">
+                    <a href="#!" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-school"></i></span>
+                        <span class="pc-mtext">Guru</span>
+                        <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+                    </a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item"><a class="pc-link" href="/gurus">Data Guru</a></li>
+                        <li class="pc-item"><a class="pc-link" href="/laporan-guru">Laporan Guru</a></li>
+                    </ul>
+                </li>
+                {{-- <li class="pc-item">
                     <a href="/siswas" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-users"></i></span>
                         <span class="pc-mtext">Siswa</span>
                     </a>
-                </li>
-                <li class="pc-item">
+                </li> --}}
+                {{-- <li class="pc-item">
                     <a href="/gurus" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-school"></i></span>
                         <span class="pc-mtext">Guru</span>
                     </a>
-                </li>
+                </li> --}}
                 @if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'super admin'))
                 <li class="pc-item pc-hasmenu">
                     <a href="#!" class="pc-link">

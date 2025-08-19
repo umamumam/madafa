@@ -32,6 +32,23 @@ class GuruController extends Controller
         return view('gurus.index', compact('gurus'));
     }
 
+    public function LaporanGuru()
+    {
+        $gurus = Guru::with([
+            'jenisKelamin',
+            'pendidikanTerakhir',
+            'statusGuru',
+            'mapel1',
+            'mapel2',
+            'mapel3',
+            'jabatan1',
+            'jabatan2',
+            'jabatan3'
+        ])->get();
+
+        return view('gurus.laporan_guru', compact('gurus'));
+    }
+
     public function show($id)
     {
         $guru = Guru::with([

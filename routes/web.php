@@ -68,6 +68,8 @@ Route::get('/identitas-guru', [ProfilController::class, 'identitasGuru'])->name(
 Route::get('/identitas-guru/cetak-pdf', [ProfilController::class, 'cetakIdentitasGuruPdf'])->name('profil.identitasguru.pdf');
 Route::post('/profil/update-password', [ProfilController::class, 'updatePassword'])->name('profil.updatePassword');
 Route::post('/profil/upload-foto', [ProfilController::class, 'uploadFoto'])->name('profil.uploadFoto');
+Route::get('/laporan-siswa', [SiswaController::class, 'LaporanSiswa'])->name('laporan.siswa');
+Route::get('/laporan-guru', [GuruController::class, 'LaporanGuru'])->name('laporan.guru');
 
 Route::get('/kelas', [App\Http\Controllers\KelasController::class, 'index'])->name('kelas.index');
 Route::post('/kelas', [App\Http\Controllers\KelasController::class, 'store'])->name('kelas.store');

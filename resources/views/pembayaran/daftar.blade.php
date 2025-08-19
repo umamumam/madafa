@@ -44,6 +44,12 @@
                                     <i class="fa fa-history"></i> Riwayat Kelas
                                 </a> --}}
                                 @if($siswa->nis)
+                                @foreach($siswa->pembayarans as $index => $pembayaran)
+                                    <a href="{{ route('pembayaran.show', [$siswa->nis, $pembayaran->id]) }}"
+                                        class="btn btn-sm btn-info px-2 py-1" title="Lihat Detail">
+                                        <i class="fas fa-eye"></i>Detail
+                                    </a>
+                                @endforeach
                                     <a href="{{ route('pembayaran.index', ['siswa_nis' => $siswa->nis]) }}"
                                         class="btn btn-primary btn-sm">
                                         <i class="fa fa-money-bill-wave"></i> Pembayaran

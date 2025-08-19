@@ -33,6 +33,24 @@ class SiswaController extends Controller
         return view('siswas.index', compact('siswas'));
     }
 
+    public function LaporanSiswa(Request $request)
+    {
+        $kelas = Kelas::all();
+        $selectedKelasId = $request->input('kelas_id');
+        $query = Siswa::with([
+            'jeniskelamin',
+            'kelas',
+            'program',
+            'pendidikanAyah',
+            'pendidikanIbu'
+        ]);
+        if ($selectedKelasId) {
+            $query->where('kelas_id', $selectedKelasId);
+        }
+        $siswas = $query->get();
+        return view('siswas.laporan_siswa', compact('siswas', 'kelas', 'selectedKelasId'));
+    }
+
     // Menampilkan form tambah siswa
     public function create()
     {
