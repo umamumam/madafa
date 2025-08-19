@@ -10,8 +10,10 @@ use App\Models\StatusGuru;
 use App\Imports\GuruImport;
 use App\Models\JenisKelamin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use Mpdf\Mpdf;
 
 class GuruController extends Controller
 {
@@ -47,6 +49,37 @@ class GuruController extends Controller
         ])->get();
 
         return view('gurus.laporan_guru', compact('gurus'));
+    }
+
+    public function cetakLaporanGuru()
+    {
+        $gurus = Guru::with([
+            'jenisKelamin',
+            'pendidikanTerakhir',
+            'statusGuru',
+            'mapel1',
+            'mapel2',
+            'mapel3',
+            'jabatan1',
+            'jabatan2',
+            'jabatan3'
+        ])->get();
+
+        $html = View::make('gurus.laporan_guru_pdf', compact('gurus'))->render();
+
+        $mpdf = new Mpdf([
+            'default_font' => 'Amiri',
+            'margin_top' => 5,
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_bottom' => 10,
+            'format' => 'A4',
+            'orientation' => 'L'
+        ]);
+
+        $mpdf->WriteHTML($html);
+
+        return response($mpdf->Output('', 'S'))->header('Content-Type', 'application/pdf');
     }
 
     public function show($id)

@@ -21,10 +21,9 @@
                             <i class="fas fa-filter"></i>
                         </button>
                     </form>
-                    {{-- <a href="{{ route('cetak.laporan.siswa', ['kelas_id' => $selectedKelasId]) }}" target="_blank"
-                        class="btn btn-danger btn-sm">
-                        <i class="fas fa-file-pdf"></i> Cetak ke PDF
-                    </a> --}}
+                    <a href="{{ route('cetak.laporan.siswa', ['kelas_id' => $selectedKelasId]) }}" target="_blank" class="btn btn-danger btn-sm">
+                        <i class="fas fa-file-pdf"></i> Cetak PDF
+                    </a>
                 </div>
             </div>
 

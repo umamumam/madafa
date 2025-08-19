@@ -51,6 +51,28 @@ class SiswaController extends Controller
         return view('siswas.laporan_siswa', compact('siswas', 'kelas', 'selectedKelasId'));
     }
 
+    public function cetakLaporanSiswa(Request $request)
+    {
+        $selectedKelasId = $request->input('kelas_id');
+
+        $query = Siswa::with([
+            'jeniskelamin',
+            'kelas',
+            'program',
+            'pendidikanAyah',
+            'pendidikanIbu'
+        ]);
+
+        if ($selectedKelasId) {
+            $query->where('kelas_id', $selectedKelasId);
+        }
+        $siswas = $query->get();
+        $kelas = $selectedKelasId ? Kelas::find($selectedKelasId) : null;
+        $pdf = Pdf::loadView('siswas.laporan_pdf', compact('siswas', 'kelas'));
+
+        return $pdf->stream('laporan_data_siswa.pdf');
+    }
+
     // Menampilkan form tambah siswa
     public function create()
     {
