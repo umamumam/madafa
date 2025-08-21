@@ -38,7 +38,8 @@ class PembayaranController extends Controller
             ->get();
         return view('pembayaran.pembayaran', compact('pembayarans'));
     }
-public function import(Request $request)
+
+    public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls',

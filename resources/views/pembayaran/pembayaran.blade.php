@@ -2,11 +2,10 @@
 
 @section('content')
 <div class="row">
-    <!-- Config table start -->
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h1>Import Data Pembayaran</h1>
+                <h1>Data Pembayaran</h1>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importModal">
                     <i class="fas fa-file-excel"></i> Import Excel
                 </button>
@@ -17,12 +16,23 @@
                     <thead style="background-color: #e9f5ff;">
                         <tr>
                             <th>No</th>
-                            <th>Tanggal Bayar</th>
                             <th>NIS</th>
                             <th>Nama Siswa</th>
-                            <th>Petugas</th>
-                            <th>Jenis Pembayaran</th>
+                            <th>Kelas</th>
+                            <th>SPP</th>
+                            <th>Dana Abadi</th>
+                            <th>BOP Smt 1</th>
+                            <th>BOP Smt 2</th>
+                            <th>Buku LKS</th>
+                            <th>Kitab</th>
+                            <th>Seragam</th>
+                            <th>Infaq Madrasah</th>
+                            <th>Infaq Kalender</th>
+                            <th>Outing Class</th>
+                            <th>Lain-lain</th>
                             <th>Jumlah Total</th>
+                            <th>Petugas</th>
+                            <th>Tanggal Bayar</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -30,46 +40,49 @@
                         @foreach($pembayarans as $key => $pembayaran)
                         @php
                         // Menjumlahkan semua nominal pembayaran
-                        $totalNominal = $pembayaran->nominal_beasiswa +
-                        $pembayaran->nominal_spp +
-                        $pembayaran->nominal_dana_abadi +
-                        $pembayaran->nominal_bop_smt1 +
-                        $pembayaran->nominal_bop_smt2 +
-                        $pembayaran->nominal_buku_lks +
-                        $pembayaran->nominal_kitab +
-                        $pembayaran->nominal_seragam +
-                        $pembayaran->nominal_infaq_madrasah +
-                        $pembayaran->nominal_infaq_kalender +
-                        $pembayaran->nominal_outing_class +
-                        $pembayaran->nominal_lainlain;
+                        $totalNominal = ($pembayaran->nominal_beasiswa ?? 0) +
+                        ($pembayaran->nominal_spp ?? 0) +
+                        ($pembayaran->nominal_dana_abadi ?? 0) +
+                        ($pembayaran->nominal_bop_smt1 ?? 0) +
+                        ($pembayaran->nominal_bop_smt2 ?? 0) +
+                        ($pembayaran->nominal_buku_lks ?? 0) +
+                        ($pembayaran->nominal_kitab ?? 0) +
+                        ($pembayaran->nominal_seragam ?? 0) +
+                        ($pembayaran->nominal_infaq_madrasah ?? 0) +
+                        ($pembayaran->nominal_infaq_kalender ?? 0) +
+                        ($pembayaran->nominal_outing_class ?? 0) +
+                        ($pembayaran->nominal_lainlain ?? 0);
                         @endphp
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ \Carbon\Carbon::parse($pembayaran->tgl_bayar)->format('d-m-Y') }}</td>
-                            {{-- Mengakses data siswa melalui relasi --}}
                             <td>{{ $pembayaran->siswa->nis ?? '-' }}</td>
                             <td>{{ $pembayaran->siswa->nama_siswa ?? '-' }}</td>
-                            <td>{{ $pembayaran->petugas ?? '-' }}</td>
-                            <td>{{ $pembayaran->jenis_pembayaran ?? '-' }}</td>
+                            <td>{{ $pembayaran->siswa->kelas->nama_kelas ?? '-' }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_spp ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_dana_abadi ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_bop_smt1 ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_bop_smt2 ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_buku_lks ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_kitab ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_seragam ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_infaq_madrasah ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_infaq_kalender ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_outing_class ?? 0, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($pembayaran->nominal_lainlain ?? 0, 0, ',', '.') }}</td>
                             <td>Rp {{ number_format($totalNominal, 0, ',', '.') }}</td>
+                            <td>{{ $pembayaran->petugas ?? '-' }}</td>
+                            <td style="text-align: center;">
+                                @if($pembayaran->tgl_bayar)
+                                {{ \Carbon\Carbon::parse($pembayaran->tgl_bayar)->format('d-m-Y') }}
+                                @else
+                                -
+                                @endif
+                            </td>
                             <td>
-                                @if($pembayaran->siswa)
-                                <a href="{{ route('pembayaran.index', ['siswa_nis' => $pembayaran->siswa->nis]) }}"
+                                <a href="{{ route('pembayaran.edit', $pembayaran->id) }}"
                                     class="btn btn-primary btn-sm">
                                     <i class="fa fa-money-bill-wave"></i> Pembayaran
                                 </a>
-                                <a href="{{ route('tabungan.index', ['siswa_nis' => $pembayaran->siswa->nis]) }}"
-                                    class="btn btn-secondary btn-sm">
-                                    <i class="fas fa-wallet"></i> Tabungan
-                                </a>
-                                @else
-                                <button class="btn btn-primary btn-sm" disabled title="Data siswa tidak ditemukan">
-                                    <i class="fa fa-money-bill-wave"></i> Pembayaran
-                                </button>
-                                <button class="btn btn-secondary btn-sm" disabled title="Data siswa tidak ditemukan">
-                                    <i class="fas fa-wallet"></i> Tabungan
-                                </button>
-                                @endif
                             </td>
                         </tr>
                         @endforeach
