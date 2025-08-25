@@ -31,8 +31,8 @@
                             <th>Outing Class</th>
                             <th>Lain-lain</th>
                             <th>Jumlah Total</th>
-                            <th>Petugas</th>
-                            <th>Tanggal Bayar</th>
+                            {{-- <th>Petugas</th>
+                            <th>Tanggal Bayar</th> --}}
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -70,14 +70,14 @@
                             <td>Rp {{ number_format($pembayaran->nominal_outing_class ?? 0, 0, ',', '.') }}</td>
                             <td>Rp {{ number_format($pembayaran->nominal_lainlain ?? 0, 0, ',', '.') }}</td>
                             <td>Rp {{ number_format($totalNominal, 0, ',', '.') }}</td>
-                            <td>{{ $pembayaran->petugas ?? '-' }}</td>
+                            {{-- <td>{{ $pembayaran->petugas ?? '-' }}</td>
                             <td style="text-align: center;">
                                 @if($pembayaran->tgl_bayar)
                                 {{ \Carbon\Carbon::parse($pembayaran->tgl_bayar)->format('d-m-Y') }}
                                 @else
                                 -
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 <a href="{{ route('pembayaran.edit', $pembayaran->id) }}"
                                     class="btn btn-primary btn-sm">
