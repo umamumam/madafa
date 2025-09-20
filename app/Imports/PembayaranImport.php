@@ -18,6 +18,12 @@ class PembayaranImport implements ToModel, WithHeadingRow, WithBatchInserts, Wit
             return null;
         }
 
+        $existingPembayaran = Pembayaran::where('siswa_nis', $row['siswa_nis'])->first();
+
+        if ($existingPembayaran) {
+            return null;
+        }
+
         $tgl_bayar = Carbon::now('Asia/Jakarta')->format('Y-m-d');
 
         if (!empty($row['tgl_bayar'])) {
