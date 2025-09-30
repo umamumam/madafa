@@ -241,8 +241,8 @@ class PembayaranController extends Controller
                 'keterangan' => $request->keterangan
             ]);
 
-            return redirect()->route('pembayaran.index', $siswa_nis)
-                ->with('success', 'Pembayaran berhasil diperbarui!');
+        return redirect()->route('pembayaran.show', [$siswa_nis, $pembayaran->id])
+            ->with('success', 'Pembayaran berhasil diperbarui!');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()
                 ->withErrors($e->validator)

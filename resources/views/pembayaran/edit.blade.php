@@ -124,7 +124,7 @@
         <button type="submit" class="btn btn-primary">
             <i class="fas fa-save"></i> Perbarui Pembayaran
         </button>
-        <a href="{{ route('pembayaran.index', $siswa->nis) }}" class="btn btn-secondary">
+        <a href="{{ route('pembayaran.daftar') }}" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Kembali
         </a>
     </form>

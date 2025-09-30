@@ -115,7 +115,20 @@
             $totalSisaKeseluruhan = $totalTagihanKeseluruhan - $totalTerbayarKeseluruhan;
             @endphp
 
-            <h5 class="mb-3">Rincian</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Rincian</h5>
+                <div class="d-print-none">
+                    <a href="{{ route('pembayaran.cetakRincian', [$pembayaran->siswa_nis, $pembayaran->id]) }}" class="btn btn-success me-2" target="_blank">
+                        <i class="fas fa-print"></i> Cetak PDF
+                    </a>
+                    <a href="{{ route('pembayaran.kuitansi', [$pembayaran->siswa_nis, $pembayaran->id]) }}" class="btn btn-danger me-2" target="_blank">
+                        <i class="fas fa-print"></i> Cetak Kuitansi
+                    </a>
+                    <a href="{{ route('pembayaran.daftar') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </a>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead class="table-primary text-center">
@@ -203,14 +216,6 @@
         </div>
     </div>
 
-    <div class="mt-4 d-print-none">
-        <a href="{{ route('pembayaran.cetakRincian', [$pembayaran->siswa_nis, $pembayaran->id]) }}" class="btn btn-success" target="_blank">
-            <i class="fas fa-print"></i> Cetak PDF
-        </a>
-        <a href="{{ route('pembayaran.index', $pembayaran->siswa_nis) }}" class="btn btn-secondary"> <i
-                class="fas fa-arrow-left"></i> Kembali
-        </a>
-    </div>
 </div>
 
 @endsection

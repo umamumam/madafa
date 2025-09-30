@@ -50,7 +50,7 @@
                                         <i class="fas fa-eye"></i>Detail
                                     </a>
                                 @endforeach
-                                    <a href="{{ route('pembayaran.index', ['siswa_nis' => $siswa->nis]) }}"
+                                    <a href="{{ route('pembayaran.edit', $pembayaran->id) }}"
                                         class="btn btn-primary btn-sm">
                                         <i class="fa fa-money-bill-wave"></i> Pembayaran
                                     </a>
