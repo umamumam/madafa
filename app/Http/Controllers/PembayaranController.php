@@ -241,8 +241,8 @@ class PembayaranController extends Controller
                 'keterangan' => $request->keterangan
             ]);
 
-        return redirect()->route('pembayaran.show', [$siswa_nis, $pembayaran->id])
-            ->with('success', 'Pembayaran berhasil diperbarui!');
+            return redirect()->route('pembayaran.show', [$siswa_nis, $pembayaran->id])
+                ->with('success', 'Pembayaran berhasil diperbarui!');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()
                 ->withErrors($e->validator)
@@ -399,6 +399,121 @@ class PembayaranController extends Controller
             ->setOption('isHtml5ParserEnabled', true);
 
         $filename = 'Laporan_Pembayaran_' . $pembayaran->siswa->nama_siswa . '_' . $pembayaran->id . '.pdf';
+
+        if ($request->has('download')) {
+            return $pdf->download($filename);
+        }
+
+        return $pdf->stream($filename);
+    }
+
+    public function cetakPerItem(Request $request, $siswa_nis, $pembayaran_id)
+    {
+        Carbon::setLocale('id');
+
+        $jenis = $request->query('jenis');
+        $pembayaran = Pembayaran::with('siswa')
+            ->where('siswa_nis', $siswa_nis)
+            ->findOrFail($pembayaran_id);
+
+        $tahunPelajaran = TahunPelajaran::where('active', true)->first();
+
+        // Mapping jenis pembayaran ke field yang sesuai
+        $jenisMapping = [
+            'Syahriyah' => [
+                'nominal_field' => 'nominal_spp',
+                'tagihan_field' => 'tagihan_spp',
+                'label' => 'Syahriyah'
+            ],
+            'Dana Abadi' => [
+                'nominal_field' => 'nominal_dana_abadi',
+                'tagihan_field' => 'tagihan_dana_abadi',
+                'label' => 'Dana Abadi'
+            ],
+            'BOP Smt.1' => [
+                'nominal_field' => 'nominal_bop_smt1',
+                'tagihan_field' => 'tagihan_bop_smt1',
+                'label' => 'BOP Semester 1'
+            ],
+            'BOP Smt.2' => [
+                'nominal_field' => 'nominal_bop_smt2',
+                'tagihan_field' => 'tagihan_bop_smt2',
+                'label' => 'BOP Semester 2'
+            ],
+            'Buku Paket & LKS' => [
+                'nominal_field' => 'nominal_buku_lks',
+                'tagihan_field' => 'tagihan_buku_lks',
+                'label' => 'Buku Paket & LKS'
+            ],
+            'Kitab' => [
+                'nominal_field' => 'nominal_kitab',
+                'tagihan_field' => 'tagihan_kitab',
+                'label' => 'Kitab'
+            ],
+            'Seragam' => [
+                'nominal_field' => 'nominal_seragam',
+                'tagihan_field' => 'tagihan_seragam',
+                'label' => 'Seragam'
+            ],
+            'Infaq Madrasah' => [
+                'nominal_field' => 'nominal_infaq_madrasah',
+                'tagihan_field' => 'tagihan_infaq_madrasah',
+                'label' => 'Infaq Madrasah'
+            ],
+            'Infaq Kalender' => [
+                'nominal_field' => 'nominal_infaq_kalender',
+                'tagihan_field' => 'tagihan_infaq_kalender',
+                'label' => 'Infaq Kalender'
+            ],
+            'Outing Class' => [
+                'nominal_field' => 'nominal_outing_class',
+                'tagihan_field' => 'tagihan_outing_class',
+                'label' => 'Outing Class'
+            ],
+            'Kolektif' => [
+                'nominal_field' => 'nominal_lainlain',
+                'tagihan_field' => 'tagihan_lainlain',
+                'label' => 'Kolektif'
+            ],
+        ];
+
+        if (!isset($jenisMapping[$jenis])) {
+            abort(404, 'Jenis pembayaran tidak ditemukan');
+        }
+
+        $mapping = $jenisMapping[$jenis];
+        $nominal = $pembayaran->{$mapping['nominal_field']} ?? 0;
+        $tagihan = $pembayaran->{$mapping['tagihan_field']} ?? 0;
+        $label = $mapping['label'];
+
+        // Hitung sisa dan status
+        $sisa = $tagihan - $nominal;
+        $status = $sisa <= 0 ? 'LUNAS' : 'Kurangnya: Rp ' . number_format($sisa, 0, ',', '.');
+
+        // Hanya cetak jika nominal lebih dari 0
+        if ($nominal <= 0) {
+            abort(404, 'Tidak ada pembayaran untuk jenis ini');
+        }
+
+        $data = [
+            'pembayaran' => $pembayaran,
+            'total' => $nominal,
+            'jenis_pembayaran' => $label,
+            'status' => $status,
+            'sisa' => $sisa,
+            'tagihan' => $tagihan,
+            'tanggal' => now()->translatedFormat('d F Y H:i:s'),
+            'kode_transaksi' => 'INV-' . str_pad($pembayaran->id, 5, '0', STR_PAD_LEFT) . '-' . substr($label, 0, 3),
+            'petugas' => $pembayaran->petugas,
+            'tahun_pelajaran' => $tahunPelajaran?->tahun ?? '-'
+        ];
+
+        $pdf = Pdf::loadView('pembayaran.kuitansi_per_item', $data)
+            ->setPaper('a4', 'portrait')
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('isHtml5ParserEnabled', true);
+
+        $filename = 'Kuitansi-' . $pembayaran->siswa->nama_siswa . '-' . str_replace(' ', '-', $label) . '.pdf';
 
         if ($request->has('download')) {
             return $pdf->download($filename);

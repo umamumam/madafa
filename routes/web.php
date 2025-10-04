@@ -96,6 +96,8 @@ Route::prefix('siswas/{siswa_nis}/pembayaran')->group(function () {
     // Route::put('/{pembayaran_id}', [PembayaranController::class, 'update'])->name('pembayaran.update');
     Route::delete('/{pembayaran_id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
     Route::get('/{pembayaran_id}/kuitansi', [PembayaranController::class, 'cetakKuitansi'])->name('pembayaran.kuitansi');
+    Route::get('{pembayaran_id}/cetak-per-item', [PembayaranController::class, 'cetakPerItem'])
+    ->name('pembayaran.cetakPerItem');
 });
 Route::get('/pembayaran/{siswa_nis}/{pembayaran_id}/cetak-rincian', [PembayaranController::class, 'cetakRincian'])->name('pembayaran.cetakRincian');
 Route::resource('siswas', SiswaController::class);

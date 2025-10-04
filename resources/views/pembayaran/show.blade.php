@@ -165,6 +165,20 @@
                                 @else
                                 <span class="badge bg-danger">BELUM LUNAS</span>
                                 @endif
+                                <br>
+                                <!-- Tombol Cetak Per Item -->
+                                @if($item['terbayar'] > 0)
+                                <a href="{{ route('pembayaran.cetakPerItem', [
+                                    'siswa_nis' => $pembayaran->siswa_nis,
+                                    'pembayaran_id' => $pembayaran->id,
+                                    'jenis' => $item['label']
+                                ]) }}"
+                                   class="btn btn-sm btn-outline-primary mt-1"
+                                   target="_blank"
+                                   title="Cetak Kuitansi {{ $item['label'] }}">
+                                    <i class="fas fa-print"></i> Cetak
+                                </a>
+                                @endif
                             </td>
                         </tr>
                         @empty
